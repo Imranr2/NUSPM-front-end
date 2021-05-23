@@ -1,5 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import {
+  ThemeProvider,
+  Container,
+  CssBaseline,
+  Grid,
+  TextField,
+  Button,
+} from "@material-ui/core";
+import { theme } from "./Theme";
+import Logo from "./components/Logo";
 
 function Login(props) {
   const [email, setEmail] = useState("");
@@ -36,31 +46,54 @@ function Login(props) {
   };
 
   return (
-    <div>
-      <h1>Log In</h1>
-      <form onSubmit={handleSubmit}>
-        <input
-          placeholder="email"
-          type="text"
-          name="email"
-          value={email}
-          onChange={(event) => setEmail(event.target.value)}
-        />
-        <input
-          placeholder="password"
-          type="password"
-          name="password"
-          value={password}
-          onChange={(event) => setPassword(event.target.value)}
-        />
-        <button placeholder="submit" type="submit">
-          Log In
-        </button>
+    <ThemeProvider theme={theme}>
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
         <div>
-          or <Link to="/signup">Sign up</Link>
+          <Logo></Logo>
+          <form onSubmit={handleSubmit}>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  name="email"
+                  label="Email Address"
+                  type="email"
+                  id="email"
+                  autoComplete="email"
+                  onChange={(event) => setEmail(event.target.value)}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  name="password"
+                  label="Password"
+                  type="password"
+                  id="password"
+                  autoComplete="current-password"
+                  onChange={(event) => setPassword(event.target.value)}
+                />
+              </Grid>
+            </Grid>
+            <Button type="submit" fullWidth variant="contained" color="primary">
+              Log In
+            </Button>
+            <Grid container justify="flex-end">
+              <Grid item>
+                <Link href="#" variant="body2">
+                  Don't have an account? Sign up
+                </Link>
+              </Grid>
+            </Grid>
+          </form>
         </div>
-      </form>
-    </div>
+      </Container>
+    </ThemeProvider>
   );
 }
 export default Login;

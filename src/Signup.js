@@ -1,4 +1,15 @@
 import React, { useState, useEffect } from "react";
+import {
+  ThemeProvider,
+  Container,
+  CssBaseline,
+  Grid,
+  TextField,
+  Button,
+  Link,
+} from "@material-ui/core";
+import { theme } from "./Theme";
+import Logo from "./components/Logo";
 
 function Signup(props) {
   const [email, setEmail] = useState("");
@@ -37,35 +48,66 @@ function Signup(props) {
   };
 
   return (
-    <div>
-      <h1>Sign Up</h1>
-      <form onSubmit={handleSubmit}>
-        <input
-          placeholder="email"
-          type="text"
-          name="email"
-          value={email}
-          onChange={(event) => setEmail(event.target.value)}
-        />
-        <input
-          placeholder="password"
-          type="password"
-          name="password"
-          value={password}
-          onChange={(event) => setPassword(event.target.value)}
-        />
-        <input
-          placeholder="password confirmation"
-          type="password"
-          name="password_confirmation"
-          value={passwordConf}
-          onChange={(event) => setPasswordConf(event.target.value)}
-        />
-        <button placeholder="submit" type="submit">
-          Sign Up
-        </button>
-      </form>
-    </div>
+    <ThemeProvider theme={theme}>
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <div>
+          <Logo></Logo>
+          <form onSubmit={handleSubmit}>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  name="email"
+                  label="Email Address"
+                  type="email"
+                  id="email"
+                  autoComplete="email"
+                  onChange={(event) => setEmail(event.target.value)}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  name="password"
+                  label="Password"
+                  type="password"
+                  id="password"
+                  autoComplete="current-password"
+                  onChange={(event) => setPassword(event.target.value)}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  name="password"
+                  label="Confirm"
+                  type="password"
+                  id="passwordConf"
+                  onChange={(event) => setPasswordConf(event.target.value)}
+                />
+              </Grid>
+            </Grid>
+            <Button type="submit" fullWidth variant="contained" color="primary">
+              Sign Up
+            </Button>
+            <Grid container justify="flex-end">
+              <Grid item>
+                <Link href="#" variant="body2">
+                  Already have an account? Login
+                </Link>
+              </Grid>
+            </Grid>
+          </form>
+        </div>
+      </Container>
+    </ThemeProvider>
   );
 }
 export default Signup;
