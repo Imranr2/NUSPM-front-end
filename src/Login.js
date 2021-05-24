@@ -14,11 +14,21 @@ import Logo from "./components/Logo";
 function Login(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [errors, setErrors] = useState("");
+  const [errors, setErrors] = useState([]);
+  const [loggedIn, setLoggedIn] = useState(false);
+
+  function handleErrors(response) {
+    if (!response.ok) {
+      return response.json().then((text) => {
+        setErrors([...errors, Object.values(text.error).toString()]);
+        throw new Error(text.error);
+      });
+    }
+    return response.json();
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(1);
     fetch("http://localhost:3001/authenticate", {
       method: "POST",
       headers: {
@@ -28,22 +38,31 @@ function Login(props) {
         email: email,
         password: password,
       }),
-    }).then((response) =>
-      response.json().then((data) => console.log(data.auth_token))
-    );
+    })
+      .then(handleErrors)
+      .then((data) => {
+        localStorage.setItem("token", data.auth_token);
+        setLoggedIn(true);
+      })
+      .catch((error) => console.log(errors));
   };
 
-  const handleErrors = () => {
-    return (
+  const printErrors =
+    errors.length > 0 ? (
       <div>
         <ul>
-          {this.state.errors.map((error) => {
+          {errors.map((error) => {
             return <li key={error}>{error}</li>;
           })}
         </ul>
       </div>
+    ) : (
+      <></>
     );
-  };
+
+  if (loggedIn) {
+    return <Redirect to="/signup" />;
+  }
 
   return (
     <ThemeProvider theme={theme}>

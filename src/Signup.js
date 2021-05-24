@@ -15,11 +15,21 @@ function Signup(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConf, setPasswordConf] = useState("");
-  const [errors, setErrors] = useState("");
+  const [errors, setErrors] = useState([]);
+  const [loggedIn, setLoggedIn] = useState(false);
+
+  const handleErrors = (response) => {
+    if (response.status === 422) {
+      return response.json().then((data) => {
+        setErrors([...errors, ...data]);
+        throw new Error(data);
+      });
+    }
+    return response.json();
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(2);
     fetch("http://localhost:3001/users", {
       method: "POST",
       headers: {
@@ -31,21 +41,25 @@ function Signup(props) {
         password_confirmation: passwordConf,
       }),
     })
-      .then((response) => response.json())
-      .then((data) => console.log(data));
+      .then(handleErrors)
+      .then((data) => {
+        setLoggedIn(true);
+      })
+      .catch((error) => console.log(error));
   };
 
-  const handleErrors = () => {
-    return (
+  const printErrors =
+    errors.length > 0 ? (
       <div>
         <ul>
-          {errors.map((error) => {
-            return <li>key={error}</li>;
+          {errors.map((error, index) => {
+            return <li key={index}>{error}</li>;
           })}
         </ul>
       </div>
+    ) : (
+      <></>
     );
-  };
 
   return (
     <ThemeProvider theme={theme}>

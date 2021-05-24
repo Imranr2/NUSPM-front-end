@@ -1,7 +1,6 @@
 import "./App.css";
 import React, { useEffect, useState } from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import Home from "./Home";
 import Login from "./Login";
 import Signup from "./Signup";
 
@@ -30,21 +29,21 @@ function App(props) {
         password: "test1234",
       },
     });
-    console.log(2);
     const data = await console.log(res.json());
     const text = await console.log(data);
   };
 
   useEffect(() => loginStatus, []);
   return (
-    <div>
-      <BrowserRouter>
-        <Switch>
-          <Route exact path="/" component={Home} />
-          <Route exact path="/login" component={Login} />
-          <Route exact path="/signup" component={Signup} />
-        </Switch>
-      </BrowserRouter>
+    <div className="App">
+      <header className="App-header">
+        <BrowserRouter>
+          <Switch>
+            <Route exact path="/" component={Login} />
+            <Route exact path="/signup" component={Signup} />
+          </Switch>
+        </BrowserRouter>
+      </header>
     </div>
   );
 }
