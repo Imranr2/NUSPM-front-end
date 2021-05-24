@@ -10,6 +10,7 @@ import {
 } from "@material-ui/core";
 import { theme } from "./Theme";
 import Logo from "./components/Logo";
+import { useHistory, Link as RouterLink } from "react-router-dom";
 
 function Signup(props) {
   const [email, setEmail] = useState("");
@@ -17,6 +18,7 @@ function Signup(props) {
   const [passwordConf, setPasswordConf] = useState("");
   const [errors, setErrors] = useState([]);
   const [loggedIn, setLoggedIn] = useState(false);
+  const history = useHistory();
 
   const handleErrors = (response) => {
     if (response.status === 422) {
@@ -46,6 +48,10 @@ function Signup(props) {
         setLoggedIn(true);
       })
       .catch((error) => console.log(error));
+    console.log("submitted");
+    if (loggedIn) {
+      history.push("/pushtest");
+    }
   };
 
   const printErrors =
@@ -113,7 +119,7 @@ function Signup(props) {
             </Button>
             <Grid container justify="flex-end">
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link component={RouterLink} to="/" variant="body2">
                   Already have an account? Login
                 </Link>
               </Grid>

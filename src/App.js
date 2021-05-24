@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import Login from "./Login";
 import Signup from "./Signup";
+import pushtest from "./pushtest";
 
 function App(props) {
   // const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -41,6 +42,7 @@ function App(props) {
           <Switch>
             <Route exact path="/" component={Login} />
             <Route exact path="/signup" component={Signup} />
+            <Route exact path="/pushtest" component={pushtest}></Route>
           </Switch>
         </BrowserRouter>
       </header>

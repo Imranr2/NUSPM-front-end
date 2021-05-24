@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link as RouterLink, Redirect, useHistory } from "react-router-dom";
 import {
   ThemeProvider,
   Container,
@@ -7,6 +7,7 @@ import {
   Grid,
   TextField,
   Button,
+  Link,
 } from "@material-ui/core";
 import { theme } from "./Theme";
 import Logo from "./components/Logo";
@@ -16,6 +17,7 @@ function Login(props) {
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState([]);
   const [loggedIn, setLoggedIn] = useState(false);
+  const history = useHistory();
 
   function handleErrors(response) {
     if (!response.ok) {
@@ -45,6 +47,9 @@ function Login(props) {
         setLoggedIn(true);
       })
       .catch((error) => console.log(errors));
+    if (loggedIn) {
+      history.push("/pushtest");
+    }
   };
 
   const printErrors =
@@ -60,9 +65,9 @@ function Login(props) {
       <></>
     );
 
-  if (loggedIn) {
-    return <Redirect to="/signup" />;
-  }
+  // if (loggedIn) {
+  //   return <Redirect to="/signup" />;
+  // }
 
   return (
     <ThemeProvider theme={theme}>
@@ -104,7 +109,7 @@ function Login(props) {
             </Button>
             <Grid container justify="flex-end">
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link component={RouterLink} to="/signup" variant="body2">
                   Don't have an account? Sign up
                 </Link>
               </Grid>
