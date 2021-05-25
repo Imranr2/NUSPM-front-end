@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { Link as RouterLink, Redirect, useHistory } from "react-router-dom";
+import { connect } from "react-redux";
 import {
-  ThemeProvider,
+  Button,
   Container,
   CssBaseline,
   Grid,
-  TextField,
-  Button,
   Link,
+  TextField,
+  ThemeProvider,
 } from "@material-ui/core";
 import { theme } from "./Theme";
 import Logo from "./components/Logo";
+import axios from "axios";
 
 function Login(props) {
   const [email, setEmail] = useState("");
@@ -31,25 +33,13 @@ function Login(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    fetch("http://localhost:3001/authenticate", {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify({
+    axios
+      .post("http://localhost:3001/authenticate", {
         email: email,
         password: password,
-      }),
-    })
-      .then(handleErrors)
-      .then((data) => {
-        localStorage.setItem("token", data.auth_token);
-        setLoggedIn(true);
       })
-      .catch((error) => console.log(errors));
-    if (loggedIn) {
-      history.push("/pushtest");
-    }
+      .then((response) => console.log(response))
+      .catch((error) => console.log(error.response.data.error));
   };
 
   const printErrors =
@@ -120,4 +110,10 @@ function Login(props) {
     </ThemeProvider>
   );
 }
+
+// const mapStateToProps = state => {
+//   return {
+//     error:
+//   }
+// }
 export default Login;
