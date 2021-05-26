@@ -11,6 +11,10 @@ import {
 import { theme } from "../../Theme";
 import Logo from "../../components/Logo";
 import { useHistory, Link as RouterLink } from "react-router-dom";
+import axios from "axios";
+import EmailIcon from "@material-ui/icons/Email";
+import LockIcon from "@material-ui/icons/Lock";
+import InputAdornment from "@material-ui/core/InputAdornment";
 
 function Signup(props) {
   const [email, setEmail] = useState("");
@@ -28,6 +32,18 @@ function Signup(props) {
       });
     }
     return response.json();
+  };
+
+  const handleSubmit2 = (e) => {
+    e.preventDefault();
+    axios
+      .post("http://localhost:3001/users", {
+        email: email,
+        password: password,
+        password_confirmation: passwordConf,
+      })
+      .then((response) => console.log(response.data))
+      .catch((error) => console.log(error.response.data));
   };
 
   const handleSubmit = (e) => {
@@ -48,7 +64,6 @@ function Signup(props) {
         setLoggedIn(true);
       })
       .catch((error) => console.log(error));
-    console.log("submitted");
     if (loggedIn) {
       history.push("/pushtest");
     }
@@ -73,10 +88,17 @@ function Signup(props) {
         <CssBaseline />
         <div>
           <Logo></Logo>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit2}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <TextField
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <EmailIcon color="action" />
+                      </InputAdornment>
+                    ),
+                  }}
                   variant="outlined"
                   required
                   fullWidth
@@ -90,6 +112,13 @@ function Signup(props) {
               </Grid>
               <Grid item xs={12}>
                 <TextField
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <LockIcon color="action" />
+                      </InputAdornment>
+                    ),
+                  }}
                   variant="outlined"
                   required
                   fullWidth
@@ -103,6 +132,13 @@ function Signup(props) {
               </Grid>
               <Grid item xs={12}>
                 <TextField
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <LockIcon color="action" />
+                      </InputAdornment>
+                    ),
+                  }}
                   variant="outlined"
                   required
                   fullWidth

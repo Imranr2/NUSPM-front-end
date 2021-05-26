@@ -1,10 +1,37 @@
-import { SIGN_IN_SUCCESS, SIGN_IN_FAIL } from "../actionTypes";
-import axios from "axios";
+import {
+  AUTH_ERROR,
+  SIGN_IN_REQUEST,
+  SIGN_IN_SUCCESS,
+  SIGN_IN_FAIL,
+  SIGN_OUT_SUCCESS,
+  REGISTER_REQUEST,
+  REGISTER_SUCCESS,
+  REGISTER_FAIL,
+  RESET_AUTH,
+} from "../actionTypes";
 
-export const signInSuccess = (data) => {
+export const authError = () => {
+  return {
+    type: AUTH_ERROR,
+  };
+};
+
+export const resetAuth = () => {
+  return {
+    type: RESET_AUTH,
+  };
+};
+
+export const signInRequest = () => {
+  return {
+    type: SIGN_IN_REQUEST,
+  };
+};
+
+export const signInSuccess = (response) => {
   return {
     type: SIGN_IN_SUCCESS,
-    payload: data,
+    payload: response,
   };
 };
 
@@ -15,14 +42,26 @@ export const signInFail = (error) => {
   };
 };
 
-export const signIn = (email, password) => {
-  return (dispatch) => {
-    axios
-      .post("http://localhost:3001/authenticate", {
-        email: email,
-        password: password,
-      })
-      .then((response) => dispatch(signInSuccess(response.data)))
-      .catch((error) => dispatch(signInFail(error.response.data)));
+export const signOutSuccess = () => {
+  return {
+    type: SIGN_OUT_SUCCESS,
+  };
+};
+
+export const registerRequest = () => {
+  return {
+    type: REGISTER_REQUEST,
+  };
+};
+
+export const registerSuccess = () => {
+  return {
+    type: REGISTER_SUCCESS,
+  };
+};
+
+export const registerFail = () => {
+  return {
+    type: REGISTER_FAIL,
   };
 };

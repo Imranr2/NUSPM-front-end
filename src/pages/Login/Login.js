@@ -13,6 +13,9 @@ import {
 import { theme } from "../../Theme";
 import Logo from "../../components/Logo";
 import axios from "axios";
+import EmailIcon from "@material-ui/icons/Email";
+import LockIcon from "@material-ui/icons/Lock";
+import InputAdornment from "@material-ui/core/InputAdornment";
 
 function Login(props) {
   const [email, setEmail] = useState("");
@@ -55,10 +58,6 @@ function Login(props) {
       <></>
     );
 
-  // if (loggedIn) {
-  //   return <Redirect to="/signup" />;
-  // }
-
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
@@ -69,6 +68,13 @@ function Login(props) {
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <TextField
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <EmailIcon color="action" />
+                      </InputAdornment>
+                    ),
+                  }}
                   variant="outlined"
                   required
                   fullWidth
@@ -82,6 +88,13 @@ function Login(props) {
               </Grid>
               <Grid item xs={12}>
                 <TextField
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <LockIcon color="action" />
+                      </InputAdornment>
+                    ),
+                  }}
                   variant="outlined"
                   required
                   fullWidth
