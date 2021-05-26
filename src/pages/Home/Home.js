@@ -11,7 +11,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import { ThemeProvider } from "@material-ui/core";
 import { theme } from "../../Theme";
 import Logo from "../../assets/nuspmlogo.png";
-import { Autorenew } from "@material-ui/icons";
+import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -71,6 +71,7 @@ export default function ButtonAppBar() {
               Home
             </Button>
             <Button
+              endIcon={<ArrowDropDownIcon />}
               className={classes.nav}
               aria-controls="simple-menu"
               aria-haspopup="true"
@@ -91,6 +92,7 @@ export default function ButtonAppBar() {
               <MenuItem onClick={handleClose1}>Offers</MenuItem>
             </Menu>
             <Button
+              endIcon={<ArrowDropDownIcon />}
               className={classes.nav}
               aria-controls="simple-menu"
               aria-haspopup="true"
