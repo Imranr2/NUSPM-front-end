@@ -11,6 +11,9 @@ import {
   resetAuth,
 } from "../redux/actions/authActions";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
+import { HistoryOutlined } from "@material-ui/icons";
 
 const setToken = (response) => {
   if (response.status === 200) {
@@ -23,62 +26,63 @@ const removeToken = (response) => {
 };
 
 const useAuth = () => {
+  const history = useHistory();
+  const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [oldPassword, setOldPassword] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConf, setPasswordConf] = useState("");
 
-  const signIn = () => {
-    return (dispatch) => {
-      dispatch(signInRequest());
-      axios
-        .post("http://localhost:3001/authenticate", {
-          email: email,
-          password: password,
-        })
-        .then((response) => {
-          dispatch(signInSuccess(response));
-          setToken(response);
-        })
-        .catch((error) => {
-          dispatch(signInFail(error));
-          removeToken(error);
-          setTimeout(() => {
-            dispatch(resetAuth());
-          }, 5000);
-        });
-    };
+  const signIn = (email, password) => {
+    dispatch(signInRequest());
+    axios
+      .post("http://localhost:3001/authenticate", {
+        email: email,
+        password: password,
+      })
+      .then((response) => {
+        dispatch(signInSuccess(response));
+        setToken(response);
+        history.push("/home");
+      })
+      .catch((error) => {
+        console.log(error.response.data);
+        dispatch(signInFail(error));
+        removeToken(error);
+        setTimeout(() => {
+          dispatch(resetAuth());
+        }, 5000);
+      });
   };
 
-  const registerAccount = () => {
-    return (dispatch) => {
-      dispatch(registerRequest());
-      axios
-        .post("http://localhost:3001/authenticate", {
-          email: email,
-          password: password,
-          password: passwordConf,
-        })
-        .then((response) => {
-          dispatch(registerSuccess());
-        })
-        .catch((error) => {
-          dispatch(registerFail(error));
-          setTimeout(() => {
-            dispatch(resetAuth());
-          }, 5000);
-        });
-    };
-  };
-
-  const changePassword = () => {
-    return (dispatch) => {};
+  const registerAccount = (email, password, passwordConf) => {
+    dispatch(registerRequest());
+    axios
+      .post("http://localhost:3001/users", {
+        email: email,
+        password: password,
+        password: passwordConf,
+      })
+      .then((response) => {
+        dispatch(registerSuccess());
+        setTimeout(() => {
+          history.push("/");
+        }, 3000);
+        setTimeout(() => {
+          dispatch(resetAuth());
+        }, 4000);
+      })
+      .catch((error) => {
+        console.log(Array.isArray(error.response.data));
+        dispatch(registerFail(error.response.data));
+        setTimeout(() => {
+          dispatch(resetAuth());
+        }, 5000);
+      });
   };
 
   const signOut = () => {
-    return (dispatch) => {
-      dispatch(signOutSuccess());
-    };
+    dispatch(signOutSuccess());
   };
 
   return {

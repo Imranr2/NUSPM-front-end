@@ -13,6 +13,7 @@ import {
   LocalOffer,
   AccountCircle,
   ExitToApp,
+  ArrowDropDown,
 } from "@material-ui/icons";
 
 export default function NavBar() {
@@ -64,6 +65,7 @@ export default function NavBar() {
               variant="text"
               onClick={handleClick1}
               color={clicked1 ? "primary" : "secondary"}
+              endIcon={<ArrowDropDown />}
             >
               Swap
             </Button>
@@ -103,6 +105,7 @@ export default function NavBar() {
               variant="text"
               onClick={handleClick2}
               color={clicked2 ? "primary" : "secondary"}
+              endIcon={<ArrowDropDown />}
             >
               Profile
             </Button>

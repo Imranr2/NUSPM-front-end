@@ -60,8 +60,9 @@ export const registerSuccess = () => {
   };
 };
 
-export const registerFail = () => {
+export const registerFail = (error) => {
   return {
     type: REGISTER_FAIL,
+    payload: error,
   };
 };

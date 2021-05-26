@@ -16,47 +16,38 @@ import axios from "axios";
 import EmailIcon from "@material-ui/icons/Email";
 import LockIcon from "@material-ui/icons/Lock";
 import InputAdornment from "@material-ui/core/InputAdornment";
+import useAuth from "../../hooks/useAuth";
+import {
+  BeatLoader,
+  BounceLoader,
+  CircleLoader,
+  ClimbingBoxLoader,
+  ClipLoader,
+  ClockLoader,
+  DotLoader,
+  FadeLoader,
+  GridLoader,
+  HashLoader,
+  MoonLoader,
+  PacmanLoader,
+  PropagateLoader,
+  PuffLoader,
+  PulseLoader,
+  RingLoader,
+  RiseLoader,
+  RotateLoader,
+  ScaleLoader,
+  SyncLoader,
+} from "react-spinners/";
+import Alert from "@material-ui/lab/Alert";
 
-function Login(props) {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [errors, setErrors] = useState([]);
-  const [loggedIn, setLoggedIn] = useState(false);
-  const history = useHistory();
-
-  function handleErrors(response) {
-    if (!response.ok) {
-      return response.json().then((text) => {
-        setErrors([...errors, Object.values(text.error).toString()]);
-        throw new Error(text.error);
-      });
-    }
-    return response.json();
-  }
+function Login({ loading, error, errorMsg }) {
+  const { email, setEmail, password, setPassword, signIn } = useAuth();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios
-      .post("http://localhost:3001/authenticate", {
-        email: email,
-        password: password,
-      })
-      .then((response) => console.log(response))
-      .catch((error) => console.log(error.response.data.error));
+    signIn(email, password);
   };
-
-  const printErrors =
-    errors.length > 0 ? (
-      <div>
-        <ul>
-          {errors.map((error) => {
-            return <li key={error}>{error}</li>;
-          })}
-        </ul>
-      </div>
-    ) : (
-      <></>
-    );
 
   return (
     <ThemeProvider theme={theme}>
@@ -110,6 +101,8 @@ function Login(props) {
             <Button type="submit" fullWidth variant="contained" color="primary">
               Log In
             </Button>
+            {loading && <PulseLoader color="#0D169F" />}
+            {error && <Alert severity="error">Invalid Credentials!</Alert>}
             <Grid container justify="flex-end">
               <Grid item>
                 <Link component={RouterLink} to="/signup" variant="body2">
@@ -124,9 +117,11 @@ function Login(props) {
   );
 }
 
-// const mapStateToProps = state => {
-//   return {
-//     error:
-//   }
-// }
-export default Login;
+const mapStateToProps = (state) => {
+  return {
+    loading: state.auth.isLoading,
+    error: state.auth.error,
+    errorMsg: state.auth.errorMsg,
+  };
+};
+export default connect(mapStateToProps)(Login);

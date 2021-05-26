@@ -10,18 +10,20 @@ import store from "./redux/store";
 
 function App(props) {
   return (
-    <div className="App">
-      <header className="App-header">
-        <BrowserRouter>
-          <Switch>
-            <Route exact path="/" component={Login} />
-            <Route exact path="/signup" component={Signup} />
-            <Route exact path="/pushtest" component={pushtest}></Route>
-            <Route exact path="/home" component={Home}></Route>
-          </Switch>
-        </BrowserRouter>
-      </header>
-    </div>
+    <Provider store={store}>
+      <div className="App">
+        <header className="App-header">
+          <BrowserRouter>
+            <Switch>
+              <Route exact path="/" component={Login} />
+              <Route exact path="/signup" component={Signup} />
+              <Route exact path="/pushtest" component={pushtest}></Route>
+              <Route exact path="/home" component={Home}></Route>
+            </Switch>
+          </BrowserRouter>
+        </header>
+      </div>
+    </Provider>
   );
 }
 

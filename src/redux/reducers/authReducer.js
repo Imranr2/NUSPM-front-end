@@ -16,7 +16,8 @@ const initialState = {
   isLoading: false,
   user: null,
   error: false,
-  errorMsg: null,
+  success: false,
+  errorMsg: "",
 };
 
 const authReducer = (state = initialState, action) => {
@@ -28,18 +29,17 @@ const authReducer = (state = initialState, action) => {
         isLoading: true,
       };
     case SIGN_IN_SUCCESS:
-      // localStorage.setItem("token", action.payload.auth_token);
       return {
         ...state,
         token: action.payload.auth_token,
         isAuthenticated: true,
         isLoading: false,
+        success: true,
         user: action.payload.user,
       };
     case AUTH_ERROR:
     case REGISTER_FAIL:
     case SIGN_IN_FAIL:
-      // localStorage.removeItem("token");
       return {
         ...state,
         token: null,
@@ -47,12 +47,13 @@ const authReducer = (state = initialState, action) => {
         isAuthenticated: false,
         isLoading: false,
         error: true,
-        errorMsg: action.payload.error,
+        errorMsg: action.payload,
       };
     case REGISTER_SUCCESS:
       return {
         ...state,
         isLoading: false,
+        success: true,
       };
     case RESET_AUTH:
     case SIGN_OUT_SUCCESS:
