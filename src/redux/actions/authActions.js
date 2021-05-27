@@ -28,10 +28,10 @@ export const signInRequest = () => {
   };
 };
 
-export const signInSuccess = (response) => {
+export const signInSuccess = (data) => {
   return {
     type: SIGN_IN_SUCCESS,
-    payload: response,
+    payload: data,
   };
 };
 

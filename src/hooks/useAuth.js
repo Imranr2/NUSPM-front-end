@@ -41,12 +41,11 @@ const useAuth = () => {
         password: password,
       })
       .then((response) => {
-        dispatch(signInSuccess(response));
+        dispatch(signInSuccess(response.data));
         setToken(response);
         history.push("/home");
       })
       .catch((error) => {
-        console.log(error.response.data);
         dispatch(signInFail(error));
         removeToken(error);
         setTimeout(() => {
@@ -56,41 +55,28 @@ const useAuth = () => {
   };
 
   const registerAccount = (email, password, passwordConf) => {
-    if (password === passwordConf) {
-      dispatch(registerRequest());
-      axios
-        .post("http://localhost:3001/users", {
-          email: email,
-          password: password,
-          passwordConf: passwordConf,
-        })
-        .then((response) => {
-          dispatch(registerSuccess());
-          setTimeout(() => {
-            history.push("/");
-          }, 3000);
-          setTimeout(() => {
-            dispatch(resetAuth());
-          }, 4000);
-        })
-        .catch((error) => {
-          console.log(error.response.data);
-          console.log(Array.isArray(error.response.data));
-          dispatch(registerFail(error.response.data));
-          setTimeout(() => {
-            dispatch(resetAuth());
-          }, 5000);
-        });
-    } else {
-      dispatch(
-        registerFail([
-          "Password and the confirmation do not match. Please check again.",
-        ])
-      );
-      setTimeout(() => {
-        dispatch(resetAuth());
-      }, 5000);
-    }
+    dispatch(registerRequest());
+    axios
+      .post("http://localhost:3001/users", {
+        email: email,
+        password: password,
+        password_confirmation: passwordConf,
+      })
+      .then((response) => {
+        dispatch(registerSuccess());
+        setTimeout(() => {
+          history.push("/");
+        }, 3000);
+        setTimeout(() => {
+          dispatch(resetAuth());
+        }, 4000);
+      })
+      .catch((error) => {
+        dispatch(registerFail(error.response.data));
+        setTimeout(() => {
+          dispatch(resetAuth());
+        }, 5000);
+      });
   };
 
   const signOut = () => {

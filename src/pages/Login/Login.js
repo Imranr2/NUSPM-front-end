@@ -12,7 +12,6 @@ import {
 } from "@material-ui/core";
 import { theme } from "../../Theme";
 import Logo from "../../components/Logo";
-import axios from "axios";
 import EmailIcon from "@material-ui/icons/Email";
 import LockIcon from "@material-ui/icons/Lock";
 import InputAdornment from "@material-ui/core/InputAdornment";
