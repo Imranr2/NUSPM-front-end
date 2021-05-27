@@ -123,11 +123,10 @@ function Signup({ loading, error, errorMsg, success }) {
            */}
           {error && (
             <>
-              <h1>Hello</h1>
               <ul>
-                {errorMsg.map((e, index) => {
-                  <li key={index}>{e}</li>;
-                })}
+                {errorMsg.map((error) => (
+                  <li>{error}</li>
+                ))}
               </ul>
             </>
           )}
