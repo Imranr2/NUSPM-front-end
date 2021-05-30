@@ -35,8 +35,6 @@ function Signup({ loading, error, errorMsg, success }) {
     registerAccount(email, password, passwordConf);
   };
 
-  function Print() {}
-
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
@@ -105,7 +103,6 @@ function Signup({ loading, error, errorMsg, success }) {
                 />
               </Grid>
             </Grid>
-
             <Button type="submit" fullWidth variant="contained" color="primary">
               Sign Up
             </Button>
