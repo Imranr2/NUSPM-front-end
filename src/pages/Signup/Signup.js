@@ -117,17 +117,11 @@ function Signup({ loading, error, errorMsg, success }) {
               </Grid>
             </Grid>
           </form>
-          {/*
-            errorMsg type in authreducer.js is currently set to an empty string. I tried with array but still cannot work. Maybe you can test it out.
-            The hello gets rendered so I know that it enters the block. I have also checked that the errorMsg is of type array (see useAuth.js under registerAccount catch block). Sign up with invalid accound and open console to see result
-           */}
           {error && (
             <>
-              <ul>
-                {errorMsg.map((error) => (
-                  <li>{error}</li>
-                ))}
-              </ul>
+              {errorMsg.map((error) => (
+                <Alert severity="error">{error}</Alert>
+              ))}
             </>
           )}
           {success && (

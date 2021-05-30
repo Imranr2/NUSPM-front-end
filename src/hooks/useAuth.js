@@ -72,6 +72,7 @@ const useAuth = () => {
         }, 4000);
       })
       .catch((error) => {
+        console.log(error);
         dispatch(registerFail(error.response.data));
         setTimeout(() => {
           dispatch(resetAuth());

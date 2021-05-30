@@ -46,7 +46,7 @@ export default function NavBar() {
   return (
     <ThemeProvider theme={theme}>
       <div>
-        <AppBar position="fixed" color="default">
+        <AppBar className="classes.appbar" position="fixed" color="default">
           <Toolbar>
             <div className={classes.container}>
               <img src={Logo} width="150" alt="NUSPM" />

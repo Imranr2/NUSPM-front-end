@@ -1,14 +1,15 @@
 import "./App.css";
 import React, { useEffect, useState } from "react";
-import { Provider } from "react-redux";
+import { Provider, connect } from "react-redux";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import Login from "./pages/Login/Login";
 import Signup from "./pages/Signup/Signup";
 import pushtest from "./pages/Pushtest/pushtest";
 import Home from "./pages/Home/Home";
 import store from "./redux/store";
+import GuardedRoute from "./components/GuardedRoute/GuardedRoute";
 
-function App(props) {
+function App({ isAuthenticated }) {
   return (
     <Provider store={store}>
       <div className="App">
@@ -18,7 +19,12 @@ function App(props) {
               <Route exact path="/" component={Login} />
               <Route exact path="/signup" component={Signup} />
               <Route exact path="/pushtest" component={pushtest}></Route>
-              <Route exact path="/home" component={Home}></Route>
+              <GuardedRoute
+                exact
+                path="/home"
+                component={Home}
+                auth={isAuthenticated}
+              ></GuardedRoute>
             </Switch>
           </BrowserRouter>
         </header>
@@ -27,4 +33,10 @@ function App(props) {
   );
 }
 
-export default App;
+const mapStateToProps = (state) => {
+  return {
+    isAuthenticated: state.auth.isAuthenticated,
+  };
+};
+
+export default connect(mapStateToProps)(App);

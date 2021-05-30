@@ -9,24 +9,24 @@ const theme = createMuiTheme({
       main: "#9b9b9b",
     },
   },
-  spacing: 8,
-  overrides: {
-    MuiButton: {
-      root: {
-        marginTop: "24px",
-        marginBottom: "16px",
-        variant: "outlined",
-        flexGrow: 1,
-        maxWidth: "150px",
-        colorDefault: "#ff003c",
-        fontSize: "20px",
-      },
-    },
-    MuiAppBar: {
-      colorDefault: "#ffffff",
-      width: "100%",
-    },
-  },
+  //   spacing: 8,
+  //   overrides: {
+  //     MuiButton: {
+  //       root: {
+  //         // marginTop: "24px",
+  //         // marginBottom: "16px",
+  //         // variant: "outlined",
+  //         // flexGrow: 1,
+  //         // maxWidth: "150px",
+  //         // colorDefault: "#ff003c",
+  //         // fontSize: "20px",
+  //       },
+  //     },
+  //     MuiAppBar: {
+  //       colorDefault: "#ffffff",
+  //       width: "100%",
+  //     },
+  //   },
 });
 
 const useStyles = makeStyles((theme) => ({
@@ -35,6 +35,13 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 6,
   },
   button: {
+    marginTop: "24px",
+    marginBottom: "16px",
+    variant: "outlined",
+    flexGrow: 1,
+    maxWidth: "150px",
+    // borderRadius: 60,
+    fontSize: "20px",
     "&:hover": {
       backgroundColor: "#e1e2fc",
       color: "#0D169F",
@@ -45,6 +52,10 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: "#e1e2fc",
       color: "#0D169F",
     },
+  },
+  appbar: {
+    colorDefault: "#ffffff",
+    width: "100%",
   },
 }));
 

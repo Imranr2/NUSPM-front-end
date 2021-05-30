@@ -19,6 +19,8 @@ const theme = createMuiTheme({
         marginTop: "24px",
         marginBottom: "16px",
         variant: "outlined",
+        borderRadius: 50,
+        textTransform: "none",
       },
     },
   },
