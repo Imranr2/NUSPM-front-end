@@ -1,6 +1,6 @@
 import { useState } from "react";
 import {
-  authError,
+  // authError,
   signInRequest,
   signInSuccess,
   signInFail,
@@ -13,7 +13,7 @@ import {
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { HistoryOutlined } from "@material-ui/icons";
+// import { HistoryOutlined } from "@material-ui/icons";
 
 const setToken = (response) => {
   if (response.status === 200) {

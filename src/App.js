@@ -1,5 +1,4 @@
 import "./App.css";
-import React, { useEffect, useState } from "react";
 import { Provider, connect } from "react-redux";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import Login from "./pages/Login/Login";

@@ -1,5 +1,8 @@
-import Logo from "../../components/Logo";
-import { Button, responsiveFontSizes } from "@material-ui/core";
+// import Logo from "../../components/Logo";
+import {
+  Button,
+  // responsiveFontSizes
+} from "@material-ui/core";
 import axios from "axios";
 
 const handleClick = () => {
@@ -9,9 +12,9 @@ const handleClick = () => {
     .then((response) => response.data.semesterData[1].timetable)
     .then((timetable) => timetable.map((e) => e.lessonType))
     .then((slot) => {
-      slot.map((s) => {
-        if (temp.indexOf(s) === -1) {
-          temp.push(s);
+      slot.array.forEach((element) => {
+        if (temp.indexOf(element) === -1) {
+          temp.push(element);
         }
       });
       console.log(temp);

@@ -1,5 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { Link as RouterLink, Redirect, useHistory } from "react-router-dom";
+// import React, { useEffect, useState } from "react";
+import {
+  Link as RouterLink,
+  // Redirect, useHistory
+} from "react-router-dom";
 import { connect } from "react-redux";
 import {
   Button,
@@ -16,28 +19,29 @@ import EmailIcon from "@material-ui/icons/Email";
 import LockIcon from "@material-ui/icons/Lock";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import useAuth from "../../hooks/useAuth";
-import {
-  BeatLoader,
-  BounceLoader,
-  CircleLoader,
-  ClimbingBoxLoader,
-  ClipLoader,
-  ClockLoader,
-  DotLoader,
-  FadeLoader,
-  GridLoader,
-  HashLoader,
-  MoonLoader,
-  PacmanLoader,
-  PropagateLoader,
-  PuffLoader,
-  PulseLoader,
-  RingLoader,
-  RiseLoader,
-  RotateLoader,
-  ScaleLoader,
-  SyncLoader,
-} from "react-spinners/";
+// import {
+//   BeatLoader,
+//   BounceLoader,
+//   CircleLoader,
+//   ClimbingBoxLoader,
+//   ClipLoader,
+//   ClockLoader,
+//   DotLoader,
+//   FadeLoader,
+//   GridLoader,
+//   HashLoader,
+//   MoonLoader,
+//   PacmanLoader,
+//   PropagateLoader,
+//   PuffLoader,
+//   PulseLoader,
+//   RingLoader,
+//   RiseLoader,
+//   RotateLoader,
+//   ScaleLoader,
+//   SyncLoader,
+// } from "react-spinners/";
+import { PulseLoader } from "react-spinners";
 import Alert from "@material-ui/lab/Alert";
 
 function Login({ loading, error, errorMsg }) {
