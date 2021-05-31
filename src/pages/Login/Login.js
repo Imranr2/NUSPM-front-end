@@ -44,7 +44,7 @@ import useAuth from "../../hooks/useAuth";
 import { PulseLoader } from "react-spinners";
 import Alert from "@material-ui/lab/Alert";
 
-function Login({ loading, error, errorMsg }) {
+function Login({ loading, loginError, errorMsg }) {
   const { email, setEmail, password, setPassword, signIn } = useAuth();
 
   const handleSubmit = (e) => {
@@ -105,7 +105,7 @@ function Login({ loading, error, errorMsg }) {
               Log In
             </Button>
             {loading && <PulseLoader color="#0D169F" />}
-            {error && <Alert severity="error">Invalid Credentials!</Alert>}
+            {loginError && <Alert severity="error">Invalid Credentials!</Alert>}
             <Grid container justify="flex-end">
               <Grid item>
                 <Link component={RouterLink} to="/signup" variant="body2">
@@ -123,7 +123,7 @@ function Login({ loading, error, errorMsg }) {
 const mapStateToProps = (state) => {
   return {
     loading: state.auth.isLoading,
-    error: state.auth.error,
+    loginError: state.auth.loginError,
     errorMsg: state.auth.errorMsg,
   };
 };

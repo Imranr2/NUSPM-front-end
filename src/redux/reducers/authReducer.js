@@ -15,7 +15,8 @@ const initialState = {
   isAuthenticated: false,
   isLoading: false,
   user: null,
-  error: false,
+  loginError: false,
+  registerError: false,
   success: false,
   errorMsg: "",
 };
@@ -39,6 +40,15 @@ const authReducer = (state = initialState, action) => {
       };
     case AUTH_ERROR:
     case REGISTER_FAIL:
+      return {
+        ...state,
+        token: null,
+        user: null,
+        isAuthenticated: false,
+        isLoading: false,
+        registerError: true,
+        errorMsg: action.payload,
+      };
     case SIGN_IN_FAIL:
       return {
         ...state,
@@ -46,7 +56,7 @@ const authReducer = (state = initialState, action) => {
         user: null,
         isAuthenticated: false,
         isLoading: false,
-        error: true,
+        loginError: true,
         errorMsg: action.payload,
       };
     case REGISTER_SUCCESS:

@@ -22,7 +22,7 @@ import useAuth from "../../hooks/useAuth";
 import { connect } from "react-redux";
 import Alert from "@material-ui/lab/Alert";
 
-function Signup({ loading, error, errorMsg, success }) {
+function Signup({ loading, registerError, errorMsg, success }) {
   const {
     email,
     setEmail,
@@ -117,7 +117,7 @@ function Signup({ loading, error, errorMsg, success }) {
               </Grid>
             </Grid>
           </form>
-          {error && (
+          {registerError && (
             <>
               {errorMsg.map((error) => (
                 <Alert severity="error">{error}</Alert>
@@ -140,7 +140,7 @@ function Signup({ loading, error, errorMsg, success }) {
 const mapStateToProps = (state) => {
   return {
     loading: state.auth.isLoading,
-    error: state.auth.error,
+    registerError: state.auth.registerError,
     errorMsg: state.auth.errorMsg,
     success: state.auth.success,
   };
