@@ -117,13 +117,13 @@ function Signup({ loading, registerError, errorMsg, success }) {
               </Grid>
             </Grid>
           </form>
-          {registerError && (
+          {/* {registerError && (
             <>
               {errorMsg.map((error) => (
                 <Alert severity="error">{error}</Alert>
               ))}
             </>
-          )}
+          )} */}
           {success && (
             <>
               <Alert severity="success">
