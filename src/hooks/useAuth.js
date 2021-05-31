@@ -36,7 +36,7 @@ const useAuth = () => {
   const signIn = (email, password) => {
     dispatch(signInRequest());
     axios
-      .post("http://localhost:3001/authenticate", {
+      .post("https://tranquil-fjord-90719.herokuapp.com/authenticate", {
         email: email,
         password: password,
       })
@@ -57,7 +57,7 @@ const useAuth = () => {
   const registerAccount = (email, password, passwordConf) => {
     dispatch(registerRequest());
     axios
-      .post("http://localhost:3001/users", {
+      .post("https://tranquil-fjord-90719.herokuapp.com/users", {
         email: email,
         password: password,
         password_confirmation: passwordConf,
