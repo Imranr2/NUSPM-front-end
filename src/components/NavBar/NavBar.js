@@ -18,12 +18,7 @@ import {
 } from "@material-ui/icons";
 import { Link as RouterLink } from "react-router-dom";
 
-<<<<<<< Updated upstream
 export default function NavBar(props) {
-=======
-export default function NavBar() {
-  const history = useHistory();
->>>>>>> Stashed changes
   const classes = useStyles();
   const [anchorEl1, setAnchorEl1] = useState(null);
   const [homeClicked, setHomeClicked] = useState(props.arr[0]);
@@ -65,18 +60,6 @@ export default function NavBar() {
     setProfileClicked(props.arr[2]);
   };
 
-  const goToCreateSwap = () => {
-    setClicked1(!clicked1);
-    setAnchorEl1(null);
-    history.push("/createSwap");
-  };
-
-  const goToMarketplace = () => {
-    setClicked1(!clicked1);
-    setAnchorEl1(null);
-    history.push("/viewSwap");
-  };
-
   return (
     <ThemeProvider theme={theme}>
       <div>
@@ -115,25 +98,17 @@ export default function NavBar() {
               open={Boolean(anchorEl1)}
               onClose={handleSwapClosed}
             >
-<<<<<<< Updated upstream
               <MenuItem className={classes.menu} onClick={handleSwapClosed}>
-=======
-              <MenuItem className={classes.menu} onClick={goToMarketplace}>
->>>>>>> Stashed changes
                 <ListItemIcon>
                   <Storefront />
                 </ListItemIcon>
                 <ListItemText primary="Marketplace" />
               </MenuItem>
-<<<<<<< Updated upstream
               <MenuItem
                 component={RouterLink}
                 to="/create"
                 className={classes.menu}
               >
-=======
-              <MenuItem className={classes.menu} onClick={goToCreateSwap}>
->>>>>>> Stashed changes
                 <ListItemIcon>
                   <AddBox />
                 </ListItemIcon>
