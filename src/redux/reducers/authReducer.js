@@ -18,7 +18,7 @@ const initialState = {
   loginError: false,
   registerError: false,
   success: false,
-  errorMsg: "",
+  errorMsg: [],
 };
 
 const authReducer = (state = initialState, action) => {
