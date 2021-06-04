@@ -3,39 +3,43 @@ import { Provider, connect } from "react-redux";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import Login from "./pages/Login/Login";
 import Signup from "./pages/Signup/Signup";
+import CreateSwap from "./pages/Create Swap/CreateSwap";
+import ViewSwap from "./pages/View Swap/ViewSwap";
 import pushtest from "./pages/Pushtest/pushtest";
 import Home from "./pages/Home/Home";
-import CreateSwap from "./pages/CreateSwap/CreateSwap";
-import store from "./redux/store";
 import GuardedRoute from "./components/GuardedRoute/GuardedRoute";
 
 function App({ isAuthenticated }) {
   return (
-    <Provider store={store}>
-      <div className="App">
-        <header className="App-header">
-          <BrowserRouter>
-            <Switch>
-              <Route exact path="/" component={Login} />
-              <Route exact path="/signup" component={Signup} />
-              <Route exact path="/pushtest" component={pushtest}></Route>
-              <GuardedRoute
-                exact
-                path="/home"
-                component={Home}
-                auth={isAuthenticated}
-              ></GuardedRoute>
-              <GuardedRoute
-                exact
-                path="/create"
-                component={CreateSwap}
-                auth={isAuthenticated}
-              ></GuardedRoute>
-            </Switch>
-          </BrowserRouter>
-        </header>
-      </div>
-    </Provider>
+    <div className="App">
+      <header className="App-header">
+        <BrowserRouter>
+          <Switch>
+            <Route exact path="/" component={Login} />
+            <Route exact path="/signup" component={Signup} />
+            <Route exact path="/pushtest" component={pushtest}></Route>
+            <GuardedRoute
+              exact
+              path="/home"
+              component={Home}
+              auth={isAuthenticated}
+            ></GuardedRoute>
+            <GuardedRoute
+              exact
+              path="/viewSwap"
+              component={ViewSwap}
+              auth={isAuthenticated}
+            ></GuardedRoute>
+            <GuardedRoute
+              exact
+              path="/create"
+              component={CreateSwap}
+              auth={isAuthenticated}
+            ></GuardedRoute>
+          </Switch>
+        </BrowserRouter>
+      </header>
+    </div>
   );
 }
 

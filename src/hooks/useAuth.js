@@ -13,7 +13,6 @@ import {
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-// import { HistoryOutlined } from "@material-ui/icons";
 
 const setToken = (response) => {
   if (response.status === 200) {
@@ -36,7 +35,8 @@ const useAuth = () => {
   const signIn = (email, password) => {
     dispatch(signInRequest());
     axios
-      .post("https://tranquil-fjord-90719.herokuapp.com/authenticate", {
+      // .post("https://tranquil-fjord-90719.herokuapp.com/authenticate", {
+      .post("http://localhost:3001/authenticate", {
         email: email,
         password: password,
       })
@@ -57,7 +57,8 @@ const useAuth = () => {
   const registerAccount = (email, password, passwordConf) => {
     dispatch(registerRequest());
     axios
-      .post("https://tranquil-fjord-90719.herokuapp.com/users", {
+      // .post("https://tranquil-fjord-90719.herokuapp.com/users", {
+      .post("http://localhost:3001/users", {
         email: email,
         password: password,
         password_confirmation: passwordConf,
@@ -82,6 +83,7 @@ const useAuth = () => {
 
   const signOut = () => {
     dispatch(signOutSuccess());
+    localStorage.clear();
   };
 
   return {

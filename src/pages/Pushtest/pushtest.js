@@ -21,8 +21,35 @@ const handleClick = () => {
     });
 };
 
+const handleClick2 = () => {
+  axios
+    .post(
+      "http://localhost:3001/api/v1/swaps",
+      {
+        module_code: "CS2030S",
+        slot_type: "LEC",
+        current_slot: "08e",
+        completed: false,
+        reserved: false,
+        desired_slots: ["08g", "08f"],
+      },
+      {
+        headers: {
+          "Content-type": "application/json",
+          Authorization:
+            "Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxOSwiZXhwIjoxNjIyODE0NDAyfQ.lNj8pc6dxlVpZv7KJfVsFz1iROCd5lgOkKpvu23D3lc",
+        },
+      }
+    )
+    .then((response) => console.log(response.data))
+    .catch((error) => {
+      console.log(error);
+      console.log(error.response.config.data);
+    });
+};
+
 function PushTest() {
-  return <Button onClick={handleClick}>Hello</Button>;
+  return <Button onClick={handleClick2}>Hello</Button>;
 }
 
 export default PushTest;
