@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Button from "@material-ui/core/Button";
@@ -15,32 +15,48 @@ import {
   ExitToApp,
   ArrowDropDown,
 } from "@material-ui/icons";
+import { Link as RouterLink } from "react-router-dom";
 
-export default function NavBar() {
+export default function NavBar(props) {
   const classes = useStyles();
-  const [anchorEl1, setAnchorEl1] = React.useState(null);
-  const [clicked1, setClicked1] = React.useState(false);
-  const [clicked2, setClicked2] = React.useState(false);
-  const [anchorEl2, setAnchorEl2] = React.useState(null);
+  const [anchorEl1, setAnchorEl1] = useState(null);
+  const [homeClicked, setHomeClicked] = useState(props.arr[0]);
+  const [swapClicked, setSwapClicked] = useState(props.arr[1]);
+  const [profileClicked, setProfileClicked] = useState(props.arr[2]);
+  const [anchorEl2, setAnchorEl2] = useState(null);
 
-  const handleClick1 = (event) => {
-    setClicked1(!clicked1);
+  const handleSwapClicked = (event) => {
+    if (!swapClicked) {
+      setHomeClicked(false);
+      setProfileClicked(false);
+    }
+    setSwapClicked(!swapClicked);
     setAnchorEl1(event.currentTarget);
   };
 
-  const handleClick2 = (event) => {
-    setClicked2(!clicked2);
+  const handleProfileClicked = (event) => {
+    if (!profileClicked) {
+      setHomeClicked(false);
+      setSwapClicked(false);
+    }
+    setProfileClicked(!profileClicked);
     setAnchorEl2(event.currentTarget);
   };
 
-  const handleClose1 = () => {
-    setClicked1(!clicked1);
+  const handleSwapClosed = () => {
+    // setSwapClicked(!swapClicked);
     setAnchorEl1(null);
+    setHomeClicked(props.arr[0]);
+    setSwapClicked(props.arr[1]);
+    setProfileClicked(props.arr[2]);
   };
 
-  const handleClose2 = () => {
-    setClicked2(!clicked2);
+  const handleProfileClosed = () => {
+    // setProfileClicked(!profileClicked);
     setAnchorEl2(null);
+    setHomeClicked(props.arr[0]);
+    setSwapClicked(props.arr[1]);
+    setProfileClicked(props.arr[2]);
   };
 
   return (
@@ -53,8 +69,10 @@ export default function NavBar() {
             </div>
             <Button
               className={classes.button}
+              component={RouterLink}
+              to="/home"
               variant="text"
-              color={clicked1 || clicked2 ? "secondary" : "primary"}
+              color={homeClicked ? "primary" : "secondary"}
             >
               Home
             </Button>
@@ -63,8 +81,8 @@ export default function NavBar() {
               aria-controls="simple-menu"
               aria-haspopup="true"
               variant="text"
-              onClick={handleClick1}
-              color={clicked1 ? "primary" : "secondary"}
+              onClick={handleSwapClicked}
+              color={swapClicked ? "primary" : "secondary"}
               endIcon={<ArrowDropDown />}
             >
               Swap
@@ -77,21 +95,25 @@ export default function NavBar() {
               anchorEl={anchorEl1}
               keepMounted
               open={Boolean(anchorEl1)}
-              onClose={handleClose1}
+              onClose={handleSwapClosed}
             >
-              <MenuItem className={classes.menu} onClick={handleClose1}>
+              <MenuItem className={classes.menu} onClick={handleSwapClosed}>
                 <ListItemIcon>
                   <Storefront />
                 </ListItemIcon>
                 <ListItemText primary="Marketplace" />
               </MenuItem>
-              <MenuItem className={classes.menu} onClick={handleClose1}>
+              <MenuItem
+                component={RouterLink}
+                to="/create"
+                className={classes.menu}
+              >
                 <ListItemIcon>
                   <AddBox />
                 </ListItemIcon>
                 <ListItemText primary="Create Swap" />
               </MenuItem>
-              <MenuItem className={classes.menu} onClick={handleClose1}>
+              <MenuItem className={classes.menu} onClick={handleSwapClosed}>
                 <ListItemIcon>
                   <LocalOffer />
                 </ListItemIcon>
@@ -103,8 +125,8 @@ export default function NavBar() {
               aria-controls="simple-menu"
               aria-haspopup="true"
               variant="text"
-              onClick={handleClick2}
-              color={clicked2 ? "primary" : "secondary"}
+              onClick={handleProfileClicked}
+              color={profileClicked ? "primary" : "secondary"}
               endIcon={<ArrowDropDown />}
             >
               Profile
@@ -117,15 +139,15 @@ export default function NavBar() {
               anchorEl={anchorEl2}
               keepMounted
               open={Boolean(anchorEl2)}
-              onClose={handleClose2}
+              onClose={handleProfileClosed}
             >
-              <MenuItem className={classes.menu} onClick={handleClose2}>
+              <MenuItem className={classes.menu} onClick={handleProfileClosed}>
                 <ListItemIcon>
                   <AccountCircle />
                 </ListItemIcon>
                 <ListItemText primary="My Account" />
               </MenuItem>
-              <MenuItem className={classes.menu} onClick={handleClose2}>
+              <MenuItem className={classes.menu} onClick={handleProfileClosed}>
                 <ListItemIcon>
                   <ExitToApp />
                 </ListItemIcon>

@@ -5,6 +5,7 @@ import Login from "./pages/Login/Login";
 import Signup from "./pages/Signup/Signup";
 import pushtest from "./pages/Pushtest/pushtest";
 import Home from "./pages/Home/Home";
+import CreateSwap from "./pages/CreateSwap/CreateSwap";
 import store from "./redux/store";
 import GuardedRoute from "./components/GuardedRoute/GuardedRoute";
 
@@ -22,6 +23,12 @@ function App({ isAuthenticated }) {
                 exact
                 path="/home"
                 component={Home}
+                auth={isAuthenticated}
+              ></GuardedRoute>
+              <GuardedRoute
+                exact
+                path="/create"
+                component={CreateSwap}
                 auth={isAuthenticated}
               ></GuardedRoute>
             </Switch>
