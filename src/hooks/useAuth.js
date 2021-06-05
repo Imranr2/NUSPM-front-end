@@ -1,6 +1,5 @@
 import { useState } from "react";
 import {
-  // authError,
   signInRequest,
   signInSuccess,
   signInFail,
@@ -50,7 +49,7 @@ const useAuth = () => {
         removeToken(error);
         setTimeout(() => {
           dispatch(resetAuth());
-        }, 5000);
+        }, 2000);
       });
   };
 
@@ -67,17 +66,16 @@ const useAuth = () => {
         dispatch(registerSuccess());
         setTimeout(() => {
           history.push("/");
-        }, 3000);
+        }, 2000);
         setTimeout(() => {
           dispatch(resetAuth());
-        }, 4000);
+        }, 2000);
       })
       .catch((error) => {
-        console.log(error);
         dispatch(registerFail(error.response.data));
         setTimeout(() => {
           dispatch(resetAuth());
-        }, 5000);
+        }, 2000);
       });
   };
 

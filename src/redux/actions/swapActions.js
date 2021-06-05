@@ -11,6 +11,7 @@ import {
   DELETE_FAIL,
   DELETE_REQUEST,
   DELETE_SUCCESS,
+  RESET_SWAP,
 } from "../actionTypes";
 
 export const createRequest = () => {
@@ -75,14 +76,22 @@ export const deleteRequest = () => {
     type: DELETE_REQUEST,
   };
 };
+
 export const deleteFail = (error) => {
   return {
     type: DELETE_FAIL,
     payload: error,
   };
 };
+
 export const deleteSuccess = () => {
   return {
     type: DELETE_SUCCESS,
+  };
+};
+
+export const resetSwap = () => {
+  return {
+    type: RESET_SWAP,
   };
 };

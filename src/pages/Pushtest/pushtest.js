@@ -4,6 +4,7 @@ import {
   // responsiveFontSizes
 } from "@material-ui/core";
 import axios from "axios";
+import useSwap from "../../hooks/useSwap";
 
 const handleClick = () => {
   const temp = [];
@@ -49,7 +50,22 @@ const handleClick2 = () => {
 };
 
 function PushTest() {
-  return <Button onClick={handleClick2}>Hello</Button>;
+  const { viewSwap, deleteSwap, searchSwap } = useSwap();
+
+  const view = (e) => {
+    e.preventDefault();
+    viewSwap();
+  };
+
+  const del = (e) => {
+    deleteSwap(33);
+  };
+
+  const search = (e) => {
+    searchSwap("CS2030S", "TUT", "1");
+  };
+
+  return <Button onClick={search}>Hello</Button>;
 }
 
 export default PushTest;

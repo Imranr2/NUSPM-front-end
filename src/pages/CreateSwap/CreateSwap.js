@@ -10,40 +10,25 @@ import {
 } from "@material-ui/core";
 import { Autocomplete } from "@material-ui/lab";
 import { theme } from "../../Theme";
-import { Link as RouterLink } from "react-router-dom";
 import { useStyles } from "./theme";
-import axios from "axios";
+import useSwap from "../../hooks/useSwap";
 
 export default function CreateSwap() {
   const classes = useStyles();
-  const [moduleList, setModuleList] = useState([]);
-  const [modDets, setModDets] = useState([]);
-  const [selectedMod, setSelectedMod] = useState("");
-  const [selectedType, setSelectedType] = useState("");
-  const [selectedCurrent, setSelectedCurrent] = useState("");
-  const [selectedDesired, setSelectedDesired] = useState([]);
+  const { moduleList, modDets, getAllModules, getModuleDetails, createSwap } =
+    useSwap();
 
-  useEffect(() => {
-    if (moduleList.length === 0) {
-      axios
-        .get("https://api.nusmods.com/v2/2020-2021/moduleList.json")
-        .then((response) => response.data)
-        .then((mods) => mods.map((mod) => mod.moduleCode))
-        .then((result) => setModuleList(result));
-    }
-  });
+  const [moduleCode, setModuleCode] = useState("");
+  const [slotType, setSlotType] = useState("");
+  const [currentSlot, setCurrentSlot] = useState("");
+  const [desiredSlots, setDesiredSlots] = useState([]);
 
-  useEffect(() => {
-    if (selectedMod !== "") {
-      axios
-        .get(`https://api.nusmods.com/v2/2020-2021/modules/${selectedMod}.json`)
-        .then((response) => response.data.semesterData[0].timetable)
-        .then((result) => setModDets(result));
-    }
-  });
+  useEffect(() => getAllModules());
+  useEffect(() => getModuleDetails(moduleCode));
 
-  function handleSubmit() {
-    console.log("submitted");
+  function handleSubmit(e) {
+    e.preventDefault();
+    createSwap(moduleCode, slotType, currentSlot, desiredSlots, false, false);
   }
 
   return (
@@ -56,7 +41,7 @@ export default function CreateSwap() {
               <Grid item xs={12}>
                 <Autocomplete
                   options={moduleList}
-                  onChange={(event, value) => setSelectedMod(value)}
+                  onChange={(event, value) => setModuleCode(value)}
                   renderInput={(params) => (
                     <TextField
                       {...params}
@@ -70,9 +55,13 @@ export default function CreateSwap() {
               <Grid item xs={12}>
                 <Autocomplete
                   options={Array.from(
-                    new Set(modDets.map((element) => element.lessonType))
+                    new Set(
+                      modDets
+                        .map((element) => element.lessonType)
+                        .filter((lessonType) => lessonType !== "Lecture")
+                    )
                   )}
-                  onChange={(event, value) => setSelectedType(value)}
+                  onChange={(event, value) => setSlotType(value)}
                   renderInput={(params) => (
                     <TextField
                       {...params}
@@ -86,10 +75,10 @@ export default function CreateSwap() {
               <Grid item xs={12}>
                 <Autocomplete
                   options={modDets
-                    .filter((element) => element.lessonType === selectedType)
+                    .filter((element) => element.lessonType === slotType)
                     .map((lesson) => lesson.classNo)
                     .sort()}
-                  onChange={(event, value) => setSelectedCurrent(value)}
+                  onChange={(event, value) => setCurrentSlot(value)}
                   renderInput={(params) => (
                     <TextField
                       {...params}
@@ -102,19 +91,23 @@ export default function CreateSwap() {
               </Grid>
               <Grid item xs={12}>
                 <Autocomplete
-                  value={selectedDesired}
+                  value={desiredSlots}
                   options={modDets
-                    .filter((element) => element.lessonType === selectedType)
+                    .filter((element) => element.lessonType === slotType)
                     .map((lesson) => lesson.classNo)
+                    .filter((classNo) => classNo != currentSlot)
                     .sort()}
-                  onChange={(event, value) => setSelectedDesired(value)}
+                  onChange={(event, value) => {
+                    setDesiredSlots(value);
+                    console.log(desiredSlots);
+                  }}
                   renderInput={(params) => (
                     <TextField
                       {...params}
                       required
                       inputProps={{
                         ...params.inputProps,
-                        required: selectedDesired.length === 0,
+                        required: desiredSlots.length === 0,
                       }}
                       label="Desired Slots"
                       variant="outlined"

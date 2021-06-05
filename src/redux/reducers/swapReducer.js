@@ -11,11 +11,13 @@ import {
   DELETE_FAIL,
   DELETE_REQUEST,
   DELETE_SUCCESS,
+  RESET_SWAP,
 } from "../actionTypes";
 
 const initialState = {
   isLoading: false,
   success: false,
+  error: false,
   errorMsg: [],
 };
 
@@ -45,7 +47,12 @@ const swapReducer = (state = initialState, action) => {
       return {
         ...state,
         isLoading: false,
+        error: true,
         errorMsg: action.payload,
+      };
+    case RESET_SWAP:
+      return {
+        initialState,
       };
     default:
       return state;

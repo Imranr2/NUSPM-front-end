@@ -1,5 +1,4 @@
 import {
-  AUTH_ERROR,
   SIGN_IN_REQUEST,
   SIGN_IN_SUCCESS,
   SIGN_IN_FAIL,
@@ -9,12 +8,6 @@ import {
   REGISTER_FAIL,
   RESET_AUTH,
 } from "../actionTypes";
-
-export const authError = () => {
-  return {
-    type: AUTH_ERROR,
-  };
-};
 
 export const resetAuth = () => {
   return {

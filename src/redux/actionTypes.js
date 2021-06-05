@@ -1,5 +1,4 @@
 // Authentication actions
-export const AUTH_ERROR = "AUTH_ERROR";
 export const SIGN_IN_REQUEST = "SIGN_IN_REQUEST";
 export const SIGN_IN_SUCCESS = "SIGN_IN_SUCCESS";
 export const SIGN_IN_FAIL = "SIGN_IN_FAIL";
@@ -22,3 +21,4 @@ export const UPDATE_FAIL = "UPDATE_FAIL";
 export const DELETE_REQUEST = "DELETE_REQUEST";
 export const DELETE_SUCCESS = "DELETE_SUCCESS";
 export const DELETE_FAIL = "DELETE_FAIL";
+export const RESET_SWAP = "RESET_SWAP";

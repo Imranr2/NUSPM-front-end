@@ -1,5 +1,4 @@
 import {
-  AUTH_ERROR,
   SIGN_IN_REQUEST,
   SIGN_IN_SUCCESS,
   SIGN_IN_FAIL,
@@ -38,7 +37,6 @@ const authReducer = (state = initialState, action) => {
         success: true,
         user: action.payload.user,
       };
-    case AUTH_ERROR:
     case REGISTER_FAIL:
       return {
         ...state,
