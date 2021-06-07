@@ -33,9 +33,9 @@ export default function CreateSwap() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs">
+      <NavBar arr={[false, true, false]} />
+      <Container className={classes.form} component="main" maxWidth="xs">
         <div>
-          <NavBar arr={[false, true, false]} />
           <form onSubmit={handleSubmit}>
             <Grid container spacing={2}>
               <Grid item xs={12}>

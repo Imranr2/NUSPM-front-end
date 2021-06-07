@@ -12,14 +12,14 @@ const theme = createMuiTheme({
 });
 
 const useStyles = makeStyles((theme) => ({
-  inputs: {
-    width: 396,
-  },
   button: {
     borderRadius: 30,
   },
   paper: {
     borderRadius: 4,
+  },
+  form: {
+    marginTop: "15vh",
   },
 }));
 
