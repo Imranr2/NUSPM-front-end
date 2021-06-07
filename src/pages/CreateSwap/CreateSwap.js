@@ -1,5 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
+import { connect } from "react-redux";
+import { Link as RouterLink } from "react-router-dom";
 import NavBar from "../../components/NavBar";
 import {
   ThemeProvider,
@@ -7,13 +9,15 @@ import {
   Grid,
   Button,
   TextField,
+  Link,
 } from "@material-ui/core";
 import { Autocomplete } from "@material-ui/lab";
 import { theme } from "../../Theme";
 import { useStyles } from "./theme";
 import useSwap from "../../hooks/useSwap";
+import Alert from "@material-ui/lab/Alert";
 
-export default function CreateSwap() {
+function CreateSwap({ success, error, errorMsg }) {
   const classes = useStyles();
   const { moduleList, modDets, getAllModules, getModuleDetails, createSwap } =
     useSwap();
@@ -132,9 +136,31 @@ export default function CreateSwap() {
             >
               Create
             </Button>
+            {success && (
+              <Alert severity="success">
+                Swap created successfully!{" "}
+                <Link component={RouterLink} to="/marketplace">
+                  Click here to find swaps!
+                </Link>
+              </Alert>
+            )}
+            {error && (
+              <Alert severity="error">
+                Swap creation failed!{` ${errorMsg}`}
+              </Alert>
+            )}
           </form>
         </div>
       </Container>
     </ThemeProvider>
   );
 }
+
+const mapStateToProps = (state) => {
+  return {
+    success: state.swap.success,
+    error: state.swap.error,
+    errorMsg: state.swap.errorMsg,
+  };
+};
+export default connect(mapStateToProps)(CreateSwap);

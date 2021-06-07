@@ -72,19 +72,17 @@ const useSwap = () => {
         }
       )
       .then((response) => {
-        // created alert and create link to go view swap if user wants
-        console.log(response.data);
+        // created alert and create link to go view swap if user want
         dispatch(createSuccess());
         setTimeout(() => {
           dispatch(resetSwap());
-        }, 2000);
+        }, 10000);
       })
       .catch((error) => {
-        console.log(error.response.data);
         dispatch(createFail(error.response.data));
         setTimeout(() => {
           dispatch(resetSwap());
-        }, 2000);
+        }, 10000);
       });
   };
 
