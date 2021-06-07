@@ -63,7 +63,7 @@ export default function NavBar(props) {
   return (
     <ThemeProvider theme={theme}>
       <div>
-        <AppBar className="classes.appbar" position="fixed" color="default">
+        <AppBar className={classes.appbar} position="relative" color="default">
           <Toolbar>
             <div className={classes.container}>
               <img src={Logo} width="150" alt="NUSPM" />
@@ -98,7 +98,12 @@ export default function NavBar(props) {
               open={Boolean(anchorEl1)}
               onClose={handleSwapClosed}
             >
-              <MenuItem className={classes.menu} onClick={handleSwapClosed}>
+              <MenuItem
+                component={RouterLink}
+                to="/marketplace"
+                className={classes.menu}
+                onClose={handleSwapClosed}
+              >
                 <ListItemIcon>
                   <Storefront />
                 </ListItemIcon>

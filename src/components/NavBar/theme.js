@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
     variant: "outlined",
     flexGrow: 1,
     maxWidth: "150px",
-    // borderRadius: 60,
+    borderRadius: 4,
     fontSize: "20px",
     "&:hover": {
       backgroundColor: "#e1e2fc",
@@ -55,7 +55,7 @@ const useStyles = makeStyles((theme) => ({
   },
   appbar: {
     colorDefault: "#ffffff",
-    width: "100%",
+    width: "100vw",
   },
 }));
 

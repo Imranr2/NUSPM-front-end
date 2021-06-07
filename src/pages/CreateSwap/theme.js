@@ -18,6 +18,9 @@ const useStyles = makeStyles((theme) => ({
   button: {
     borderRadius: 30,
   },
+  paper: {
+    borderRadius: 4,
+  },
 }));
 
 export { theme, useStyles };

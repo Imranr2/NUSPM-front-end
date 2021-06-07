@@ -7,13 +7,18 @@ import {
   Grid,
   Button,
   TextField,
+  Card,
+  CardMedia,
+  CardContent,
+  Typography,
+  CardActions,
 } from "@material-ui/core";
 import { Autocomplete } from "@material-ui/lab";
-import { theme } from "../../Theme";
+import { theme } from "./theme";
 import { useStyles } from "./theme";
 import useSwap from "../../hooks/useSwap";
 
-export default function CreateSwap() {
+export default function Marketplace() {
   const classes = useStyles();
   const { moduleList, modDets, getAllModules, getModuleDetails, createSwap } =
     useSwap();
@@ -23,24 +28,20 @@ export default function CreateSwap() {
   const [currentSlot, setCurrentSlot] = useState("");
   const [desiredSlots, setDesiredSlots] = useState([]);
 
-  useEffect(() => getAllModules());
-  useEffect(() => getModuleDetails(moduleCode));
-
-  function handleSubmit(e) {
-    e.preventDefault();
-    createSwap(moduleCode, slotType, currentSlot, desiredSlots, false, false);
-  }
-
+  const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
   return (
     <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs">
+      <NavBar arr={[false, true, false]} />
+      <Container className={classes.main}>
         <div>
-          <NavBar arr={[false, true, false]} />
-          <form onSubmit={handleSubmit}>
-            <Grid container spacing={2}>
-              <Grid item xs={12}>
+          <form>
+            <Grid className={classes.search} container spacing={2}>
+              <Grid item>
                 <Autocomplete
-                  classes={{ paper: classes.paper }}
+                  classes={{
+                    root: classes.fields,
+                    paper: classes.paper,
+                  }}
                   options={moduleList}
                   onChange={(event, value) => {
                     setModuleCode(value);
@@ -55,9 +56,12 @@ export default function CreateSwap() {
                   )}
                 />
               </Grid>
-              <Grid item xs={12}>
+              <Grid item>
                 <Autocomplete
-                  classes={{ paper: classes.paper }}
+                  classes={{
+                    root: classes.fields,
+                    paper: classes.paper,
+                  }}
                   options={Array.from(
                     new Set(
                       modDets
@@ -76,9 +80,12 @@ export default function CreateSwap() {
                   )}
                 />
               </Grid>
-              <Grid item xs={12}>
+              <Grid item>
                 <Autocomplete
-                  classes={{ paper: classes.paper }}
+                  classes={{
+                    root: classes.fields,
+                    paper: classes.paper,
+                  }}
                   options={modDets
                     .filter((element) => element.lessonType === slotType)
                     .map((lesson) => lesson.classNo)
@@ -94,46 +101,52 @@ export default function CreateSwap() {
                   )}
                 />
               </Grid>
-              <Grid item xs={12}>
-                <Autocomplete
-                  classes={{ paper: classes.paper }}
-                  value={desiredSlots}
-                  options={modDets
-                    .filter((element) => element.lessonType === slotType)
-                    .map((lesson) => lesson.classNo)
-                    .filter((classNo) => classNo != currentSlot)
-                    .sort()}
-                  onChange={(event, value) => {
-                    setDesiredSlots(value);
-                    console.log(desiredSlots);
-                  }}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      required
-                      inputProps={{
-                        ...params.inputProps,
-                        required: desiredSlots.length === 0,
-                      }}
-                      label="Desired Slots"
-                      variant="outlined"
-                    />
-                  )}
-                  multiple
-                />
+              <Grid item>
+                <Button
+                  className={classes.button}
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                >
+                  Search
+                </Button>
               </Grid>
             </Grid>
-            <Button
-              className={classes.button}
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-            >
-              Create
-            </Button>
           </form>
         </div>
+      </Container>
+      <Container>
+        <Grid container spacing={4}>
+          {cards.map((card) => (
+            <Grid item key={card} xs={12} sm={6} md={4}>
+              <Card className={classes.card}>
+                <CardMedia
+                  className={classes.cardMedia}
+                  image="https://source.unsplash.com/random"
+                  title="Image title"
+                />
+                <CardContent className={classes.cardContent}>
+                  <Typography gutterBottom variant="h5" component="h2">
+                    Heading
+                  </Typography>
+                  <Typography>
+                    This is a media card. You can use this section to describe
+                    the content.
+                  </Typography>
+                </CardContent>
+                <CardActions>
+                  <Button size="small" color="primary">
+                    View
+                  </Button>
+                  <Button size="small" color="primary">
+                    Edit
+                  </Button>
+                </CardActions>
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
       </Container>
     </ThemeProvider>
   );

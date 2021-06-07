@@ -4,7 +4,7 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import Login from "./pages/Login/Login";
 import Signup from "./pages/Signup/Signup";
 import CreateSwap from "./pages/CreateSwap/CreateSwap";
-import ViewSwap from "./pages/View Swap/ViewSwap";
+import Marketplace from "./pages/Marketplace/Marketplace";
 import pushtest from "./pages/Pushtest/pushtest";
 import Home from "./pages/Home/Home";
 import GuardedRoute from "./components/GuardedRoute/GuardedRoute";
@@ -26,8 +26,8 @@ function App({ isAuthenticated }) {
             ></GuardedRoute>
             <GuardedRoute
               exact
-              path="/viewSwap"
-              component={ViewSwap}
+              path="/marketplace"
+              component={Marketplace}
               auth={isAuthenticated}
             ></GuardedRoute>
             <GuardedRoute

@@ -38,7 +38,7 @@ const useSwap = () => {
 
   // need to clear module details when module code is empty or changed, can cause weird things to be created
   const getModuleDetails = (moduleCode) => {
-    if (moduleCode !== "") {
+    if (moduleCode !== "" && modDets.length === 0) {
       // maybe should have date to automatically change parameters
       axios
         .get(`https://api.nusmods.com/v2/2020-2021/modules/${moduleCode}.json`)
