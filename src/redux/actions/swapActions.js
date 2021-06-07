@@ -11,6 +11,9 @@ import {
   DELETE_FAIL,
   DELETE_REQUEST,
   DELETE_SUCCESS,
+  SEARCH_FAIL,
+  SEARCH_SUCCESS,
+  SEARCH_REQUEST,
   RESET_SWAP,
 } from "../actionTypes";
 
@@ -87,6 +90,24 @@ export const deleteFail = (error) => {
 export const deleteSuccess = () => {
   return {
     type: DELETE_SUCCESS,
+  };
+};
+
+export const searchRequest = () => {
+  return {
+    type: SEARCH_REQUEST,
+  };
+};
+
+export const searchFail = () => {
+  return {
+    type: SEARCH_FAIL,
+  };
+};
+
+export const searchSuccess = () => {
+  return {
+    type: SEARCH_SUCCESS,
   };
 };
 

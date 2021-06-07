@@ -11,6 +11,9 @@ import {
   DELETE_FAIL,
   DELETE_REQUEST,
   DELETE_SUCCESS,
+  SEARCH_FAIL,
+  SEARCH_REQUEST,
+  SEARCH_SUCCESS,
   RESET_SWAP,
 } from "../actionTypes";
 
@@ -27,6 +30,7 @@ const swapReducer = (state = initialState, action) => {
     case VIEW_REQUEST:
     case DELETE_REQUEST:
     case UPDATE_REQUEST:
+    case SEARCH_REQUEST:
       return {
         ...state,
         isLoading: true,
@@ -35,6 +39,7 @@ const swapReducer = (state = initialState, action) => {
     case VIEW_SUCCESS:
     case DELETE_SUCCESS:
     case UPDATE_SUCCESS:
+    case SEARCH_SUCCESS:
       return {
         ...state,
         isLoading: false,
@@ -44,6 +49,7 @@ const swapReducer = (state = initialState, action) => {
     case VIEW_FAIL:
     case DELETE_FAIL:
     case UPDATE_FAIL:
+    case SEARCH_FAIL:
       return {
         ...state,
         isLoading: false,

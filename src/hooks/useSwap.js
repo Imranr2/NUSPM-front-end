@@ -11,6 +11,9 @@ import {
   updateFail,
   updateRequest,
   updateSuccess,
+  searchFail,
+  searchRequest,
+  searchSuccess,
   resetSwap,
 } from "../redux/actions/swapActions";
 import axios from "axios";
@@ -21,6 +24,9 @@ const useSwap = () => {
   const dispatch = useDispatch();
   const [moduleList, setModuleList] = useState([]);
   const [modDets, setModDets] = useState([]);
+  const [userSwap, setUserSwaps] = useState([]);
+  const [findSwap, setFindSwap] = useState([]);
+  const [slotDets, setSlotDets] = useState([]);
 
   const headers = {
     Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -47,6 +53,15 @@ const useSwap = () => {
     }
   };
 
+  const getSlotDetails = (slotId, slotType) => {
+    setSlotDets(
+      modDets.filter(
+        (timetable) =>
+          timetable.classNo === slotId && timetable.lessonType === slotType
+      )[0]
+    );
+  };
+
   const createSwap = (
     moduleCode,
     slotType,
@@ -56,6 +71,7 @@ const useSwap = () => {
     reserved
   ) => {
     dispatch(createRequest());
+    getSlotDetails(currentSlot, slotType);
     axios
       .post(
         "http://localhost:3001/api/v1/swaps",
@@ -66,13 +82,21 @@ const useSwap = () => {
           desired_slots: desiredSlots,
           completed: completed,
           reserved: reserved,
+          venue: slotDets.venue,
+          startTime: slotDets.startTime,
+          endTime: slotDets.endTime,
+          day: slotDets.day,
         },
         {
           headers,
         }
       )
       .then((response) => {
+<<<<<<< Updated upstream
         // created alert and create link to go view swap if user want
+=======
+        // created alert and create link to go view swap if user wants;
+>>>>>>> Stashed changes
         dispatch(createSuccess());
         setTimeout(() => {
           dispatch(resetSwap());
@@ -95,6 +119,7 @@ const useSwap = () => {
       })
       .then((response) => {
         console.log(response.data);
+        setUserSwaps(response.data);
         dispatch(viewSuccess());
         setTimeout(() => {
           dispatch(resetSwap());
@@ -174,6 +199,7 @@ const useSwap = () => {
 
   // finding a potential swap
   const searchSwap = (moduleCode, slotType, currentSlot) => {
+    dispatch(searchRequest());
     axios
       .post(
         "http://localhost:3001/api/v1/searchSwap",
@@ -187,10 +213,19 @@ const useSwap = () => {
         }
       )
       .then((response) => {
+        dispatch(searchSuccess());
         console.log(response.data);
+        setFindSwap(response.data);
+        setTimeout(() => {
+          dispatch(resetSwap());
+        }, 2000);
       })
       .catch((error) => {
+        dispatch(searchFail(error.response.data));
         console.log(error.response);
+        setTimeout(() => {
+          dispatch(resetSwap());
+        }, 2000);
       });
   };
 
@@ -199,8 +234,13 @@ const useSwap = () => {
     setModuleList,
     modDets,
     setModDets,
+    userSwap,
+    findSwap,
+    slotDets,
+    setSlotDets,
     getAllModules,
     getModuleDetails,
+    getSlotDetails,
     createSwap,
     viewSwap,
     deleteSwap,

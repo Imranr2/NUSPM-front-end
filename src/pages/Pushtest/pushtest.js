@@ -50,7 +50,8 @@ const handleClick2 = () => {
 };
 
 function PushTest() {
-  const { viewSwap, deleteSwap, searchSwap } = useSwap();
+  const { viewSwap, deleteSwap, searchSwap, getSlotDetails, slotDets } =
+    useSwap();
 
   const view = (e) => {
     e.preventDefault();
@@ -65,7 +66,12 @@ function PushTest() {
     searchSwap("CS2030S", "TUT", "1");
   };
 
-  return <Button onClick={search}>Hello</Button>;
+  const getSlot = (e) => {
+    getSlotDetails("CS2100", "05", "Tutorial").then((res) => console.log(res));
+    // console.log(slotDets);
+  };
+
+  return <Button onClick={getSlot}>Hello</Button>;
 }
 
 export default PushTest;

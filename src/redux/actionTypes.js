@@ -21,4 +21,7 @@ export const UPDATE_FAIL = "UPDATE_FAIL";
 export const DELETE_REQUEST = "DELETE_REQUEST";
 export const DELETE_SUCCESS = "DELETE_SUCCESS";
 export const DELETE_FAIL = "DELETE_FAIL";
+export const SEARCH_REQUEST = "SEARCH_REQUEST";
+export const SEARCH_SUCCESS = "SEARCH_SUCCESS";
+export const SEARCH_FAIL = "SEARCH_FAIL;";
 export const RESET_SWAP = "RESET_SWAP";

@@ -15,8 +15,11 @@ import {
   AccountCircle,
   ExitToApp,
   ArrowDropDown,
+  LocalShippingOutlined,
 } from "@material-ui/icons";
+import VisibilityIcon from "@material-ui/icons/Visibility";
 import { Link as RouterLink } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
 
 export default function NavBar(props) {
   const classes = useStyles();
@@ -25,6 +28,7 @@ export default function NavBar(props) {
   const [swapClicked, setSwapClicked] = useState(props.arr[1]);
   const [profileClicked, setProfileClicked] = useState(props.arr[2]);
   const [anchorEl2, setAnchorEl2] = useState(null);
+  const { signOut } = useAuth();
 
   const handleSwapClicked = (event) => {
     if (!swapClicked) {
@@ -58,6 +62,10 @@ export default function NavBar(props) {
     setHomeClicked(props.arr[0]);
     setSwapClicked(props.arr[1]);
     setProfileClicked(props.arr[2]);
+  };
+
+  const logOut = () => {
+    signOut();
   };
 
   return (
@@ -119,6 +127,16 @@ export default function NavBar(props) {
                 </ListItemIcon>
                 <ListItemText primary="Create Swap" />
               </MenuItem>
+              <MenuItem
+                component={RouterLink}
+                to="/yourSwap"
+                className={classes.menu}
+              >
+                <ListItemIcon>
+                  <VisibilityIcon />
+                </ListItemIcon>
+                <ListItemText primary="Your Swap" />
+              </MenuItem>
               <MenuItem className={classes.menu} onClick={handleSwapClosed}>
                 <ListItemIcon>
                   <LocalOffer />
@@ -153,7 +171,12 @@ export default function NavBar(props) {
                 </ListItemIcon>
                 <ListItemText primary="My Account" />
               </MenuItem>
-              <MenuItem className={classes.menu} onClick={handleProfileClosed}>
+              <MenuItem
+                component={RouterLink}
+                to="/"
+                className={classes.menu}
+                onClick={logOut}
+              >
                 <ListItemIcon>
                   <ExitToApp />
                 </ListItemIcon>
