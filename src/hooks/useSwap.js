@@ -92,11 +92,7 @@ const useSwap = () => {
         }
       )
       .then((response) => {
-<<<<<<< Updated upstream
         // created alert and create link to go view swap if user want
-=======
-        // created alert and create link to go view swap if user wants;
->>>>>>> Stashed changes
         dispatch(createSuccess());
         setTimeout(() => {
           dispatch(resetSwap());
