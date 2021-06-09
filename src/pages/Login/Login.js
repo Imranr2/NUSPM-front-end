@@ -14,33 +14,12 @@ import {
   ThemeProvider,
 } from "@material-ui/core";
 import { theme } from "../../Theme";
+import { useStyles } from "./theme";
 import Logo from "../../components/Logo";
 import EmailIcon from "@material-ui/icons/Email";
 import LockIcon from "@material-ui/icons/Lock";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import useAuth from "../../hooks/useAuth";
-// import {
-//   BeatLoader,
-//   BounceLoader,
-//   CircleLoader,
-//   ClimbingBoxLoader,
-//   ClipLoader,
-//   ClockLoader,
-//   DotLoader,
-//   FadeLoader,
-//   GridLoader,
-//   HashLoader,
-//   MoonLoader,
-//   PacmanLoader,
-//   PropagateLoader,
-//   PuffLoader,
-//   PulseLoader,
-//   RingLoader,
-//   RiseLoader,
-//   RotateLoader,
-//   ScaleLoader,
-//   SyncLoader,
-// } from "react-spinners/";
 import { PulseLoader } from "react-spinners";
 import Alert from "@material-ui/lab/Alert";
 
@@ -51,6 +30,8 @@ function Login({ loading, loginError, errorMsg }) {
     e.preventDefault();
     signIn(email, password);
   };
+
+  const classes = useStyles();
 
   return (
     <ThemeProvider theme={theme}>
@@ -101,7 +82,13 @@ function Login({ loading, loginError, errorMsg }) {
                 />
               </Grid>
             </Grid>
-            <Button type="submit" fullWidth variant="contained" color="primary">
+            <Button
+              className={classes.button}
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+            >
               Log In
             </Button>
             {loading && <PulseLoader color="#0D169F" />}

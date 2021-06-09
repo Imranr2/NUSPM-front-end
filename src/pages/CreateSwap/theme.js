@@ -14,6 +14,8 @@ const theme = createMuiTheme({
 const useStyles = makeStyles((theme) => ({
   button: {
     borderRadius: 30,
+    marginTop: 24,
+    marginBottom: 16,
   },
   paper: {
     borderRadius: 4,

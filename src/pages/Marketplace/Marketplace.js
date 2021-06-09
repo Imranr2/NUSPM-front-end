@@ -7,34 +7,51 @@ import {
   Grid,
   Button,
   TextField,
-  Card,
-  CardMedia,
-  CardContent,
-  Typography,
-  CardActions,
 } from "@material-ui/core";
-import { Autocomplete } from "@material-ui/lab";
+import { Alert, Autocomplete } from "@material-ui/lab";
 import { theme } from "./theme";
 import { useStyles } from "./theme";
 import useSwap from "../../hooks/useSwap";
+import { connect } from "react-redux";
+import SwapList from "../../components/SwapList/SwapList";
 
-export default function Marketplace() {
+function Marketplace({ success, error, errorMsg }) {
   const classes = useStyles();
-  const { moduleList, modDets, getAllModules, getModuleDetails, createSwap } =
-    useSwap();
+  const {
+    moduleList,
+    modDets,
+    potentialSwaps,
+    getAllModules,
+    getModuleDetails,
+    createSwap,
+    searchSwap,
+  } = useSwap();
 
   const [moduleCode, setModuleCode] = useState("");
   const [slotType, setSlotType] = useState("");
   const [currentSlot, setCurrentSlot] = useState("");
-  const [desiredSlots, setDesiredSlots] = useState([]);
+  const [localSuccess, setLocalSuccess] = useState(false);
 
-  const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+  useEffect(() => getAllModules());
+
+  useEffect(() => getModuleDetails(moduleCode));
+
+  useEffect(() => {
+    if (success) {
+      setLocalSuccess(true);
+    }
+  });
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    searchSwap(moduleCode, slotType, currentSlot);
+  }
   return (
     <ThemeProvider theme={theme}>
       <NavBar arr={[false, true, false]} />
       <Container className={classes.main}>
         <div>
-          <form>
+          <form onSubmit={handleSubmit}>
             <Grid className={classes.search} container spacing={2}>
               <Grid item>
                 <Autocomplete
@@ -54,6 +71,7 @@ export default function Marketplace() {
                       variant="outlined"
                     />
                   )}
+                  required
                 />
               </Grid>
               <Grid item>
@@ -78,6 +96,7 @@ export default function Marketplace() {
                       variant="outlined"
                     />
                   )}
+                  required
                 />
               </Grid>
               <Grid item>
@@ -95,10 +114,11 @@ export default function Marketplace() {
                     <TextField
                       {...params}
                       required
-                      label="Current Slot"
+                      label="Your Current Slot"
                       variant="outlined"
                     />
                   )}
+                  required
                 />
               </Grid>
               <Grid item>
@@ -114,40 +134,22 @@ export default function Marketplace() {
               </Grid>
             </Grid>
           </form>
+          {localSuccess && <SwapList arr={potentialSwaps}></SwapList>}
+          {/* display some other thing, not alert */}
+          {potentialSwaps.length === 0 && (
+            <Alert severity="error">No swaps found!</Alert>
+          )}
+          {/* {error} */}
         </div>
-      </Container>
-      <Container>
-        <Grid container spacing={4}>
-          {cards.map((card) => (
-            <Grid item key={card} xs={12} sm={6} md={4}>
-              <Card className={classes.card}>
-                <CardMedia
-                  className={classes.cardMedia}
-                  image="https://source.unsplash.com/random"
-                  title="Image title"
-                />
-                <CardContent className={classes.cardContent}>
-                  <Typography gutterBottom variant="h5" component="h2">
-                    Heading
-                  </Typography>
-                  <Typography>
-                    This is a media card. You can use this section to describe
-                    the content.
-                  </Typography>
-                </CardContent>
-                <CardActions>
-                  <Button size="small" color="primary">
-                    View
-                  </Button>
-                  <Button size="small" color="primary">
-                    Edit
-                  </Button>
-                </CardActions>
-              </Card>
-            </Grid>
-          ))}
-        </Grid>
       </Container>
     </ThemeProvider>
   );
 }
+const mapStateToProps = (state) => {
+  return {
+    success: state.swap.success,
+    error: state.swap.error,
+    errorMsg: state.swap.errorMsg,
+  };
+};
+export default connect(mapStateToProps)(Marketplace);

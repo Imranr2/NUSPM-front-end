@@ -25,7 +25,7 @@ const useSwap = () => {
   const [moduleList, setModuleList] = useState([]);
   const [modDets, setModDets] = useState([]);
   const [userSwap, setUserSwaps] = useState([]);
-  const [findSwap, setFindSwap] = useState([]);
+  const [potentialSwaps, setPotentialSwaps] = useState([]);
   const [slotDets, setSlotDets] = useState([]);
 
   const headers = {
@@ -211,10 +211,10 @@ const useSwap = () => {
       .then((response) => {
         dispatch(searchSuccess());
         console.log(response.data);
-        setFindSwap(response.data);
+        setPotentialSwaps(response.data);
         setTimeout(() => {
           dispatch(resetSwap());
-        }, 2000);
+        }, 5000);
       })
       .catch((error) => {
         dispatch(searchFail(error.response.data));
@@ -231,7 +231,7 @@ const useSwap = () => {
     modDets,
     setModDets,
     userSwap,
-    findSwap,
+    potentialSwaps,
     slotDets,
     setSlotDets,
     getAllModules,

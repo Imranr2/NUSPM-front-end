@@ -1,4 +1,4 @@
-import { createMuiTheme } from "@material-ui/core";
+import { makeStyles, createMuiTheme } from "@material-ui/core";
 
 const theme = createMuiTheme({
   palette: {
@@ -16,8 +16,6 @@ const theme = createMuiTheme({
   overrides: {
     MuiButton: {
       root: {
-        marginTop: "24px",
-        marginBottom: "16px",
         variant: "outlined",
         borderRadius: 50,
         textTransform: "none",

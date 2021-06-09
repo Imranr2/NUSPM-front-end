@@ -21,6 +21,7 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import useAuth from "../../hooks/useAuth";
 import { connect } from "react-redux";
 import Alert from "@material-ui/lab/Alert";
+import { useStyles } from "./theme";
 
 function Signup({ loading, registerError, errorMsg, success }) {
   const {
@@ -38,10 +39,11 @@ function Signup({ loading, registerError, errorMsg, success }) {
     registerAccount(email, password, passwordConf);
   };
 
+  const classes = useStyles();
+
   return (
     <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
+      <Container className={classes.top} maxWidth="xs">
         <div>
           <Logo></Logo>
           <form onSubmit={handleSubmit}>
@@ -106,7 +108,13 @@ function Signup({ loading, registerError, errorMsg, success }) {
                 />
               </Grid>
             </Grid>
-            <Button type="submit" fullWidth variant="contained" color="primary">
+            <Button
+              className={classes.button}
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+            >
               Sign Up
             </Button>
             <Grid container justify="flex-end">
