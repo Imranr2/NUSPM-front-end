@@ -33,6 +33,7 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: 4,
   },
   search: {
+    marginTop: 150,
     flexWrap: "nowrap",
     flexGrow: 1,
     justifyContent: "space-evenly",

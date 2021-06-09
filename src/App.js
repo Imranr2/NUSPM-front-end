@@ -7,7 +7,9 @@ import CreateSwap from "./pages/CreateSwap/CreateSwap";
 import Marketplace from "./pages/Marketplace/Marketplace";
 import pushtest from "./pages/Pushtest/pushtest";
 import Home from "./pages/Home/Home";
+import ChangePassword from "./pages/ChangePassword/ChangePassword";
 import GuardedRoute from "./components/GuardedRoute/GuardedRoute";
+import YourSwap from "./pages/YourSwap/YourSwap";
 
 function App({ isAuthenticated }) {
   return (
@@ -34,6 +36,18 @@ function App({ isAuthenticated }) {
               exact
               path="/create"
               component={CreateSwap}
+              auth={isAuthenticated}
+            ></GuardedRoute>
+            <GuardedRoute
+              exact
+              path="/changePassword"
+              component={ChangePassword}
+              auth={isAuthenticated}
+            ></GuardedRoute>
+            <GuardedRoute
+              exact
+              path="/yourSwap"
+              component={YourSwap}
               auth={isAuthenticated}
             ></GuardedRoute>
           </Switch>

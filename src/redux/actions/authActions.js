@@ -7,6 +7,9 @@ import {
   REGISTER_SUCCESS,
   REGISTER_FAIL,
   RESET_AUTH,
+  CHANGE_PASSWORD_SUCCESS,
+  CHANGE_PASSWORD_REQUEST,
+  CHANGE_PASSWORD_FAIL,
 } from "../actionTypes";
 
 export const resetAuth = () => {
@@ -56,6 +59,25 @@ export const registerSuccess = () => {
 export const registerFail = (error) => {
   return {
     type: REGISTER_FAIL,
+    payload: error,
+  };
+};
+
+export const changePasswordRequest = () => {
+  return {
+    type: CHANGE_PASSWORD_REQUEST,
+  };
+};
+
+export const changePasswordSuccess = () => {
+  return {
+    type: CHANGE_PASSWORD_SUCCESS,
+  };
+};
+
+export const changePasswordFail = (error) => {
+  return {
+    type: CHANGE_PASSWORD_FAIL,
     payload: error,
   };
 };

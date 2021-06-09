@@ -7,6 +7,9 @@ import {
   registerRequest,
   registerSuccess,
   registerFail,
+  changePasswordRequest,
+  changePasswordSuccess,
+  changePasswordFail,
   resetAuth,
 } from "../redux/actions/authActions";
 import axios from "axios";
@@ -21,6 +24,10 @@ const setToken = (response) => {
 
 const removeToken = (response) => {
   localStorage.removeItem("token");
+};
+
+const headers = {
+  Authorization: `Bearer ${localStorage.getItem("token")}`,
 };
 
 const useAuth = () => {
@@ -49,7 +56,7 @@ const useAuth = () => {
         removeToken(error);
         setTimeout(() => {
           dispatch(resetAuth());
-        }, 2000);
+        }, 3000);
       });
   };
 
@@ -84,6 +91,47 @@ const useAuth = () => {
     localStorage.clear();
   };
 
+  const changePassword = (id, email, oldPassword, password, passwordConf) => {
+    dispatch(changePasswordRequest());
+    axios
+      .post("http://localhost:3001/authenticate", {
+        email: email,
+        password: oldPassword,
+      })
+      .then(() => {
+        axios
+          .put(
+            `http://localhost:3001/users/${id}`,
+            {
+              password: password,
+              password_confirmation: passwordConf,
+            },
+            {
+              headers,
+            }
+          )
+          .then((response) => {
+            console.log(response.data);
+            dispatch(changePasswordSuccess());
+          })
+          .catch((error) => {
+            dispatch(changePasswordFail(error.response.data));
+            console.log(error);
+            setTimeout(() => {
+              dispatch(resetAuth());
+            }, 2000);
+          });
+      })
+      .catch((error) => {
+        dispatch(changePasswordFail(error.response.data));
+        console.log(error);
+        console.log(error.response.data.error);
+        setTimeout(() => {
+          dispatch(resetAuth());
+        }, 2000);
+      });
+  };
+
   return {
     email,
     setEmail,
@@ -96,6 +144,7 @@ const useAuth = () => {
     signIn,
     signOut,
     registerAccount,
+    changePassword,
   };
 };
 

@@ -5,6 +5,7 @@ import {
 } from "@material-ui/core";
 import axios from "axios";
 import useSwap from "../../hooks/useSwap";
+import useAuth from "../../hooks/useAuth";
 
 const handleClick = () => {
   const temp = [];
@@ -53,6 +54,8 @@ function PushTest() {
   const { viewSwap, deleteSwap, searchSwap, getSlotDetails, slotDets } =
     useSwap();
 
+  const { changePassword } = useAuth();
+
   const view = (e) => {
     e.preventDefault();
     viewSwap();
@@ -71,7 +74,10 @@ function PushTest() {
     // console.log(slotDets);
   };
 
-  return <Button onClick={getSlot}>Hello</Button>;
+  const change = (e) => {
+    changePassword(19, "test3@gmail.com", "test1234", "12345678", "12345678");
+  };
+  return <Button onClick={change}>Hello</Button>;
 }
 
 export default PushTest;

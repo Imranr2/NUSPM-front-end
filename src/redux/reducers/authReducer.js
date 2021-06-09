@@ -6,6 +6,9 @@ import {
   REGISTER_REQUEST,
   REGISTER_SUCCESS,
   REGISTER_FAIL,
+  CHANGE_PASSWORD_FAIL,
+  CHANGE_PASSWORD_REQUEST,
+  CHANGE_PASSWORD_SUCCESS,
   RESET_AUTH,
 } from "../actionTypes";
 
@@ -16,6 +19,7 @@ const initialState = {
   user: null,
   loginError: false,
   registerError: false,
+  updateError: false,
   success: false,
   errorMsg: [],
 };
@@ -24,6 +28,7 @@ const authReducer = (state = initialState, action) => {
   switch (action.type) {
     case REGISTER_REQUEST:
     case SIGN_IN_REQUEST:
+    case CHANGE_PASSWORD_REQUEST:
       return {
         ...state,
         isLoading: true,
@@ -57,16 +62,32 @@ const authReducer = (state = initialState, action) => {
         loginError: true,
         errorMsg: action.payload,
       };
+    case CHANGE_PASSWORD_FAIL:
+      return {
+        ...state,
+        isLoading: false,
+        updateError: true,
+        errorMsg: action.payload,
+      };
     case REGISTER_SUCCESS:
+    case CHANGE_PASSWORD_SUCCESS:
       return {
         ...state,
         isLoading: false,
         success: true,
       };
-    case RESET_AUTH:
     case SIGN_OUT_SUCCESS:
       return {
         initialState,
+      };
+    case RESET_AUTH:
+      return {
+        ...state,
+        loginError: false,
+        registerError: false,
+        updateError: false,
+        errorMsg: null,
+        isLoading: false,
       };
     default:
       return state;
