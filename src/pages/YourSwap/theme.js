@@ -1,4 +1,5 @@
 import { makeStyles, createMuiTheme } from "@material-ui/core";
+import { Height } from "@material-ui/icons";
 
 const theme = createMuiTheme({
   palette: {
@@ -17,6 +18,15 @@ const useStyles = makeStyles((theme) => ({
     // width: "30vw",
     // minWidth: "10vw",
     // maxWidth: "10vw",
+    marginTop: "15vh",
+  },
+  main: {
+    width: "100vw",
+    height: "100vh",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "flex-start",
+    alignItems: "center",
   },
 }));
 

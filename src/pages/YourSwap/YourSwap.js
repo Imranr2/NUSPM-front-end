@@ -35,28 +35,33 @@ function YourSwap() {
   return (
     <ThemeProvider theme={theme}>
       <NavBar arr={[false, false, true]} />
-      <Tabs
-        value={value}
-        indicatorColor="primary"
-        textColor="primary"
-        className={classes.tabs}
-        onChange={handleChange}
-      >
-        <Tab label="Open" />
-        <Tab label="Reserved" />
-        <Tab label="Completed" />
-      </Tabs>
-      {value === 0 && (
-        <SwapList
-          arr={userSwap.filter((swap) => !swap.isReserved && !swap.isCompleted)}
-        />
-      )}
-      {value === 1 && (
-        <SwapList arr={userSwap.filter((swap) => swap.isReserved)} />
-      )}
-      {value === 2 && (
-        <SwapList arr={userSwap.filter((swap) => swap.isCompleted)} />
-      )}
+      <Container className={classes.main}>
+        <Tabs
+          value={value}
+          indicatorColor="primary"
+          textColor="primary"
+          className={classes.tabs}
+          onChange={handleChange}
+        >
+          <Tab label="Open" />
+          <Tab label="Reserved" />
+          <Tab label="Completed" />
+        </Tabs>
+        {value === 0 && (
+          <SwapList
+            arr={userSwap.filter(
+              (swap) => !swap.isReserved && !swap.isCompleted
+            )}
+            panel="open"
+          />
+        )}
+        {value === 1 && (
+          <SwapList arr={userSwap.filter((swap) => swap.isReserved)} panel="reserved" />
+        )}
+        {value === 2 && (
+          <SwapList arr={userSwap.filter((swap) => swap.isCompleted)} panel="completed" />
+        )}
+      </Container>
     </ThemeProvider>
   );
 }
