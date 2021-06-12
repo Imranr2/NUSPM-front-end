@@ -93,7 +93,7 @@ export default function ReservedButtons() {
         color="primary"
         onClick={handleDeleteClickOpen}
       >
-        Delete
+        DELETE
       </Button>
       <Dialog
         open={deleteOpen}

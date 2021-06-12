@@ -1,18 +1,6 @@
 import NavBar from "../../components/NavBar";
 import ChangePasswordForm from "../../components/ChangePasswordForm/ChangePasswordForm";
-import {
-  ThemeProvider,
-  Container,
-  Grid,
-  Button,
-  TextField,
-  Link,
-  Tabs,
-  Tab,
-  Typography,
-  Box,
-  Paper,
-} from "@material-ui/core";
+import { ThemeProvider, Container, Tabs, Tab } from "@material-ui/core";
 import { theme } from "../../Theme";
 import { useState, useEffect } from "react";
 import { useStyles } from "./theme";
@@ -56,10 +44,16 @@ function YourSwap() {
           />
         )}
         {value === 1 && (
-          <SwapList arr={userSwap.filter((swap) => swap.isReserved)} panel="reserved" />
+          <SwapList
+            arr={userSwap.filter((swap) => swap.isReserved)}
+            panel="reserved"
+          />
         )}
         {value === 2 && (
-          <SwapList arr={userSwap.filter((swap) => swap.isCompleted)} panel="completed" />
+          <SwapList
+            arr={userSwap.filter((swap) => swap.isCompleted)}
+            panel="completed"
+          />
         )}
       </Container>
     </ThemeProvider>

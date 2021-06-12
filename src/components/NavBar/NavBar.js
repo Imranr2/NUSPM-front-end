@@ -71,7 +71,7 @@ export default function NavBar(props) {
   return (
     <ThemeProvider theme={theme}>
       <div>
-        <AppBar className={classes.appbar} position="fixed" color="default">
+        <AppBar className={classes.appbar} position="sticky" color="default">
           <Toolbar>
             <div className={classes.container}>
               <img src={Logo} width="150" alt="NUSPM" />

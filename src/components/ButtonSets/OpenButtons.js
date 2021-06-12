@@ -9,6 +9,7 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import { ThemeProvider } from "@material-ui/core";
 import { theme } from "../../Theme";
+import { DeleteButton } from "./theme";
 
 export default function OpenButtons() {
   const [editOpen, setEditOpen] = useState(false);
@@ -60,13 +61,9 @@ export default function OpenButtons() {
           </Button>
         </DialogActions>
       </Dialog>
-      <Button
-        variant="outlined"
-        color="primary"
-        onClick={handleDeleteClickOpen}
-      >
-        Delete
-      </Button>
+      <DeleteButton variant="contained" onClick={handleDeleteClickOpen}>
+        DELETE
+      </DeleteButton>
       <Dialog
         open={deleteOpen}
         onClose={handleDeleteClose}

@@ -45,13 +45,17 @@ export default function Swap(props) {
       <Card className={classes.card}>
         <CardContent className={classes.cardContent}>
           <Typography variant="h6">
-            {props.current_slot}
+            {props.card.module_code}
             <br />
-            {props.day}
+            {props.card.slot_type}
             <br />
-            {props.venue}
+            {props.card.current_slot}
             <br />
-            {`${props.startTime} - ${props.endTime}`}
+            {props.card.day}
+            <br />
+            {props.card.venue}
+            <br />
+            {`${props.card.startTime} - ${props.card.endTime}`}
             <br />
           </Typography>
         </CardContent>

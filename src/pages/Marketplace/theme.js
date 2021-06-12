@@ -19,8 +19,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
     justifyContent: "flex-start",
-    disableGutters: true,
-    width: "100vw",
+
     height: "100vh",
   },
   button: {
@@ -33,11 +32,10 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: 4,
   },
   search: {
-    marginTop: 150,
     flexWrap: "nowrap",
     flexGrow: 1,
     justifyContent: "space-evenly",
-    marginTop: "15vh",
+    marginTop: "5vh",
   },
   fields: {
     borderRadius: 30,

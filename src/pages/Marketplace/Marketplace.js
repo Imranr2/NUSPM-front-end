@@ -40,7 +40,7 @@ function Marketplace({ success, error, errorMsg }) {
     if (success) {
       setLocalSuccess(true);
     }
-  });
+  }, [success]);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -49,7 +49,7 @@ function Marketplace({ success, error, errorMsg }) {
   return (
     <ThemeProvider theme={theme}>
       <NavBar arr={[false, true, false]} />
-      <Container className={classes.main}>
+      <Container className={classes.main} disableGutters={true}>
         <div>
           <form onSubmit={handleSubmit}>
             <Grid className={classes.search} container spacing={2}>

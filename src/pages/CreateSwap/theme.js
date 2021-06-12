@@ -20,7 +20,8 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     borderRadius: 4,
   },
-  form: {
+  main: {
+    height: "100vh",
     marginTop: "15vh",
   },
 }));

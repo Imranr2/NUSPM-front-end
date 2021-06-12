@@ -8,7 +8,7 @@ function SwapList(props) {
     <Container>
       <Grid className={classes.list} container spacing={4}>
         {props.arr.map((card, index) => (
-          <Swap key={index} {...card} buttonset={props.panel}></Swap>
+          <Swap key={index} card={card} buttonset={props.panel}></Swap>
         ))}
       </Grid>
     </Container>
