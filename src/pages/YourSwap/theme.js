@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
   },
   main: {
     width: "100vw",
-    height: "100vh",
+    height: "88vh",
     display: "flex",
     flexDirection: "column",
     justifyContent: "flex-start",

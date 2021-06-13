@@ -1,25 +1,13 @@
-import { makeStyles, createMuiTheme } from "@material-ui/core";
-
-const theme = createMuiTheme({
-  palette: {
-    primary: {
-      main: "#0D169F",
-    },
-    secondary: {
-      main: "#9b9b9b",
-    },
-  },
-  shape: {
-    borderRadius: 30,
-  },
-});
-
+import { makeStyles } from "@material-ui/core";
 const useStyles = makeStyles((theme) => ({
   main: {
     display: "flex",
     flexDirection: "column",
     justifyContent: "flex-start",
     height: "88vh",
+  },
+  header: {
+    marginTop: "5vh",
   },
   button: {
     borderRadius: 30,
@@ -47,4 +35,4 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export { theme, useStyles };
+export { useStyles };

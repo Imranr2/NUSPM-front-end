@@ -137,7 +137,11 @@ export default function NavBar(props) {
                 </ListItemIcon>
                 <ListItemText primary="Your Swap" />
               </MenuItem>
-              <MenuItem className={classes.menu} onClick={handleSwapClosed}>
+              <MenuItem
+                component={RouterLink}
+                to="/offers"
+                className={classes.menu}
+              >
                 <ListItemIcon>
                   <LocalOffer />
                 </ListItemIcon>

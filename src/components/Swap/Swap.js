@@ -1,20 +1,12 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import NavBar from "../../components/NavBar";
 import {
-  ThemeProvider,
-  Container,
   Grid,
-  Button,
-  TextField,
   Card,
-  CardMedia,
   CardContent,
   Typography,
   CardActions,
 } from "@material-ui/core";
-import { Autocomplete } from "@material-ui/lab";
-import { theme } from "../../Theme";
 import { useStyles } from "./theme";
 import useSwap from "../../hooks/useSwap";
 import OpenButtons from "../ButtonSets/OpenButtons";
@@ -40,6 +32,7 @@ export default function Swap(props) {
       buttonset = <InitiateButtons swapDetails={props.card} />;
       break;
   }
+
   return (
     <Grid key={props} container item xs={12} sm={6} md={4} justify="center">
       <Card className={classes.card}>
@@ -57,12 +50,7 @@ export default function Swap(props) {
             <br />
           </Typography>
         </CardContent>
-        <CardActions className={classes.button}>
-          {/* <Button size="small" color="primary">
-            Initiate Swap
-          </Button> */}
-          {buttonset}
-        </CardActions>
+        <CardActions className={classes.button}>{buttonset}</CardActions>
       </Card>
     </Grid>
   );

@@ -10,6 +10,7 @@ import Home from "./pages/Home/Home";
 import ChangePassword from "./pages/ChangePassword/ChangePassword";
 import GuardedRoute from "./components/GuardedRoute/GuardedRoute";
 import YourSwap from "./pages/YourSwap/YourSwap";
+import Offers from "./pages/Offers/Offers";
 
 function App({ isAuthenticated }) {
   return (
@@ -48,6 +49,12 @@ function App({ isAuthenticated }) {
               exact
               path="/yourSwap"
               component={YourSwap}
+              auth={isAuthenticated}
+            ></GuardedRoute>
+            <GuardedRoute
+              exact
+              path="/offers"
+              component={Offers}
               auth={isAuthenticated}
             ></GuardedRoute>
           </Switch>
