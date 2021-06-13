@@ -1,5 +1,4 @@
 import NavBar from "../../components/NavBar";
-import ChangePasswordForm from "../../components/ChangePasswordForm/ChangePasswordForm";
 import { ThemeProvider, Container, Tabs, Tab } from "@material-ui/core";
 import { theme } from "../../Theme";
 import { useState, useEffect } from "react";

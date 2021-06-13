@@ -6,7 +6,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
     width: "15vw",
-    minWidth: 150,
+    minWidth: 300,
   },
   button: {
     justifyContent: "center",

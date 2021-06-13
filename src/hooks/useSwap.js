@@ -71,7 +71,6 @@ const useSwap = () => {
     reserved
   ) => {
     dispatch(createRequest());
-    getSlotDetails(currentSlot, slotType);
     axios
       .post(
         "http://localhost:3001/api/v1/swaps",
@@ -96,13 +95,13 @@ const useSwap = () => {
         dispatch(createSuccess());
         setTimeout(() => {
           dispatch(resetSwap());
-        }, 10000);
+        }, 3000);
       })
       .catch((error) => {
         dispatch(createFail(error.response.data));
         setTimeout(() => {
           dispatch(resetSwap());
-        }, 10000);
+        }, 3000);
       });
   };
 
@@ -159,6 +158,7 @@ const useSwap = () => {
       .then((response) => {
         dispatch(updateSuccess());
         console.log(response.data);
+        console.log("updated");
         setTimeout(() => {
           dispatch(resetSwap());
         }, 2000);
@@ -211,7 +211,10 @@ const useSwap = () => {
       .then((response) => {
         dispatch(searchSuccess());
         console.log(response.data);
-        setPotentialSwaps(response.data);
+        setPotentialSwaps(
+          response.data.filter((swap) => !swap.isReserved && !swap.isCompleted)
+        );
+        console.log(potentialSwaps);
         setTimeout(() => {
           dispatch(resetSwap());
         }, 5000);
@@ -240,6 +243,7 @@ const useSwap = () => {
     createSwap,
     viewSwap,
     deleteSwap,
+    updateSwap,
     searchSwap,
   };
 };

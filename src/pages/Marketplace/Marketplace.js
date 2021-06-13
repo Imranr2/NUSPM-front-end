@@ -23,7 +23,6 @@ function Marketplace({ success, error, errorMsg }) {
     potentialSwaps,
     getAllModules,
     getModuleDetails,
-    createSwap,
     searchSwap,
   } = useSwap();
 
@@ -134,11 +133,12 @@ function Marketplace({ success, error, errorMsg }) {
               </Grid>
             </Grid>
           </form>
-          {localSuccess && <SwapList arr={potentialSwaps}></SwapList>}
+          <SwapList arr={potentialSwaps} />
+          {/* {localSuccess && <SwapList arr={potentialSwaps}></SwapList>} */}
           {/* display some other thing, not alert */}
-          {potentialSwaps.length === 0 && (
+          {/* {potentialSwaps.length === 0 && (
             <Alert severity="error">No swaps found!</Alert>
-          )}
+          )} */}
           {/* {error} */}
         </div>
       </Container>

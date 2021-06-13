@@ -28,16 +28,16 @@ export default function Swap(props) {
 
   switch (props.buttonset) {
     case "open":
-      buttonset = <OpenButtons />;
+      buttonset = <OpenButtons swapDetails={props.card} />;
       break;
     case "reserved":
-      buttonset = <ReservedButtons />;
+      buttonset = <ReservedButtons swapDetails={props.card} />;
       break;
     case "completed":
-      buttonset = <CompletedButtons />;
+      buttonset = <CompletedButtons swapDetails={props.card} />;
       break;
     default:
-      buttonset = <InitiateButtons />;
+      buttonset = <InitiateButtons swapDetails={props.card} />;
       break;
   }
   return (
@@ -47,9 +47,7 @@ export default function Swap(props) {
           <Typography variant="h6">
             {props.card.module_code}
             <br />
-            {props.card.slot_type}
-            <br />
-            {props.card.current_slot}
+            {props.card.slot_type} [{props.card.current_slot}]
             <br />
             {props.card.day}
             <br />

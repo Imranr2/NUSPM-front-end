@@ -9,17 +9,20 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import { ThemeProvider } from "@material-ui/core";
 import { theme } from "../../Theme";
+import useSwap from "../../hooks/useSwap";
 
-export default function ReservedButtons() {
+export default function ReservedButtons({ swapDetails }) {
   const [freeOpen, setFreeOpen] = useState(false);
   const [completeOpen, setCompleteOpen] = useState(false);
   const [deleteOpen, setDeleteOpen] = useState(false);
 
-  const handleFreeClickOpen = () => {
+  const { deleteSwap, updateSwap } = useSwap();
+
+  const handleUnreserveClickOpen = () => {
     setFreeOpen(true);
   };
 
-  const handleFreeClose = () => {
+  const handleUnreserveClose = () => {
     setFreeOpen(false);
   };
 
@@ -38,14 +41,50 @@ export default function ReservedButtons() {
   const handleDeleteClose = () => {
     setDeleteOpen(false);
   };
+
+  const handleUnreserve = () => {
+    setFreeOpen(false);
+    updateSwap(
+      swapDetails.id,
+      swapDetails.module_code,
+      swapDetails.slot_type,
+      swapDetails.current_slot,
+      swapDetails.desired_slots,
+      false,
+      false
+    );
+  };
+
+  const handleDelete = () => {
+    setDeleteOpen(false);
+    deleteSwap(swapDetails.id);
+  };
+
+  const handleComplete = () => {
+    setCompleteOpen(false);
+    updateSwap(
+      swapDetails.id,
+      swapDetails.module_code,
+      swapDetails.slot_type,
+      swapDetails.current_slot,
+      swapDetails.desired_slots,
+      true,
+      false
+    );
+  };
+
   return (
     <ThemeProvider theme={theme}>
-      <Button variant="outlined" color="primary" onClick={handleFreeClickOpen}>
-        Free
+      <Button
+        variant="outlined"
+        color="primary"
+        onClick={handleUnreserveClickOpen}
+      >
+        Unreserve
       </Button>
       <Dialog
         open={freeOpen}
-        onClose={handleFreeClose}
+        onClose={handleUnreserveClose}
         aria-labelledby="form-dialog-title"
       >
         <DialogTitle id="form-dialog-title">Free up Swap</DialogTitle>
@@ -53,10 +92,10 @@ export default function ReservedButtons() {
           <DialogContentText>Are you sure?</DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleFreeClose} color="primary">
+          <Button onClick={handleUnreserveClose} color="primary">
             Cancel
           </Button>
-          <Button onClick={handleFreeClose} color="primary">
+          <Button onClick={handleUnreserve} color="primary">
             Confirm
           </Button>
         </DialogActions>
@@ -67,7 +106,7 @@ export default function ReservedButtons() {
         color="primary"
         onClick={handleCompleteClickOpen}
       >
-        Free
+        Complete
       </Button>
       <Dialog
         open={completeOpen}
@@ -82,7 +121,7 @@ export default function ReservedButtons() {
           <Button onClick={handleCompleteClose} color="primary">
             Cancel
           </Button>
-          <Button onClick={handleCompleteClose} color="primary">
+          <Button onClick={handleComplete} color="primary">
             Confirm
           </Button>
         </DialogActions>
@@ -108,7 +147,7 @@ export default function ReservedButtons() {
           <Button onClick={handleDeleteClose} color="primary">
             Cancel
           </Button>
-          <Button onClick={handleDeleteClose} color="primary">
+          <Button onClick={handleDelete} color="primary">
             Confirm
           </Button>
         </DialogActions>

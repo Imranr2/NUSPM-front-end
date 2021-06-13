@@ -1,5 +1,4 @@
 import { makeStyles, createMuiTheme } from "@material-ui/core";
-import { Height } from "@material-ui/icons";
 
 const theme = createMuiTheme({
   palette: {

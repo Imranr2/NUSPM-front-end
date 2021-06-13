@@ -19,8 +19,15 @@ import Alert from "@material-ui/lab/Alert";
 
 function CreateSwap({ success, error, errorMsg }) {
   const classes = useStyles();
-  const { moduleList, modDets, getAllModules, getModuleDetails, createSwap } =
-    useSwap();
+  const {
+    moduleList,
+    modDets,
+    getAllModules,
+    getModuleDetails,
+    getSlotDetails,
+    createSwap,
+    slotDets,
+  } = useSwap();
 
   const [moduleCode, setModuleCode] = useState("");
   const [slotType, setSlotType] = useState("");
@@ -28,7 +35,7 @@ function CreateSwap({ success, error, errorMsg }) {
   const [desiredSlots, setDesiredSlots] = useState([]);
 
   useEffect(() => getAllModules());
-  // useEffect(() => getModuleDetails(moduleCode));
+  useEffect(() => getSlotDetails(currentSlot, slotType));
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -84,13 +91,6 @@ function CreateSwap({ success, error, errorMsg }) {
                 <Autocomplete
                   value={slotType}
                   classes={{ paper: classes.paper }}
-                  // options={Array.from(
-                  //   new Set(
-                  //     modDets
-                  //       .map((element) => element.lessonType)
-                  //       .filter((lessonType) => lessonType !== "Lecture")
-                  //   )
-                  // )}
                   options={slotTypeOptions}
                   onChange={(event, value) => setSlotType(value)}
                   renderInput={(params) => (
@@ -108,12 +108,10 @@ function CreateSwap({ success, error, errorMsg }) {
                 <Autocomplete
                   value={currentSlot}
                   classes={{ paper: classes.paper }}
-                  // options={modDets
-                  //   .filter((element) => element.lessonType === slotType)
-                  //   .map((lesson) => lesson.classNo)
-                  //   .sort()}
                   options={slotOptions}
-                  onChange={(event, value) => setCurrentSlot(value)}
+                  onChange={(event, value) => {
+                    setCurrentSlot(value);
+                  }}
                   renderInput={(params) => (
                     <TextField
                       {...params}
@@ -128,15 +126,9 @@ function CreateSwap({ success, error, errorMsg }) {
                 <Autocomplete
                   classes={{ paper: classes.paper }}
                   value={desiredSlots}
-                  // options={modDets
-                  //   .filter((element) => element.lessonType === slotType)
-                  //   .map((lesson) => lesson.classNo)
-                  //   .filter((classNo) => classNo != currentSlot)
-                  //   .sort()}
                   options={desiredSlotOptions}
                   onChange={(event, value) => {
                     setDesiredSlots(value);
-                    console.log(desiredSlots);
                   }}
                   renderInput={(params) => (
                     <TextField
