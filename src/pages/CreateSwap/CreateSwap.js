@@ -34,8 +34,12 @@ function CreateSwap({ success, error, errorMsg }) {
   const [currentSlot, setCurrentSlot] = useState("");
   const [desiredSlots, setDesiredSlots] = useState([]);
 
-  useEffect(() => getAllModules());
-  useEffect(() => getSlotDetails(currentSlot, slotType));
+  useEffect(() => getAllModules(), [...moduleList]);
+  useEffect(
+    () => getSlotDetails(currentSlot, slotType),
+    [currentSlot, slotType, desiredSlots]
+  );
+  useEffect(() => getModuleDetails(moduleCode), [moduleCode]);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -72,7 +76,7 @@ function CreateSwap({ success, error, errorMsg }) {
                   options={moduleList}
                   onChange={(event, value) => {
                     setModuleCode(value);
-                    getModuleDetails(value);
+                    // getModuleDetails(value);
                     setSlotType([]);
                     setCurrentSlot([]);
                     setDesiredSlots([]);

@@ -1,19 +1,19 @@
 import {
-  createFail,
-  createRequest,
-  createSuccess,
-  viewFail,
-  viewRequest,
-  viewSuccess,
-  deleteFail,
-  deleteRequest,
-  deleteSuccess,
-  updateFail,
-  updateRequest,
-  updateSuccess,
-  searchFail,
-  searchRequest,
-  searchSuccess,
+  createSwapFail,
+  createSwapRequest,
+  createSwapSuccess,
+  viewSwapFail,
+  viewSwapRequest,
+  viewSwapSuccess,
+  deleteSwapFail,
+  deleteSwapRequest,
+  deleteSwapSuccess,
+  updateSwapFail,
+  updateSwapRequest,
+  updateSwapSuccess,
+  searchSwapFail,
+  searchSwapRequest,
+  searchSwapSuccess,
   resetSwap,
 } from "../redux/actions/swapActions";
 import axios from "axios";
@@ -28,29 +28,31 @@ const useSwap = () => {
   const [potentialSwaps, setPotentialSwaps] = useState([]);
   const [slotDets, setSlotDets] = useState([]);
 
+  // for showSwap at the bottom, rename if u need or delete if u dont need
+  const [initiatorSwap, setInitiatorSwap] = useState("");
+  const [creatorSwap, setCreatorSwap] = useState("");
+
   const headers = {
     Authorization: `Bearer ${localStorage.getItem("token")}`,
   };
 
   const getAllModules = () => {
-    if (moduleList.length === 0) {
-      axios
-        .get("https://api.nusmods.com/v2/2020-2021/moduleList.json")
-        .then((response) => response.data)
-        .then((mods) => mods.map((mod) => mod.moduleCode))
-        .then((result) => setModuleList(result));
-    }
+    axios
+      .get("https://api.nusmods.com/v2/2020-2021/moduleList.json")
+      .then((response) => {
+        console.log(moduleList);
+        return response.data;
+      })
+      .then((mods) => mods.map((mod) => mod.moduleCode))
+      .then((result) => setModuleList(result));
   };
 
-  // need to clear module details when module code is empty or changed, can cause weird things to be created
   const getModuleDetails = (moduleCode) => {
-    if (moduleCode !== "") {
-      // maybe should have date to automatically change parameters
-      axios
-        .get(`https://api.nusmods.com/v2/2020-2021/modules/${moduleCode}.json`)
-        .then((response) => response.data.semesterData[0].timetable)
-        .then((result) => setModDets(result));
-    }
+    // maybe should have date to automatically change parameters
+    axios
+      .get(`https://api.nusmods.com/v2/2020-2021/modules/${moduleCode}.json`)
+      .then((response) => response.data.semesterData[0].timetable)
+      .then((result) => setModDets(result));
   };
 
   const getSlotDetails = (slotId, slotType) => {
@@ -70,7 +72,7 @@ const useSwap = () => {
     completed,
     reserved
   ) => {
-    dispatch(createRequest());
+    dispatch(createSwapRequest());
     axios
       .post(
         "http://localhost:3001/api/v1/swaps",
@@ -91,45 +93,40 @@ const useSwap = () => {
         }
       )
       .then((response) => {
-        // created alert and create link to go view swap if user want
-        dispatch(createSuccess());
+        dispatch(createSwapSuccess());
         setTimeout(() => {
           dispatch(resetSwap());
         }, 3000);
       })
       .catch((error) => {
-        dispatch(createFail(error.response.data));
+        dispatch(createSwapFail(error.response.data));
         setTimeout(() => {
           dispatch(resetSwap());
         }, 3000);
       });
   };
 
-  // your own swaps
-  const viewSwap = () => {
-    dispatch(viewRequest);
+  const viewSwaps = () => {
+    dispatch(viewSwapRequest());
     axios
       .get("http://localhost:3001/api/v1/swaps", {
         headers,
       })
       .then((response) => {
-        console.log(response.data);
         setUserSwaps(response.data);
-        dispatch(viewSuccess());
+        dispatch(viewSwapSuccess());
         setTimeout(() => {
           dispatch(resetSwap());
         }, 2000);
       })
       .catch((error) => {
-        console.log(error.response);
-        dispatch(viewFail(error.response.data));
+        dispatch(viewSwapFail(error.response.data));
         setTimeout(() => {
           dispatch(resetSwap());
         }, 2000);
       });
   };
 
-  // tested all other functions except for this
   const updateSwap = (
     swapId,
     moduleCode,
@@ -139,7 +136,7 @@ const useSwap = () => {
     completed,
     reserved
   ) => {
-    dispatch(updateRequest());
+    dispatch(updateSwapRequest());
     axios
       .put(
         `http://localhost:3001/api/v1/swaps/${swapId}`,
@@ -150,13 +147,17 @@ const useSwap = () => {
           desired_slots: desiredSlots,
           completed: completed,
           reserved: reserved,
+          venue: slotDets.venue,
+          startTime: slotDets.startTime,
+          endTime: slotDets.endTime,
+          day: slotDets.day,
         },
         {
           headers,
         }
       )
       .then((response) => {
-        dispatch(updateSuccess());
+        dispatch(updateSwapSuccess());
         console.log(response.data);
         console.log("updated");
         setTimeout(() => {
@@ -164,7 +165,7 @@ const useSwap = () => {
         }, 2000);
       })
       .catch((error) => {
-        dispatch(updateFail(error.response.data));
+        dispatch(updateSwapFail(error.response.data));
         setTimeout(() => {
           dispatch(resetSwap());
         }, 2000);
@@ -172,20 +173,20 @@ const useSwap = () => {
   };
 
   const deleteSwap = (swapId) => {
-    dispatch(deleteRequest());
+    dispatch(deleteSwapRequest());
     axios
       .delete(`http://localhost:3001/api/v1/swaps/${swapId}`, {
         headers,
       })
       .then((response) => {
-        dispatch(deleteSuccess());
+        dispatch(deleteSwapSuccess());
         console.log(response.data);
         setTimeout(() => {
           dispatch(resetSwap());
         }, 2000);
       })
       .catch((error) => {
-        dispatch(deleteFail(error.response.data));
+        dispatch(deleteSwapFail(error.response.data));
         console.log(error.response.data);
         setTimeout(() => {
           dispatch(resetSwap());
@@ -195,7 +196,7 @@ const useSwap = () => {
 
   // finding a potential swap
   const searchSwap = (moduleCode, slotType, currentSlot) => {
-    dispatch(searchRequest());
+    dispatch(searchSwapRequest());
     axios
       .post(
         "http://localhost:3001/api/v1/searchSwap",
@@ -209,7 +210,7 @@ const useSwap = () => {
         }
       )
       .then((response) => {
-        dispatch(searchSuccess());
+        dispatch(searchSwapSuccess());
         console.log(response.data);
         setPotentialSwaps(
           response.data.filter((swap) => !swap.isReserved && !swap.isCompleted)
@@ -220,11 +221,38 @@ const useSwap = () => {
         }, 5000);
       })
       .catch((error) => {
-        dispatch(searchFail(error.response.data));
+        dispatch(searchSwapFail(error.response.data));
         console.log(error.response);
         setTimeout(() => {
           dispatch(resetSwap());
         }, 2000);
+      });
+  };
+
+  // NEW METHOD FOR OFFER
+  const showSwap = (swapId, initiator) => {
+    dispatch(viewSwapRequest());
+    axios
+      .get(`http://localhost:3001/api/v1/swaps/${swapId}`, {
+        headers,
+      })
+      .then((response) => {
+        dispatch(viewSwapSuccess());
+        //change to whatever u think is better
+        if (initiator) {
+          setInitiatorSwap(response.data);
+        } else {
+          setCreatorSwap(response.data);
+        }
+        setTimeout(() => {
+          dispatch(resetSwap());
+        }, 3000);
+      })
+      .catch((error) => {
+        dispatch(viewSwapFail());
+        setTimeout(() => {
+          dispatch(resetSwap());
+        }, 3000);
       });
   };
 
@@ -241,7 +269,7 @@ const useSwap = () => {
     getModuleDetails,
     getSlotDetails,
     createSwap,
-    viewSwap,
+    viewSwaps,
     deleteSwap,
     updateSwap,
     searchSwap,

@@ -15,9 +15,9 @@ function YourSwap() {
     setValue(newValue);
   };
 
-  const { userSwap, viewSwap } = useSwap();
+  const { userSwap, viewSwaps } = useSwap();
 
-  useEffect(() => viewSwap(), []);
+  useEffect(() => viewSwaps(), []);
 
   return (
     <ThemeProvider theme={theme}>

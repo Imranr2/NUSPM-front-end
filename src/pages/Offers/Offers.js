@@ -18,9 +18,9 @@ import Offer from "../../components/Offer/Offer";
 export default function Offers() {
   const classes = useStyles();
 
-  const { userSwap, viewSwap } = useSwap();
+  const { userSwap, viewSwaps } = useSwap();
 
-  useEffect(() => viewSwap(), []);
+  useEffect(() => viewSwaps(), []);
 
   return (
     <ThemeProvider theme={theme}>

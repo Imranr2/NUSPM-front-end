@@ -1,113 +1,113 @@
 import {
-  CREATE_FAIL,
-  CREATE_REQUEST,
-  CREATE_SUCCESS,
-  VIEW_FAIL,
-  VIEW_REQUEST,
-  VIEW_SUCCESS,
-  UPDATE_FAIL,
-  UPDATE_REQUEST,
-  UPDATE_SUCCESS,
-  DELETE_FAIL,
-  DELETE_REQUEST,
-  DELETE_SUCCESS,
-  SEARCH_FAIL,
-  SEARCH_SUCCESS,
-  SEARCH_REQUEST,
+  CREATE_SWAP_FAIL,
+  CREATE_SWAP_REQUEST,
+  CREATE_SWAP_SUCCESS,
+  VIEW_SWAP_FAIL,
+  VIEW_SWAP_REQUEST,
+  VIEW_SWAP_SUCCESS,
+  UPDATE_SWAP_FAIL,
+  UPDATE_SWAP_REQUEST,
+  UPDATE_SWAP_SUCCESS,
+  DELETE_SWAP_FAIL,
+  DELETE_SWAP_REQUEST,
+  DELETE_SWAP_SUCCESS,
+  SEARCH_SWAP_FAIL,
+  SEARCH_SWAP_SUCCESS,
+  SEARCH_SWAP_REQUEST,
   RESET_SWAP,
 } from "../actionTypes";
 
-export const createRequest = () => {
+export const createSwapRequest = () => {
   return {
-    type: CREATE_REQUEST,
+    type: CREATE_SWAP_REQUEST,
   };
 };
 
-export const createFail = (error) => {
+export const createSwapFail = (error) => {
   return {
-    type: CREATE_FAIL,
+    type: CREATE_SWAP_FAIL,
     payload: error,
   };
 };
 
-export const createSuccess = () => {
+export const createSwapSuccess = () => {
   return {
-    type: CREATE_SUCCESS,
+    type: CREATE_SWAP_SUCCESS,
   };
 };
 
-export const viewRequest = () => {
+export const viewSwapRequest = () => {
   return {
-    type: VIEW_REQUEST,
+    type: VIEW_SWAP_REQUEST,
   };
 };
 
-export const viewFail = (error) => {
+export const viewSwapFail = (error) => {
   return {
-    type: VIEW_FAIL,
+    type: VIEW_SWAP_FAIL,
     payload: error,
   };
 };
 
-export const viewSuccess = () => {
+export const viewSwapSuccess = () => {
   return {
-    type: VIEW_SUCCESS,
+    type: VIEW_SWAP_SUCCESS,
   };
 };
 
-export const updateRequest = () => {
+export const updateSwapRequest = () => {
   return {
-    type: UPDATE_REQUEST,
+    type: UPDATE_SWAP_REQUEST,
   };
 };
 
-export const updateFail = (error) => {
+export const updateSwapFail = (error) => {
   return {
-    type: UPDATE_FAIL,
+    type: UPDATE_SWAP_FAIL,
     payload: error,
   };
 };
 
-export const updateSuccess = () => {
+export const updateSwapSuccess = () => {
   return {
-    type: UPDATE_SUCCESS,
+    type: UPDATE_SWAP_SUCCESS,
   };
 };
 
-export const deleteRequest = () => {
+export const deleteSwapRequest = () => {
   return {
-    type: DELETE_REQUEST,
+    type: DELETE_SWAP_REQUEST,
   };
 };
 
-export const deleteFail = (error) => {
+export const deleteSwapFail = (error) => {
   return {
-    type: DELETE_FAIL,
+    type: DELETE_SWAP_FAIL,
     payload: error,
   };
 };
 
-export const deleteSuccess = () => {
+export const deleteSwapSuccess = () => {
   return {
-    type: DELETE_SUCCESS,
+    type: DELETE_SWAP_SUCCESS,
   };
 };
 
-export const searchRequest = () => {
+export const searchSwapRequest = () => {
   return {
-    type: SEARCH_REQUEST,
+    type: SEARCH_SWAP_REQUEST,
   };
 };
 
-export const searchFail = () => {
+export const searchSwapFail = () => {
   return {
-    type: SEARCH_FAIL,
+    type: SEARCH_SWAP_FAIL,
   };
 };
 
-export const searchSuccess = () => {
+export const searchSwapSuccess = () => {
   return {
-    type: SEARCH_SUCCESS,
+    type: SEARCH_SWAP_SUCCESS,
   };
 };
 

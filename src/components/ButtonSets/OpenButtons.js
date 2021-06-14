@@ -32,10 +32,15 @@ export default function OpenButtons({ swapDetails }) {
     getAllModules,
     getModuleDetails,
     slotDets,
+    userSwap,
+    viewSwaps,
   } = useSwap();
 
   const handleEditClickOpen = () => {
-    console.log(swapDetails);
+    setModuleCode(swapDetails.module_code);
+    setSlotType(swapDetails.slot_type);
+    setCurrentSlot(swapDetails.current_slot);
+    setDesiredSlots(swapDetails.desired_slots);
     setEditOpen(true);
   };
 
@@ -67,6 +72,8 @@ export default function OpenButtons({ swapDetails }) {
       swapDetails.isCompleted,
       swapDetails.isReserved
     );
+    viewSwaps();
+    console.log(userSwap);
     setEditOpen(false);
   };
 
@@ -76,9 +83,12 @@ export default function OpenButtons({ swapDetails }) {
     setDeleteOpen(false);
   };
 
-  useEffect(() => getAllModules());
+  useEffect(() => getAllModules(), []);
   useEffect(() => getModuleDetails(moduleCode), [moduleCode]);
-  useEffect(() => getSlotDetails(currentSlot, slotType), [moduleCode]);
+  useEffect(
+    () => getSlotDetails(currentSlot, slotType),
+    [currentSlot, desiredSlots, slotType]
+  );
 
   const slotTypeOptions = Array.from(
     new Set(
@@ -199,7 +209,7 @@ export default function OpenButtons({ swapDetails }) {
           </Button>
         </DialogActions>
       </Dialog>
-      <DeleteButton variant="contained" onClick={handleDelete}>
+      <DeleteButton variant="contained" onClick={handleDeleteClickOpen}>
         DELETE
       </DeleteButton>
       <Dialog

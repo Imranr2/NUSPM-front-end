@@ -1,19 +1,19 @@
 import {
-  CREATE_FAIL,
-  CREATE_REQUEST,
-  CREATE_SUCCESS,
-  VIEW_FAIL,
-  VIEW_REQUEST,
-  VIEW_SUCCESS,
-  UPDATE_FAIL,
-  UPDATE_REQUEST,
-  UPDATE_SUCCESS,
-  DELETE_FAIL,
-  DELETE_REQUEST,
-  DELETE_SUCCESS,
-  SEARCH_FAIL,
-  SEARCH_REQUEST,
-  SEARCH_SUCCESS,
+  CREATE_SWAP_FAIL,
+  CREATE_SWAP_REQUEST,
+  CREATE_SWAP_SUCCESS,
+  VIEW_SWAP_FAIL,
+  VIEW_SWAP_REQUEST,
+  VIEW_SWAP_SUCCESS,
+  UPDATE_SWAP_FAIL,
+  UPDATE_SWAP_REQUEST,
+  UPDATE_SWAP_SUCCESS,
+  DELETE_SWAP_FAIL,
+  DELETE_SWAP_REQUEST,
+  DELETE_SWAP_SUCCESS,
+  SEARCH_SWAP_FAIL,
+  SEARCH_SWAP_REQUEST,
+  SEARCH_SWAP_SUCCESS,
   RESET_SWAP,
 } from "../actionTypes";
 
@@ -26,30 +26,30 @@ const initialState = {
 
 const swapReducer = (state = initialState, action) => {
   switch (action.type) {
-    case CREATE_REQUEST:
-    case VIEW_REQUEST:
-    case DELETE_REQUEST:
-    case UPDATE_REQUEST:
-    case SEARCH_REQUEST:
+    case CREATE_SWAP_REQUEST:
+    case VIEW_SWAP_REQUEST:
+    case DELETE_SWAP_REQUEST:
+    case UPDATE_SWAP_REQUEST:
+    case SEARCH_SWAP_REQUEST:
       return {
         ...state,
         isLoading: true,
       };
-    case CREATE_SUCCESS:
-    case VIEW_SUCCESS:
-    case DELETE_SUCCESS:
-    case UPDATE_SUCCESS:
-    case SEARCH_SUCCESS:
+    case CREATE_SWAP_SUCCESS:
+    case VIEW_SWAP_SUCCESS:
+    case DELETE_SWAP_SUCCESS:
+    case UPDATE_SWAP_SUCCESS:
+    case SEARCH_SWAP_SUCCESS:
       return {
         ...state,
         isLoading: false,
         success: true,
       };
-    case CREATE_FAIL:
-    case VIEW_FAIL:
-    case DELETE_FAIL:
-    case UPDATE_FAIL:
-    case SEARCH_FAIL:
+    case CREATE_SWAP_FAIL:
+    case VIEW_SWAP_FAIL:
+    case DELETE_SWAP_FAIL:
+    case UPDATE_SWAP_FAIL:
+    case SEARCH_SWAP_FAIL:
       return {
         ...state,
         isLoading: false,

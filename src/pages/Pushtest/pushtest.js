@@ -51,14 +51,14 @@ const handleClick2 = () => {
 };
 
 function PushTest() {
-  const { viewSwap, deleteSwap, searchSwap, getSlotDetails, slotDets } =
+  const { viewSwaps, deleteSwap, searchSwap, getSlotDetails, slotDets } =
     useSwap();
 
   const { changePassword } = useAuth();
 
   const view = (e) => {
     e.preventDefault();
-    viewSwap();
+    viewSwaps();
   };
 
   const del = (e) => {
