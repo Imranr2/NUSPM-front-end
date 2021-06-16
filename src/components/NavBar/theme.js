@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
   },
   appbar: {
     width: "100vw",
-    minHeight: "12vh",
+    // minHeight: "12vh",
   },
 }));
 

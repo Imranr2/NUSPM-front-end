@@ -177,7 +177,7 @@ export default function NavBar(props) {
               </MenuItem>
               <MenuItem
                 component={RouterLink}
-                to="/"
+                to="/myAccount"
                 className={classes.menu}
                 onClick={logOut}
               >

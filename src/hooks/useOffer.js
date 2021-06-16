@@ -28,25 +28,26 @@ const useOffer = () => {
     Authorization: `Bearer ${localStorage.getItem("token")}`,
   };
 
+  // CHANGED HERE (DELETE COMMENT ONCE SEEN)
   const createOffer = (
+    initiatorUserId,
+    creatorUserId,
     initiatorSwapId,
     creatorSwapId,
     accepted,
-    pending,
-    rejected,
-    initiated
+    pending
   ) => {
     dispatch(createOfferRequest());
     axios
       .post(
         "http://localhost:3001/api/v1/offers",
         {
+          initiator_user_id: initiatorUserId,
+          creator_user_id: creatorUserId,
           initiator_swap_id: initiatorSwapId,
           creator_swap_id: creatorSwapId,
           accepted: accepted,
           pending: pending,
-          rejected: rejected,
-          initiated: initiated,
         },
         {
           headers,
@@ -66,6 +67,7 @@ const useOffer = () => {
       });
   };
 
+  // WILL SHOW ALL OFFERS WHERE INITIATOR ID OR CREATOR ID == LOCALSTORAGE USER (DELETE ONCE SEEN)
   const viewOffers = () => {
     dispatch(viewOfferRequest());
     axios
@@ -108,7 +110,8 @@ const useOffer = () => {
       });
   };
 
-  const updateOffer = (offerId, accepted, pending, rejected) => {
+  // CHANGED HERE (DELETE COMMENT ONCE SEEN)
+  const updateOffer = (offerId, accepted, pending) => {
     dispatch(updateOfferRequest());
     axios
       .put(
@@ -116,7 +119,6 @@ const useOffer = () => {
         {
           accepted: accepted,
           pending: pending,
-          rejected: rejected,
         },
         {
           headers,

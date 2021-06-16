@@ -47,6 +47,12 @@ function App({ isAuthenticated }) {
             ></GuardedRoute>
             <GuardedRoute
               exact
+              path="/myAccount"
+              component={ChangePassword}
+              auth={isAuthenticated}
+            ></GuardedRoute>
+            <GuardedRoute
+              exact
               path="/yourSwap"
               component={YourSwap}
               auth={isAuthenticated}
