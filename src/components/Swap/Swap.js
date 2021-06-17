@@ -48,6 +48,7 @@ export default function Swap(props) {
             <br />
             {`${props.card.startTime} - ${props.card.endTime}`}
             <br />
+            {props.card.desired_slots}
           </Typography>
         </CardContent>
         <CardActions className={classes.button}>{buttonset}</CardActions>

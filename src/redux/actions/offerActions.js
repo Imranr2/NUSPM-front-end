@@ -100,7 +100,7 @@ export const updateOfferRequest = () => {
 
 export const updateOfferFail = (error) => {
   return {
-    type: UDPATE_OFFER_FAIL,
+    type: UPDATE_OFFER_FAIL,
     payload: error,
   };
 };

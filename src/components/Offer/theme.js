@@ -1,13 +1,16 @@
 import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
-  cardContent: {
+  card: {
     height: "100%",
     display: "flex",
     flexDirection: "column",
     width: "15vw",
-    minWidth: 300,
-    minHeight: 300,
+    minWidth: 200,
+  },
+  typography: {
+    width: "15vw",
+    minWidth: 200,
   },
   dialog: {
     minWidth: "70vw",

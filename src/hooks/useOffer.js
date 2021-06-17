@@ -75,14 +75,14 @@ const useOffer = () => {
         headers,
       })
       .then((response) => {
-        dispatch(viewOfferSuccess());
         setUserOffer(response.data);
+        dispatch(viewOfferSuccess());
         setTimeout(() => {
           dispatch(resetOffer());
         }, 3000);
       })
       .catch((error) => {
-        dispatch(viewOfferFail());
+        dispatch(viewOfferFail(error.response.data));
         setTimeout(() => {
           dispatch(resetOffer());
         }, 3000);
@@ -175,4 +175,4 @@ const useOffer = () => {
   };
 };
 
-export default useOffer();
+export default useOffer;

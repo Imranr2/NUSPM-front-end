@@ -8,13 +8,13 @@ import SwapList from "../../components/SwapList/SwapList";
 
 function YourSwap() {
   const [value, setValue] = useState(0);
+
   const classes = useStyles();
 
   const handleChange = (event, newValue) => {
     event.preventDefault();
     setValue(newValue);
   };
-
   const { userSwap, viewSwaps } = useSwap();
 
   useEffect(() => viewSwaps(), []);
