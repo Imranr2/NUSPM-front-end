@@ -31,9 +31,9 @@ function Marketplace({ success, error, errorMsg }) {
   const [currentSlot, setCurrentSlot] = useState("");
   const [localSuccess, setLocalSuccess] = useState(false);
 
-  useEffect(() => getAllModules());
+  useEffect(() => getAllModules(), []);
 
-  useEffect(() => getModuleDetails(moduleCode));
+  useEffect(() => getModuleDetails(moduleCode), [moduleCode]);
 
   useEffect(() => {
     if (success) {
