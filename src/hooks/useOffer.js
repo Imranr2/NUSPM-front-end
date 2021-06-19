@@ -16,17 +16,14 @@ import {
   updateOfferSuccess,
   resetOffer,
 } from "../redux/actions/offerActions";
-import axios from "axios";
+import authAxios from "../helpers/authAxios";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
 
 const useOffer = () => {
   const [userOffer, setUserOffer] = useState([]);
+  const [refresh, setRefresh] = useState(false);
   const dispatch = useDispatch();
-
-  const headers = {
-    Authorization: `Bearer ${localStorage.getItem("token")}`,
-  };
 
   // CHANGED HERE (DELETE COMMENT ONCE SEEN)
   const createOffer = (
@@ -38,21 +35,15 @@ const useOffer = () => {
     pending
   ) => {
     dispatch(createOfferRequest());
-    axios
-      .post(
-        "http://localhost:3001/api/v1/offers",
-        {
-          initiator_user_id: initiatorUserId,
-          creator_user_id: creatorUserId,
-          initiator_swap_id: initiatorSwapId,
-          creator_swap_id: creatorSwapId,
-          accepted: accepted,
-          pending: pending,
-        },
-        {
-          headers,
-        }
-      )
+    authAxios
+      .post("/api/v1/offers", {
+        initiator_user_id: initiatorUserId,
+        creator_user_id: creatorUserId,
+        initiator_swap_id: initiatorSwapId,
+        creator_swap_id: creatorSwapId,
+        accepted: accepted,
+        pending: pending,
+      })
       .then((response) => {
         dispatch(createOfferSuccess());
         setTimeout(() => {
@@ -70,13 +61,12 @@ const useOffer = () => {
   // WILL SHOW ALL OFFERS WHERE INITIATOR ID OR CREATOR ID == LOCALSTORAGE USER (DELETE ONCE SEEN)
   const viewOffers = () => {
     dispatch(viewOfferRequest());
-    axios
-      .get("http://localhost:3001/api/v1/offers", {
-        headers,
-      })
+    authAxios
+      .get("/api/v1/offers")
       .then((response) => {
         setUserOffer(response.data);
         dispatch(viewOfferSuccess());
+        setRefresh(false);
         setTimeout(() => {
           dispatch(resetOffer());
         }, 3000);
@@ -91,10 +81,8 @@ const useOffer = () => {
 
   const deleteOffer = (offerId) => {
     dispatch(deleteOfferRequest());
-    axios
-      .delete(`http://localhost:3001/api/v1/offers/${offerId}`, {
-        headers,
-      })
+    authAxios
+      .delete(`/api/v1/offers/${offerId}`)
       .then((response) => {
         dispatch(deleteOfferSuccess());
         console.log(response.data);
@@ -113,17 +101,11 @@ const useOffer = () => {
   // CHANGED HERE (DELETE COMMENT ONCE SEEN)
   const updateOffer = (offerId, accepted, pending) => {
     dispatch(updateOfferRequest());
-    axios
-      .put(
-        `http://localhost:3001/api/v1/offers/${offerId}`,
-        {
-          accepted: accepted,
-          pending: pending,
-        },
-        {
-          headers,
-        }
-      )
+    authAxios
+      .put(`/api/v1/offers/${offerId}`, {
+        accepted: accepted,
+        pending: pending,
+      })
       .then((response) => {
         dispatch(updateOfferSuccess());
         setTimeout(() => {
@@ -140,16 +122,10 @@ const useOffer = () => {
 
   const withdrawOffers = (swapId) => {
     dispatch(withdrawOfferRequest());
-    axios
-      .post(
-        `http://localhost:3001/api/v1/withdrawOffer`,
-        {
-          swap_id: swapId,
-        },
-        {
-          headers,
-        }
-      )
+    authAxios
+      .post(`http://localhost:3001/api/v1/withdrawOffer`, {
+        swap_id: swapId,
+      })
       .then((response) => {
         dispatch(withdrawOfferSuccess());
         setTimeout(() => {

@@ -15,7 +15,7 @@ import { theme } from "../../Theme";
 import { DeleteButton } from "./theme";
 import useSwap from "../../hooks/useSwap";
 
-export default function OpenButtons({ swapDetails }) {
+export default function OpenButtons({ swapDetails, status }) {
   const [editOpen, setEditOpen] = useState(false);
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [moduleCode, setModuleCode] = useState(swapDetails.module_code);
@@ -32,8 +32,6 @@ export default function OpenButtons({ swapDetails }) {
     getAllModules,
     getModuleDetails,
     slotDets,
-    userSwap,
-    viewSwaps,
   } = useSwap();
 
   const handleEditClickOpen = () => {
@@ -72,15 +70,19 @@ export default function OpenButtons({ swapDetails }) {
       swapDetails.isCompleted,
       swapDetails.isReserved
     );
-    viewSwaps();
-    console.log(userSwap);
     setEditOpen(false);
+    setTimeout(() => {
+      status();
+    }, 1500);
   };
 
   const handleDelete = (e) => {
     e.preventDefault();
     deleteSwap(swapDetails.id);
     setDeleteOpen(false);
+    setTimeout(() => {
+      status();
+    }, 1500);
   };
 
   useEffect(() => getAllModules(), []);

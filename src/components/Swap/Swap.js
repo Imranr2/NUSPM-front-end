@@ -13,6 +13,7 @@ import OpenButtons from "../ButtonSets/OpenButtons";
 import ReservedButtons from "../ButtonSets/ReservedButtons";
 import CompletedButtons from "../ButtonSets/CompletedButtons";
 import InitiateButtons from "../ButtonSets/InitiateButtons";
+import { PinDropSharp } from "@material-ui/icons";
 
 export default function Swap(props) {
   const classes = useStyles();
@@ -20,16 +21,24 @@ export default function Swap(props) {
 
   switch (props.buttonset) {
     case "open":
-      buttonset = <OpenButtons swapDetails={props.card} />;
+      buttonset = (
+        <OpenButtons swapDetails={props.card} status={props.status} />
+      );
       break;
     case "reserved":
-      buttonset = <ReservedButtons swapDetails={props.card} />;
+      buttonset = (
+        <ReservedButtons swapDetails={props.card} status={props.status} />
+      );
       break;
     case "completed":
-      buttonset = <CompletedButtons swapDetails={props.card} />;
+      buttonset = (
+        <CompletedButtons swapDetails={props.card} status={props.status} />
+      );
       break;
     default:
-      buttonset = <InitiateButtons swapDetails={props.card} />;
+      buttonset = (
+        <InitiateButtons swapDetails={props.card} status={props.status} />
+      );
       break;
   }
 

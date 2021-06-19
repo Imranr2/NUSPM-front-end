@@ -34,16 +34,22 @@ function CreateSwap({ success, error, errorMsg }) {
   const [currentSlot, setCurrentSlot] = useState("");
   const [desiredSlots, setDesiredSlots] = useState([]);
 
-  useEffect(() => getAllModules(), [...moduleList]);
+  useEffect(() => getAllModules(), []);
+
   useEffect(
     () => getSlotDetails(currentSlot, slotType),
     [currentSlot, slotType, desiredSlots]
   );
+
   useEffect(() => getModuleDetails(moduleCode), [moduleCode]);
 
   function handleSubmit(e) {
     e.preventDefault();
     createSwap(moduleCode, slotType, currentSlot, desiredSlots, false, false);
+    setModuleCode([]);
+    setSlotType([]);
+    setCurrentSlot([]);
+    setDesiredSlots([]);
   }
 
   const slotTypeOptions = Array.from(
@@ -72,6 +78,7 @@ function CreateSwap({ success, error, errorMsg }) {
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <Autocomplete
+                  value={moduleCode}
                   classes={{ paper: classes.paper }}
                   options={moduleList}
                   onChange={(event, value) => {

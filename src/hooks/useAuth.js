@@ -12,7 +12,7 @@ import {
   changePasswordFail,
   resetAuth,
 } from "../redux/actions/authActions";
-import axios from "axios";
+import authAxios from "../helpers/authAxios";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 
@@ -26,10 +26,6 @@ const removeToken = (response) => {
   localStorage.removeItem("token");
 };
 
-const headers = {
-  Authorization: `Bearer ${localStorage.getItem("token")}`,
-};
-
 const useAuth = () => {
   const history = useHistory();
   const dispatch = useDispatch();
@@ -40,9 +36,8 @@ const useAuth = () => {
 
   const signIn = (email, password) => {
     dispatch(signInRequest());
-    axios
-      // .post("https://tranquil-fjord-90719.herokuapp.com/authenticate", {
-      .post("http://localhost:3001/authenticate", {
+    authAxios
+      .post("/authenticate", {
         email: email,
         password: password,
       })
@@ -62,9 +57,8 @@ const useAuth = () => {
 
   const registerAccount = (email, password, passwordConf) => {
     dispatch(registerRequest());
-    axios
-      // .post("https://tranquil-fjord-90719.herokuapp.com/users", {
-      .post("http://localhost:3001/users", {
+    authAxios
+      .post("/users", {
         email: email,
         password: password,
         password_confirmation: passwordConf,
@@ -93,23 +87,17 @@ const useAuth = () => {
 
   const changePassword = (id, email, oldPassword, password, passwordConf) => {
     dispatch(changePasswordRequest());
-    axios
-      .post("http://localhost:3001/authenticate", {
+    authAxios
+      .post("/authenticate", {
         email: email,
         password: oldPassword,
       })
       .then(() => {
-        axios
-          .put(
-            `http://localhost:3001/users/${id}`,
-            {
-              password: password,
-              password_confirmation: passwordConf,
-            },
-            {
-              headers,
-            }
-          )
+        authAxios
+          .put(`/users/${id}`, {
+            password: password,
+            password_confirmation: passwordConf,
+          })
           .then((response) => {
             console.log(response.data);
             dispatch(changePasswordSuccess());

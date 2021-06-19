@@ -19,6 +19,7 @@ import {
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
+import authAxios from "../helpers/authAxios";
 
 const useSwap = () => {
   const dispatch = useDispatch();
@@ -32,15 +33,10 @@ const useSwap = () => {
   const [initiatorSwap, setInitiatorSwap] = useState("");
   const [creatorSwap, setCreatorSwap] = useState("");
 
-  const headers = {
-    Authorization: `Bearer ${localStorage.getItem("token")}`,
-  };
-
   const getAllModules = () => {
     axios
       .get("https://api.nusmods.com/v2/2020-2021/moduleList.json")
       .then((response) => {
-        console.log(moduleList);
         return response.data;
       })
       .then((mods) => mods.map((mod) => mod.moduleCode))
@@ -73,25 +69,19 @@ const useSwap = () => {
     reserved
   ) => {
     dispatch(createSwapRequest());
-    axios
-      .post(
-        "http://localhost:3001/api/v1/swaps",
-        {
-          module_code: moduleCode,
-          slot_type: slotType,
-          current_slot: currentSlot,
-          desired_slots: desiredSlots,
-          completed: completed,
-          reserved: reserved,
-          venue: slotDets.venue,
-          startTime: slotDets.startTime,
-          endTime: slotDets.endTime,
-          day: slotDets.day,
-        },
-        {
-          headers,
-        }
-      )
+    authAxios
+      .post(`/api/v1/swaps`, {
+        module_code: moduleCode,
+        slot_type: slotType,
+        current_slot: currentSlot,
+        desired_slots: desiredSlots,
+        completed: completed,
+        reserved: reserved,
+        venue: slotDets.venue,
+        startTime: slotDets.startTime,
+        endTime: slotDets.endTime,
+        day: slotDets.day,
+      })
       .then((response) => {
         dispatch(createSwapSuccess());
         setTimeout(() => {
@@ -99,6 +89,9 @@ const useSwap = () => {
         }, 3000);
       })
       .catch((error) => {
+        console.log(error);
+        console.log(error.response);
+        console.log(error.response.data);
         dispatch(createSwapFail(error.response.data));
         setTimeout(() => {
           dispatch(resetSwap());
@@ -108,10 +101,8 @@ const useSwap = () => {
 
   const viewSwaps = () => {
     dispatch(viewSwapRequest());
-    axios
-      .get("http://localhost:3001/api/v1/swaps", {
-        headers,
-      })
+    authAxios
+      .get(`/api/v1/swaps`)
       .then((response) => {
         setUserSwaps(response.data);
         dispatch(viewSwapSuccess());
@@ -137,29 +128,21 @@ const useSwap = () => {
     reserved
   ) => {
     dispatch(updateSwapRequest());
-    axios
-      .put(
-        `http://localhost:3001/api/v1/swaps/${swapId}`,
-        {
-          module_code: moduleCode,
-          slot_type: slotType,
-          current_slot: currentSlot,
-          desired_slots: desiredSlots,
-          completed: completed,
-          reserved: reserved,
-          venue: slotDets.venue,
-          startTime: slotDets.startTime,
-          endTime: slotDets.endTime,
-          day: slotDets.day,
-        },
-        {
-          headers,
-        }
-      )
+    authAxios
+      .put(`/api/v1/swaps/${swapId}`, {
+        module_code: moduleCode,
+        slot_type: slotType,
+        current_slot: currentSlot,
+        desired_slots: desiredSlots,
+        completed: completed,
+        reserved: reserved,
+        venue: slotDets.venue,
+        startTime: slotDets.startTime,
+        endTime: slotDets.endTime,
+        day: slotDets.day,
+      })
       .then((response) => {
         dispatch(updateSwapSuccess());
-        console.log(response.data);
-        console.log("updated");
         setTimeout(() => {
           dispatch(resetSwap());
         }, 2000);
@@ -174,20 +157,16 @@ const useSwap = () => {
 
   const deleteSwap = (swapId) => {
     dispatch(deleteSwapRequest());
-    axios
-      .delete(`http://localhost:3001/api/v1/swaps/${swapId}`, {
-        headers,
-      })
+    authAxios
+      .delete(`/api/v1/swaps/${swapId}`)
       .then((response) => {
         dispatch(deleteSwapSuccess());
-        console.log(response.data);
         setTimeout(() => {
           dispatch(resetSwap());
         }, 2000);
       })
       .catch((error) => {
         dispatch(deleteSwapFail(error.response.data));
-        console.log(error.response.data);
         setTimeout(() => {
           dispatch(resetSwap());
         }, 2000);
@@ -197,18 +176,12 @@ const useSwap = () => {
   // finding a potential swap
   const searchSwap = (moduleCode, slotType, currentSlot) => {
     dispatch(searchSwapRequest());
-    axios
-      .post(
-        "http://localhost:3001/api/v1/searchSwap",
-        {
-          module_code: moduleCode,
-          slot_type: slotType,
-          desired_slots: currentSlot,
-        },
-        {
-          headers,
-        }
-      )
+    authAxios
+      .post(`/api/v1/searchSwap`, {
+        module_code: moduleCode,
+        slot_type: slotType,
+        desired_slots: currentSlot,
+      })
       .then((response) => {
         dispatch(searchSwapSuccess());
         console.log(response.data);
@@ -232,10 +205,8 @@ const useSwap = () => {
   // NEW METHOD FOR OFFER
   const showSwap = (swapId, initiator) => {
     dispatch(viewSwapRequest());
-    axios
-      .get(`http://localhost:3001/api/v1/swaps/${swapId}`, {
-        headers,
-      })
+    authAxios
+      .get(`/api/v1/swaps/${swapId}`)
       .then((response) => {
         dispatch(viewSwapSuccess());
         //change to whatever u think is better

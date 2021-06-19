@@ -8,7 +8,7 @@ import Marketplace from "./pages/Marketplace/Marketplace";
 import pushtest from "./pages/Pushtest/pushtest";
 import Home from "./pages/Home/Home";
 import ChangePassword from "./pages/ChangePassword/ChangePassword";
-import GuardedRoute from "./components/GuardedRoute/GuardedRoute";
+import GuardedRoute from "./helpers/GuardedRoute";
 import YourSwap from "./pages/YourSwap/YourSwap";
 import Offers from "./pages/Offers/Offers";
 

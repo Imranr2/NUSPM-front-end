@@ -11,7 +11,7 @@ import { ThemeProvider } from "@material-ui/core";
 import { theme } from "../../Theme";
 import useSwap from "../../hooks/useSwap";
 
-export default function ReservedButtons({ swapDetails }) {
+export default function ReservedButtons({ swapDetails, status }) {
   const [freeOpen, setFreeOpen] = useState(false);
   const [reserveOpen, setReserveOpen] = useState(false);
   const [deleteOpen, setDeleteOpen] = useState(false);
@@ -53,11 +53,17 @@ export default function ReservedButtons({ swapDetails }) {
       false,
       false
     );
+    setTimeout(() => {
+      status();
+    }, 1500);
   };
 
   const handleDelete = () => {
     setDeleteOpen(false);
     deleteSwap(swapDetails.id);
+    setTimeout(() => {
+      status();
+    }, 1500);
   };
 
   const handleReserve = () => {
@@ -71,6 +77,9 @@ export default function ReservedButtons({ swapDetails }) {
       false,
       true
     );
+    setTimeout(() => {
+      status();
+    }, 1500);
   };
 
   return (
