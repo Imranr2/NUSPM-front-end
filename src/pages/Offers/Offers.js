@@ -7,6 +7,7 @@ import Navbar from "../../components/NavBar";
 import useOffer from "../../hooks/useOffer";
 import OfferList from "../../components/OfferList/OfferList";
 import { connect } from "react-redux";
+import axios from "axios";
 
 function Offers({ userId }) {
   const classes = useStyles();
@@ -17,8 +18,19 @@ function Offers({ userId }) {
     setValue(newValue);
   };
   const { userOffer, viewOffers } = useOffer();
+  const [refresh, setRefresh] = useState(true);
 
-  useEffect(() => viewOffers(), [userOffer]);
+  function changeStatus(value) {
+    setRefresh(value);
+  }
+
+  useEffect(() => {
+    if (refresh) {
+      viewOffers();
+      setRefresh(false);
+      console.log(userOffer);
+    }
+  }, [refresh]);
 
   return (
     <ThemeProvider theme={theme}>
@@ -33,7 +45,6 @@ function Offers({ userId }) {
         >
           <Tab label="Current" />
           <Tab label="Pending" />
-          <Tab label="Accepted" />
           <Tab label="Rejected" />
         </Tabs>
         {value === 0 && (
@@ -44,6 +55,8 @@ function Offers({ userId }) {
                 !offer.isAccepted &&
                 offer.isPending
             )}
+            parentCallback={changeStatus}
+            tab="current"
           />
         )}
         {value === 1 && (
@@ -54,20 +67,17 @@ function Offers({ userId }) {
                 !offer.isAccepted &&
                 offer.isPending
             )}
+            parentCallback={changeStatus}
+            tab="pending"
           />
         )}
         {value === 2 && (
           <OfferList
             arr={userOffer.filter(
-              (offer) => offer.isAccepted && !offer.isPending
-            )}
-          />
-        )}
-        {value === 3 && (
-          <OfferList
-            arr={userOffer.filter(
               (offer) => !offer.isAccepted && !offer.isPending
             )}
+            parentCallback={changeStatus}
+            tab="rejected"
           />
         )}
       </Container>

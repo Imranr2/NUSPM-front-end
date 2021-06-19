@@ -19,6 +19,8 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import ArrowRightIcon from "@material-ui/icons/ArrowRight";
 import axios from "axios";
 import useOffer from "../../hooks/useOffer";
+import CurrentButtons from "../ButtonSets/CurrentButtons";
+import PendingButtons from "../ButtonSets/PendingButtons";
 
 export default function Offer(props) {
   const classes = useStyles();
@@ -64,15 +66,34 @@ export default function Offer(props) {
       });
   }, []);
 
-  function handleAccept() {
-    updateOffer(props.card.id, true, false);
+  let buttonset = null;
+
+  switch (props.tab) {
+    case "current":
+      buttonset = (
+        <CurrentButtons
+          offerDetails={props.card}
+          parentCallback={props.parentCallback}
+        />
+      );
+      break;
+    case "pending":
+      buttonset = (
+        <PendingButtons
+          offerDetails={props.card}
+          parentCallback={props.parentCallback}
+        />
+      );
+      break;
+    default:
+      break;
   }
 
   return (
     <Grid key={props} container item xs={12} sm={6} md={4} justify="center">
       <Card className={classes.card}>
         <ButtonBase onClick={handleOfferOpen}>
-          {!loading2 && (
+          {!loading2 && (props.tab === "current" || props.tab === "rejected") && (
             <CardContent>
               <Typography variant="h6">
                 {incomingSwap.module_code}
@@ -80,6 +101,17 @@ export default function Offer(props) {
                 {incomingSwap.slot_type}
                 <br />
                 {incomingSwap.current_slot}
+              </Typography>
+            </CardContent>
+          )}
+          {!loading1 && props.tab === "pending" && (
+            <CardContent>
+              <Typography variant="h6">
+                {currentSwap.module_code}
+                <br />
+                {currentSwap.slot_type}
+                <br />
+                {currentSwap.current_slot}
               </Typography>
             </CardContent>
           )}
@@ -140,10 +172,7 @@ export default function Offer(props) {
                 </Card>
               </Container>
             </DialogContent>
-            <DialogActions>
-              <Button onClick={handleAccept}>Accept</Button>
-              <Button className={classes.button}>Reject</Button>
-            </DialogActions>
+            <DialogActions>{buttonset}</DialogActions>
           </Dialog>
         </ButtonBase>
       </Card>

@@ -12,7 +12,12 @@ function OfferList(props) {
     <Container>
       <Grid className={classes.list} container spacing={4}>
         {props.arr.map((offerDetails, index) => (
-          <Offer key={index} card={offerDetails}></Offer>
+          <Offer
+            key={index}
+            card={offerDetails}
+            parentCallback={props.parentCallback}
+            tab={props.tab}
+          ></Offer>
         ))}
       </Grid>
     </Container>
