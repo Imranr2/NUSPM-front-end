@@ -22,7 +22,7 @@ function YourSwap({ success, loading }) {
     setValue(newValue);
   };
 
-  const { userSwap, viewSwaps } = useSwap();
+  const { userSwaps, viewSwaps } = useSwap();
 
   useEffect(() => {
     if (refresh) {
@@ -48,7 +48,7 @@ function YourSwap({ success, loading }) {
         </Tabs>
         {value === 0 && (
           <SwapList
-            arr={userSwap.filter(
+            arr={userSwaps.filter(
               (swap) => !swap.isReserved && !swap.isCompleted
             )}
             panel="open"
@@ -57,14 +57,14 @@ function YourSwap({ success, loading }) {
         )}
         {value === 1 && (
           <SwapList
-            arr={userSwap.filter((swap) => swap.isReserved)}
+            arr={userSwaps.filter((swap) => swap.isReserved)}
             panel="reserved"
             status={changeStatus}
           />
         )}
         {value === 2 && (
           <SwapList
-            arr={userSwap.filter((swap) => swap.isCompleted)}
+            arr={userSwaps.filter((swap) => swap.isCompleted)}
             panel="completed"
             status={changeStatus}
           />

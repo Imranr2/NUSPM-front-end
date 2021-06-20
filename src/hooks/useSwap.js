@@ -25,12 +25,11 @@ const useSwap = () => {
   const dispatch = useDispatch();
   const [moduleList, setModuleList] = useState([]);
   const [modDets, setModDets] = useState([]);
-  const [userSwap, setUserSwaps] = useState([]);
+  const [userSwaps, setUserSwaps] = useState([]);
   const [potentialSwaps, setPotentialSwaps] = useState([]);
   const [slotDets, setSlotDets] = useState([]);
 
-  // for showSwap at the bottom, rename if u need or delete if u dont need
-  const [initiatorSwap, setInitiatorSwap] = useState("");
+  const [initiatorSwap, setInitiatorSwap] = useState({});
   const [creatorSwap, setCreatorSwap] = useState("");
 
   const getAllModules = () => {
@@ -84,12 +83,12 @@ const useSwap = () => {
       })
       .then((response) => {
         dispatch(createSwapSuccess());
+        setInitiatorSwap(response.data);
         setTimeout(() => {
           dispatch(resetSwap());
         }, 3000);
       })
       .catch((error) => {
-        console.log(error);
         console.log(error.response);
         console.log(error.response.data);
         dispatch(createSwapFail(error.response.data));
@@ -203,37 +202,39 @@ const useSwap = () => {
   };
 
   // NEW METHOD FOR OFFER
-  const showSwap = (swapId, initiator) => {
-    dispatch(viewSwapRequest());
-    authAxios
-      .get(`/api/v1/swaps/${swapId}`)
-      .then((response) => {
-        dispatch(viewSwapSuccess());
-        //change to whatever u think is better
-        if (initiator) {
-          setInitiatorSwap(response.data);
-        } else {
-          setCreatorSwap(response.data);
-        }
-        setTimeout(() => {
-          dispatch(resetSwap());
-        }, 3000);
-      })
-      .catch((error) => {
-        dispatch(viewSwapFail());
-        setTimeout(() => {
-          dispatch(resetSwap());
-        }, 3000);
-      });
-  };
+  // const showSwap = (swapId, initiator) => {
+  //   dispatch(viewSwapRequest());
+  //   authAxios
+  //     .get(`/api/v1/swaps/${swapId}`)
+  //     .then((response) => {
+  //       dispatch(viewSwapSuccess());
+  //       //change to whatever u think is better
+  //       if (initiator) {
+  //         setInitiatorSwap(response.data);
+  //       } else {
+  //         setCreatorSwap(response.data);
+  //       }
+  //       setTimeout(() => {
+  //         dispatch(resetSwap());
+  //       }, 3000);
+  //     })
+  //     .catch((error) => {
+  //       dispatch(viewSwapFail());
+  //       setTimeout(() => {
+  //         dispatch(resetSwap());
+  //       }, 3000);
+  //     });
+  // };
 
   return {
     moduleList,
     setModuleList,
     modDets,
     setModDets,
-    userSwap,
+    userSwaps,
     potentialSwaps,
+    initiatorSwap,
+    setInitiatorSwap,
     slotDets,
     setSlotDets,
     getAllModules,

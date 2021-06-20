@@ -13,7 +13,7 @@ import { theme } from "./theme";
 import { useStyles } from "./theme";
 import useSwap from "../../hooks/useSwap";
 import { connect } from "react-redux";
-import SwapList from "../../components/SwapList/SwapList";
+import PotentialSwaps from "../../components/PotentialSwaps/PotentialSwaps";
 
 function Marketplace({ success, error, errorMsg }) {
   const classes = useStyles();
@@ -23,7 +23,10 @@ function Marketplace({ success, error, errorMsg }) {
     potentialSwaps,
     getAllModules,
     getModuleDetails,
+    getSlotDetails,
     searchSwap,
+    viewSwaps,
+    userSwaps,
   } = useSwap();
 
   const [moduleCode, setModuleCode] = useState("");
@@ -31,9 +34,14 @@ function Marketplace({ success, error, errorMsg }) {
   const [currentSlot, setCurrentSlot] = useState("");
   const [localSuccess, setLocalSuccess] = useState(false);
 
-  useEffect(() => getAllModules());
+  useEffect(() => getAllModules(), []);
 
-  useEffect(() => getModuleDetails(moduleCode));
+  useEffect(() => getModuleDetails(moduleCode), [moduleCode]);
+
+  useEffect(
+    () => getSlotDetails(currentSlot, slotType),
+    [currentSlot, slotType]
+  );
 
   useEffect(() => {
     if (success) {
@@ -41,9 +49,14 @@ function Marketplace({ success, error, errorMsg }) {
     }
   }, [success]);
 
+  useEffect(() => {
+    viewSwaps();
+  }, []);
+
   function handleSubmit(e) {
     e.preventDefault();
     searchSwap(moduleCode, slotType, currentSlot);
+    console.log(userSwaps);
   }
   return (
     <ThemeProvider theme={theme}>
@@ -133,7 +146,12 @@ function Marketplace({ success, error, errorMsg }) {
               </Grid>
             </Grid>
           </form>
-          <SwapList arr={potentialSwaps} />
+          <PotentialSwaps
+            creatorSwaps={potentialSwaps}
+            initiatorSwaps={userSwaps}
+            initiatorSlot={currentSlot}
+          />
+
           {/* {localSuccess && <SwapList arr={potentialSwaps}></SwapList>} */}
           {/* display some other thing, not alert */}
           {/* {potentialSwaps.length === 0 && (
@@ -153,3 +171,39 @@ const mapStateToProps = (state) => {
   };
 };
 export default connect(mapStateToProps)(Marketplace);
+
+/*
+//Marketplace get potetialSwaps, userSwapss
+  //potentialSwaps, new SwapList(PotentialSwaps), map into new Swap component(<PotentialSwap swap={swap} />)
+    //PotentialSwap => ButtonBase, onclick=open dialog, setState for creatorSwap 
+      Dialog
+        Step 1:
+        DialogContent
+        userSwapss.map into layout and individual swap (not a separate component)
+          Each swap => ButtonBase, onClick = setState for initiatorSwap
+        DialogActions
+        Next Button onClick={compare 2 swaps to match modcode etc...if dont match, render error else value == 3}
+        Create Button onclick{value == 2}
+        Step 2(optional): 
+        AutoCompletes for creation of swap
+        Submit onClick={useEffect [success], if true, set value === 3,create swap, setState of initiatorSwap}
+        Step 3:
+        initiatorSwap >>> creatorSwap
+        confirm button onclick={create offer using the 2 swap details}
+
+
+*/
+
+/*
+Button to open
+Dialog
+  value == 1 && 
+  userSwapss
+
+  value == 2 &&
+  step 2
+
+  value = 3 &&
+
+Dialog
+*/
