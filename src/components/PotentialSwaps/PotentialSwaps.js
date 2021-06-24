@@ -13,6 +13,7 @@ function SwapList(props) {
             creatorSwap={swap}
             initiatorSwaps={props.initiatorSwaps}
             initiatorSlot={props.initiatorSlot}
+            slotDets={props.slotDets}
           ></PotentialSwap>
         ))}
       </Grid>

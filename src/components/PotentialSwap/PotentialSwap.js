@@ -2,6 +2,7 @@ import {
   Button,
   ButtonBase,
   Card,
+  CardActionArea,
   CardContent,
   Container,
   Dialog,
@@ -15,10 +16,13 @@ import {
 import { Autocomplete } from "@material-ui/lab";
 import { useState, useEffect } from "react";
 import useSwap from "../../hooks/useSwap";
-import { ArrowRightIcon } from "@material-ui/icons/ArrowRight";
+import ArrowRightIcon from "@material-ui/icons/ArrowRight";
 import { connect } from "react-redux";
-
+import { HighlightButton } from "./theme";
+import { useStyles } from "./theme";
+import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 function PotentialSwap(props) {
+  const classes = useStyles();
   // const [initiatorSwap, setInitiatorSwap] = useState({});
   const [dialogOpen, setDialogOpen] = useState(false);
   const [currentDialog, setCurrentDialog] = useState(0);
@@ -29,18 +33,25 @@ function PotentialSwap(props) {
       userSwap.slot_type === props.creatorSwap.slot_type
   );
 
-  const { userSwaps, createSwap, initiatorSwap, setInitiatorSwap } = useSwap();
+  const {
+    userSwaps,
+    createSwap,
+    initiatorSwap,
+    slotDets,
+    setInitiatorSwap,
+    setSlotDets,
+  } = useSwap();
 
   const handleDialogClickOpen = () => {
-    console.log(userSwaps);
-    console.log(filteredUserSwaps);
+    // console.log(userSwaps);
+    // console.log(filteredUserSwaps);
     setDialogOpen(true);
   };
 
   const handleDialogClose = () => {
+    setDialogOpen(false);
     setCurrentDialog(0);
     setDisabled(true);
-    setDialogOpen(false);
   };
 
   const handleInitiatorSwapClick = (params) => {
@@ -57,6 +68,7 @@ function PotentialSwap(props) {
   };
 
   const handleCreateSwap = () => {
+    console.log(props.slotDets);
     createSwap(
       props.creatorSwap.module_code,
       props.creatorSwap.slot_type,
@@ -65,18 +77,18 @@ function PotentialSwap(props) {
       false,
       true
     );
+    setCurrentDialog(2);
   };
 
-  // useEffect(() => {
-  //   if (!loading) {
-  //     setToTwo
-  //   }, [loading]
-  // })
+  useEffect(() => setSlotDets(props.slotDets));
 
   return (
-    <Grid key={props} container item xs={12} sm={6} md={4} justify="center">
-      <Card>
-        <ButtonBase onClick={handleDialogClickOpen}>
+    <Grid key={props} item xs={12} sm={6} md={4} justify="center">
+      <Card className={classes.card}>
+        <CardActionArea
+          className={classes.actionArea}
+          onClick={handleDialogClickOpen}
+        >
           <CardContent>
             <Typography variant="h6">
               {props.creatorSwap.module_code}
@@ -92,7 +104,7 @@ function PotentialSwap(props) {
               {props.creatorSwap.desired_slots}
             </Typography>
           </CardContent>
-        </ButtonBase>
+        </CardActionArea>
 
         <Dialog open={dialogOpen} onClose={handleDialogClose}>
           <DialogTitle>
@@ -139,24 +151,34 @@ function PotentialSwap(props) {
             {currentDialog === 1 && (
               <Container>
                 <TextField
+                  className={classes.field}
                   value={props.creatorSwap.module_code}
                   label="Module"
                   variant="outlined"
                   disabled={true}
                 ></TextField>
+                <br />
+                <br />
                 <TextField
+                  className={classes.field}
                   value={props.creatorSwap.slot_type}
                   label="Slot Type"
                   variant="outlined"
                   disabled={true}
                 ></TextField>
+                <br />
+                <br />
                 <TextField
+                  className={classes.field}
                   value={props.initiatorSlot}
                   label="Current Slot"
                   variant="outlined"
                   disabled={true}
                 ></TextField>
+                <br />
+                <br />
                 <TextField
+                  className={classes.field}
                   value={props.creatorSwap.current_slot}
                   label="Desired Slot"
                   variant="outlined"
@@ -166,7 +188,7 @@ function PotentialSwap(props) {
             )}
             {/*Step 3*/}
             {currentDialog === 2 && (
-              <Container>
+              <Container className={classes.comparison}>
                 <Card>
                   <Typography variant="h6" align="center">
                     {initiatorSwap.module_code}

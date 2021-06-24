@@ -23,6 +23,7 @@ function Marketplace({ success, error, errorMsg }) {
     potentialSwaps,
     getAllModules,
     getModuleDetails,
+    slotDets,
     getSlotDetails,
     searchSwap,
     viewSwaps,
@@ -57,6 +58,7 @@ function Marketplace({ success, error, errorMsg }) {
     e.preventDefault();
     searchSwap(moduleCode, slotType, currentSlot);
     console.log(userSwaps);
+    console.log(slotDets);
   }
   return (
     <ThemeProvider theme={theme}>
@@ -150,6 +152,7 @@ function Marketplace({ success, error, errorMsg }) {
             creatorSwaps={potentialSwaps}
             initiatorSwaps={userSwaps}
             initiatorSlot={currentSlot}
+            slotDets={slotDets}
           />
 
           {/* {localSuccess && <SwapList arr={potentialSwaps}></SwapList>} */}
