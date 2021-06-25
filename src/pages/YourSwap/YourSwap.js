@@ -1,5 +1,12 @@
 import NavBar from "../../components/NavBar";
-import { ThemeProvider, Container, Tabs, Tab, setRef } from "@material-ui/core";
+import {
+  ThemeProvider,
+  Container,
+  Tabs,
+  Tab,
+  setRef,
+  Dialog,
+} from "@material-ui/core";
 import { theme } from "../../Theme";
 import { useState, useEffect } from "react";
 import { useStyles } from "./theme";

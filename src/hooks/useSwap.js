@@ -75,7 +75,6 @@ const useSwap = () => {
         current_slot: currentSlot,
         desired_slots: desiredSlots,
         completed: completed,
-        reserved: reserved,
         venue: slotDets.venue,
         startTime: slotDets.startTime,
         endTime: slotDets.endTime,
@@ -89,8 +88,6 @@ const useSwap = () => {
         }, 3000);
       })
       .catch((error) => {
-        console.log(error.response);
-        console.log(error.response.data);
         dispatch(createSwapFail(error.response.data));
         setTimeout(() => {
           dispatch(resetSwap());
@@ -183,18 +180,15 @@ const useSwap = () => {
       })
       .then((response) => {
         dispatch(searchSwapSuccess());
-        console.log(response.data);
         setPotentialSwaps(
           response.data.filter((swap) => !swap.isReserved && !swap.isCompleted)
         );
-        console.log(potentialSwaps);
         setTimeout(() => {
           dispatch(resetSwap());
         }, 5000);
       })
       .catch((error) => {
         dispatch(searchSwapFail(error.response.data));
-        console.log(error.response);
         setTimeout(() => {
           dispatch(resetSwap());
         }, 2000);
