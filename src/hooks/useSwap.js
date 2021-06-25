@@ -87,8 +87,6 @@ const useSwap = () => {
         }, 3000);
       })
       .catch((error) => {
-        console.log(error.response);
-        console.log(error.response.data);
         dispatch(createSwapFail(error.response.data));
         setTimeout(() => {
           dispatch(resetSwap());
@@ -188,7 +186,6 @@ const useSwap = () => {
       })
       .catch((error) => {
         dispatch(searchSwapFail(error.response.data));
-        console.log(error.response);
         setTimeout(() => {
           dispatch(resetSwap());
         }, 2000);
