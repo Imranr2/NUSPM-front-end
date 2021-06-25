@@ -6,6 +6,10 @@ const useStyles = makeStyles((theme) => ({
     "&:hover": {
       transform: "scale(1.1)",
     },
+    "&:focus": {
+      borderColor: "#0D169F",
+      backgroundColor: "#dedede",
+    },
   },
   card: {},
   field: {

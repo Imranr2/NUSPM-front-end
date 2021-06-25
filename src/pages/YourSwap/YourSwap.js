@@ -4,10 +4,13 @@ import { theme } from "../../Theme";
 import { useState, useEffect } from "react";
 import { useStyles } from "./theme";
 import useSwap from "../../hooks/useSwap";
+import useOffer from "../../hooks/useOffer";
 import SwapList from "../../components/SwapList/SwapList";
+import OfferList from "../../components/OfferList/OfferList";
 import { connect } from "react-redux";
+import { PulseLoader } from "react-spinners";
 
-function YourSwap({ success, loading }) {
+function YourSwap({ success, swapLoading, offerLoading, userId }) {
   const [value, setValue] = useState(0);
   const [refresh, setRefresh] = useState(true);
 
@@ -23,10 +26,12 @@ function YourSwap({ success, loading }) {
   };
 
   const { userSwaps, viewSwaps } = useSwap();
+  const { userOffer, viewOffers } = useOffer();
 
   useEffect(() => {
     if (refresh) {
       viewSwaps();
+      viewOffers();
       setRefresh(false);
     }
   }, [refresh]);
@@ -42,31 +47,60 @@ function YourSwap({ success, loading }) {
           className={classes.tabs}
           onChange={handleChange}
         >
-          <Tab label="Open" />
-          <Tab label="Reserved" />
-          <Tab label="Completed" />
+          <Tab label="Current Offers" />
+          <Tab label="Open Swaps" />
+          <Tab label="Pending Offers" />
+          <Tab label="Completed Swaps" />
+          <Tab label="Rejected Offers" />
         </Tabs>
+        {(swapLoading || offerLoading) && <PulseLoader color="#0D169F" />}
+        {/* some other loader in center of page */}
         {value === 0 && (
-          <SwapList
-            arr={userSwaps.filter(
-              (swap) => !swap.isReserved && !swap.isCompleted
+          <OfferList
+            arr={userOffer.filter(
+              (offer) =>
+                offer.creatorUserId === userId &&
+                !offer.isAccepted &&
+                offer.isPending
             )}
-            panel="open"
-            status={changeStatus}
+            parentCallback={changeStatus}
+            tab="current"
           />
         )}
         {value === 1 && (
           <SwapList
-            arr={userSwaps.filter((swap) => swap.isReserved)}
-            panel="reserved"
+            arr={userSwaps.filter((swap) => !swap.isCompleted)}
+            panel="open"
             status={changeStatus}
           />
         )}
+
         {value === 2 && (
+          <OfferList
+            arr={userOffer.filter(
+              (offer) =>
+                offer.initiatorUserId === userId &&
+                !offer.isAccepted &&
+                offer.isPending
+            )}
+            parentCallback={changeStatus}
+            tab="pending"
+          />
+        )}
+        {value === 3 && (
           <SwapList
             arr={userSwaps.filter((swap) => swap.isCompleted)}
             panel="completed"
             status={changeStatus}
+          />
+        )}
+        {value === 4 && (
+          <OfferList
+            arr={userOffer.filter(
+              (offer) => !offer.isAccepted && !offer.isPending
+            )}
+            parentCallback={changeStatus}
+            tab="rejected"
           />
         )}
       </Container>
@@ -77,7 +111,9 @@ function YourSwap({ success, loading }) {
 const mapStateToProps = (state) => {
   return {
     success: state.swap.success,
-    loading: state.swap.isLoading,
+    swapLoading: state.swap.isLoading,
+    offerLoading: state.offer.isLoading,
+    userId: state.auth.user.id,
   };
 };
 export default connect(mapStateToProps)(YourSwap);
