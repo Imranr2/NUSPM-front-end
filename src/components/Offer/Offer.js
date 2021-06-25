@@ -18,6 +18,7 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import ArrowRightIcon from "@material-ui/icons/ArrowRight";
 import axios from "axios";
+import authAxios from "../../helpers/authAxios";
 import useOffer from "../../hooks/useOffer";
 import CurrentButtons from "../ButtonSets/CurrentButtons";
 import PendingButtons from "../ButtonSets/PendingButtons";
@@ -26,21 +27,18 @@ export default function Offer(props) {
   const classes = useStyles();
   const { updateOffer } = useOffer();
   const [offerOpen, setOfferOpen] = useState(false);
-  const handleOfferOpen = () => setOfferOpen(true);
-  const handleOfferClose = () => setOfferOpen(false);
   const [currentSwap, setCurrentSwap] = useState();
   const [incomingSwap, setIncomingSwap] = useState();
   const [loading1, setLoading1] = useState(true);
   const [loading2, setLoading2] = useState(true);
-  const headers = {
-    Authorization: `Bearer ${localStorage.getItem("token")}`,
-  };
 
+  const handleOfferOpen = () => setOfferOpen(true);
+  const handleOfferClose = () => setOfferOpen(false);
+
+  // find way to extract out using useoffer
   useEffect(() => {
-    axios
-      .get(`http://localhost:3001/api/v1/swaps/${props.card.creatorSwapId}`, {
-        headers,
-      })
+    authAxios
+      .get(`/api/v1/swaps/${props.card.initiatorSwapId}`)
       .then((response) => {
         setCurrentSwap(response.data);
         console.log(currentSwap);
@@ -52,10 +50,8 @@ export default function Offer(props) {
   }, []);
 
   useEffect(() => {
-    axios
-      .get(`http://localhost:3001/api/v1/swaps/${props.card.initiatorSwapId}`, {
-        headers,
-      })
+    authAxios
+      .get(`/api/v1/swaps/${props.card.creatorSwapId}`)
       .then((response) => {
         setIncomingSwap(response.data);
         console.log(incomingSwap);
@@ -71,18 +67,12 @@ export default function Offer(props) {
   switch (props.tab) {
     case "current":
       buttonset = (
-        <CurrentButtons
-          offerDetails={props.card}
-          parentCallback={props.parentCallback}
-        />
+        <CurrentButtons offerDetails={props.card} status={props.status} initiatorSwap={currentSwap} creatorSwap={incomingSwap}/>
       );
       break;
     case "pending":
       buttonset = (
-        <PendingButtons
-          offerDetails={props.card}
-          parentCallback={props.parentCallback}
-        />
+        <PendingButtons offerDetails={props.card} status={props.status} />
       );
       break;
     default:
@@ -98,9 +88,14 @@ export default function Offer(props) {
               <Typography variant="h6">
                 {incomingSwap.module_code}
                 <br />
-                {incomingSwap.slot_type}
+                {incomingSwap.slot_type} [{incomingSwap.current_slot}]
                 <br />
-                {incomingSwap.current_slot}
+                {incomingSwap.day}
+                <br />
+                {incomingSwap.venue}
+                <br />
+                {`${incomingSwap.startTime} - ${incomingSwap.endTime}`}
+                <br />
               </Typography>
             </CardContent>
           )}
@@ -109,9 +104,14 @@ export default function Offer(props) {
               <Typography variant="h6">
                 {currentSwap.module_code}
                 <br />
-                {currentSwap.slot_type}
+                {currentSwap.slot_type} [{currentSwap.current_slot}]
                 <br />
-                {currentSwap.current_slot}
+                {currentSwap.day}
+                <br />
+                {currentSwap.venue}
+                <br />
+                {`${currentSwap.startTime} - ${currentSwap.endTime}`}
+                <br />
               </Typography>
             </CardContent>
           )}

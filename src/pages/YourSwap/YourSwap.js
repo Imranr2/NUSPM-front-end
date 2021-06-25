@@ -63,13 +63,24 @@ function YourSwap({ success, swapLoading, offerLoading, userId }) {
                 !offer.isAccepted &&
                 offer.isPending
             )}
-            parentCallback={changeStatus}
+            status={changeStatus}
             tab="current"
           />
         )}
+
+        {/* test and check with actual users on what they want */}
         {value === 1 && (
           <SwapList
-            arr={userSwaps.filter((swap) => !swap.isCompleted)}
+            arr={userSwaps.filter(
+              (swap) =>
+                !swap.isCompleted &&
+                !userOffer
+                  .map((offer) => offer.initiator_swap_id)
+                  .includes(swap.id) &&
+                !userOffer
+                  .map((offer) => offer.creator_swap_id)
+                  .includes(swap.id)
+            )}
             panel="open"
             status={changeStatus}
           />
@@ -83,7 +94,7 @@ function YourSwap({ success, swapLoading, offerLoading, userId }) {
                 !offer.isAccepted &&
                 offer.isPending
             )}
-            parentCallback={changeStatus}
+            status={changeStatus}
             tab="pending"
           />
         )}
@@ -99,7 +110,7 @@ function YourSwap({ success, swapLoading, offerLoading, userId }) {
             arr={userOffer.filter(
               (offer) => !offer.isAccepted && !offer.isPending
             )}
-            parentCallback={changeStatus}
+            status={changeStatus}
             tab="rejected"
           />
         )}

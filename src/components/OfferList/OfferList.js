@@ -15,7 +15,7 @@ function OfferList(props) {
           <Offer
             key={index}
             card={offerDetails}
-            parentCallback={props.parentCallback}
+            status={props.status}
             tab={props.tab}
           ></Offer>
         ))}

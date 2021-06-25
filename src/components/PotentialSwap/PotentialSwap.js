@@ -16,11 +16,13 @@ import {
 import { Autocomplete } from "@material-ui/lab";
 import { useState, useEffect } from "react";
 import useSwap from "../../hooks/useSwap";
+import useOffer from "../../hooks/useOffer";
 import ArrowRightIcon from "@material-ui/icons/ArrowRight";
 import { connect } from "react-redux";
 import { HighlightButton } from "./theme";
 import { useStyles } from "./theme";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
+
 function PotentialSwap(props) {
   const classes = useStyles();
   // const [initiatorSwap, setInitiatorSwap] = useState({});
@@ -42,6 +44,8 @@ function PotentialSwap(props) {
     setSlotDets,
   } = useSwap();
 
+  const { createOffer } = useOffer();
+
   const handleDialogClickOpen = () => {
     // console.log(userSwaps);
     // console.log(filteredUserSwaps);
@@ -56,10 +60,12 @@ function PotentialSwap(props) {
 
   const handleInitiatorSwapClick = (params) => {
     setInitiatorSwap(params);
+    console.log(initiatorSwap);
     setDisabled(!disabled);
   };
 
   const handleNext = () => {
+    console.log(initiatorSwap);
     setCurrentDialog(2);
   };
 
@@ -74,10 +80,25 @@ function PotentialSwap(props) {
       props.creatorSwap.slot_type,
       props.initiatorSlot,
       [props.creatorSwap.current_slot],
+      false
+    );
+    setCurrentDialog(2);
+    console.log(initiatorSwap);
+  };
+
+  const handleInitiateSwap = () => {
+    //create offer
+    createOffer(
+      initiatorSwap.user_id,
+      props.creatorSwap.user_id,
+      initiatorSwap.id,
+      props.creatorSwap.id,
       false,
       true
     );
-    setCurrentDialog(2);
+    handleDialogClose();
+    console.log(initiatorSwap);
+    //update swaps
   };
 
   useEffect(() => setSlotDets(props.slotDets));
@@ -229,7 +250,12 @@ function PotentialSwap(props) {
           <DialogActions>
             {currentDialog === 0 && (
               <Container>
-                <Button onClick={handleCreate}>Create Swap</Button>
+                <Button
+                  disabled={filteredUserSwaps.length > 0}
+                  onClick={handleCreate}
+                >
+                  Create Swap
+                </Button>
                 <Button disabled={disabled} onClick={handleNext}>
                   Next
                 </Button>
@@ -243,7 +269,7 @@ function PotentialSwap(props) {
             )}
             {currentDialog === 2 && (
               <Container>
-                <Button>Initiate</Button>
+                <Button onClick={handleInitiateSwap}>Initiate</Button>
                 <Button onClick={handleDialogClose}>Cancel</Button>
               </Container>
             )}

@@ -64,8 +64,7 @@ const useSwap = () => {
     slotType,
     currentSlot,
     desiredSlots,
-    completed,
-    reserved
+    completed
   ) => {
     dispatch(createSwapRequest());
     authAxios
@@ -75,7 +74,6 @@ const useSwap = () => {
         current_slot: currentSlot,
         desired_slots: desiredSlots,
         completed: completed,
-        reserved: reserved,
         venue: slotDets.venue,
         startTime: slotDets.startTime,
         endTime: slotDets.endTime,
@@ -123,8 +121,7 @@ const useSwap = () => {
     slotType,
     currentSlot,
     desiredSlots,
-    completed,
-    reserved
+    completed
   ) => {
     dispatch(updateSwapRequest());
     authAxios
@@ -134,7 +131,6 @@ const useSwap = () => {
         current_slot: currentSlot,
         desired_slots: desiredSlots,
         completed: completed,
-        reserved: reserved,
         venue: slotDets.venue,
         startTime: slotDets.startTime,
         endTime: slotDets.endTime,
@@ -184,9 +180,7 @@ const useSwap = () => {
       .then((response) => {
         dispatch(searchSwapSuccess());
         console.log(response.data);
-        setPotentialSwaps(
-          response.data.filter((swap) => !swap.isReserved && !swap.isCompleted)
-        );
+        setPotentialSwaps(response.data.filter((swap) => !swap.isCompleted));
         console.log(potentialSwaps);
         setTimeout(() => {
           dispatch(resetSwap());
@@ -202,29 +196,23 @@ const useSwap = () => {
   };
 
   // NEW METHOD FOR OFFER
-  // const showSwap = (swapId, initiator) => {
-  //   dispatch(viewSwapRequest());
-  //   authAxios
-  //     .get(`/api/v1/swaps/${swapId}`)
-  //     .then((response) => {
-  //       dispatch(viewSwapSuccess());
-  //       //change to whatever u think is better
-  //       if (initiator) {
-  //         setInitiatorSwap(response.data);
-  //       } else {
-  //         setCreatorSwap(response.data);
-  //       }
-  //       setTimeout(() => {
-  //         dispatch(resetSwap());
-  //       }, 3000);
-  //     })
-  //     .catch((error) => {
-  //       dispatch(viewSwapFail());
-  //       setTimeout(() => {
-  //         dispatch(resetSwap());
-  //       }, 3000);
-  //     });
-  // };
+  const showSwap = (swapId) => {
+    dispatch(viewSwapRequest());
+    authAxios
+      .get(`/api/v1/swaps/${swapId}`)
+      .then((response) => {
+        dispatch(viewSwapSuccess());
+        setTimeout(() => {
+          dispatch(resetSwap());
+        }, 3000);
+      })
+      .catch((error) => {
+        dispatch(viewSwapFail());
+        setTimeout(() => {
+          dispatch(resetSwap());
+        }, 3000);
+      });
+  };
 
   return {
     moduleList,

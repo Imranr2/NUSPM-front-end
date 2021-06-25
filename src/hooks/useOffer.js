@@ -45,12 +45,16 @@ const useOffer = () => {
         pending: pending,
       })
       .then((response) => {
+        console.log(response.data);
         dispatch(createOfferSuccess());
         setTimeout(() => {
           dispatch(resetOffer());
         }, 3000);
       })
       .catch((error) => {
+        console.log(error);
+        console.log(error.response);
+        console.log(error.response.data);
         dispatch(createOfferFail(error.response.data));
         setTimeout(() => {
           dispatch(resetOffer());

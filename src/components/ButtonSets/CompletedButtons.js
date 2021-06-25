@@ -26,21 +26,13 @@ export default function ReservedButtons({ swapDetails, status }) {
     setFreeOpen(false);
   };
 
-  const handleReserveClickOpen = () => {
-    setReserveOpen(true);
-  };
+  // const handleDeleteClickOpen = () => {
+  //   setDeleteOpen(true);
+  // };
 
-  const handleReserveClose = () => {
-    setReserveOpen(false);
-  };
-
-  const handleDeleteClickOpen = () => {
-    setDeleteOpen(true);
-  };
-
-  const handleDeleteClose = () => {
-    setDeleteOpen(false);
-  };
+  // const handleDeleteClose = () => {
+  //   setDeleteOpen(false);
+  // };
 
   const handleUnreserve = () => {
     setFreeOpen(false);
@@ -50,7 +42,6 @@ export default function ReservedButtons({ swapDetails, status }) {
       swapDetails.slot_type,
       swapDetails.current_slot,
       swapDetails.desired_slots,
-      false,
       false
     );
     setTimeout(() => {
@@ -58,29 +49,13 @@ export default function ReservedButtons({ swapDetails, status }) {
     }, 1500);
   };
 
-  const handleDelete = () => {
-    setDeleteOpen(false);
-    deleteSwap(swapDetails.id);
-    setTimeout(() => {
-      status();
-    }, 1500);
-  };
-
-  const handleReserve = () => {
-    setReserveOpen(false);
-    updateSwap(
-      swapDetails.id,
-      swapDetails.module_code,
-      swapDetails.slot_type,
-      swapDetails.current_slot,
-      swapDetails.desired_slots,
-      false,
-      true
-    );
-    setTimeout(() => {
-      status();
-    }, 1500);
-  };
+  // const handleDelete = () => {
+  //   setDeleteOpen(false);
+  //   deleteSwap(swapDetails.id);
+  //   setTimeout(() => {
+  //     status();
+  //   }, 1500);
+  // };
 
   return (
     <ThemeProvider theme={theme}>
@@ -89,7 +64,7 @@ export default function ReservedButtons({ swapDetails, status }) {
         color="primary"
         onClick={handleUnreserveClickOpen}
       >
-        Unreserve
+        Free Swap
       </Button>
       <Dialog
         open={freeOpen}
@@ -110,33 +85,7 @@ export default function ReservedButtons({ swapDetails, status }) {
         </DialogActions>
       </Dialog>
 
-      <Button
-        variant="outlined"
-        color="primary"
-        onClick={handleReserveClickOpen}
-      >
-        Reserve
-      </Button>
-      <Dialog
-        open={reserveOpen}
-        onClose={handleReserveClose}
-        aria-labelledby="form-dialog-title"
-      >
-        <DialogTitle id="form-dialog-title">Reserve Swap</DialogTitle>
-        <DialogContent>
-          <DialogContentText>Are you sure?</DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleReserveClose} color="primary">
-            Cancel
-          </Button>
-          <Button onClick={handleReserve} color="primary">
-            Confirm
-          </Button>
-        </DialogActions>
-      </Dialog>
-
-      <Button
+      {/* <Button
         variant="outlined"
         color="primary"
         onClick={handleDeleteClickOpen}
@@ -160,7 +109,55 @@ export default function ReservedButtons({ swapDetails, status }) {
             Confirm
           </Button>
         </DialogActions>
-      </Dialog>
+      </Dialog> */}
     </ThemeProvider>
   );
 }
+
+// const handleReserveClickOpen = () => {
+//   setReserveOpen(true);
+// };
+
+// const handleReserveClose = () => {
+//   setReserveOpen(false);
+// };
+
+// const handleReserve = () => {
+//   setReserveOpen(false);
+//   updateSwap(
+//     swapDetails.id,
+//     swapDetails.module_code,
+//     swapDetails.slot_type,
+//     swapDetails.current_slot,
+//     swapDetails.desired_slots,
+//     false
+//   );
+//   setTimeout(() => {
+//     status();
+//   }, 1500);
+// };
+// {/* <Button
+//   variant="outlined"
+//   color="primary"
+//   onClick={handleReserveClickOpen}
+// >
+//   Reserve
+// </Button>
+// <Dialog
+//   open={reserveOpen}
+//   onClose={handleReserveClose}
+//   aria-labelledby="form-dialog-title"
+// >
+//   <DialogTitle id="form-dialog-title">Reserve Swap</DialogTitle>
+//   <DialogContent>
+//     <DialogContentText>Are you sure?</DialogContentText>
+//   </DialogContent>
+//   <DialogActions>
+//     <Button onClick={handleReserveClose} color="primary">
+//       Cancel
+//     </Button>
+//     <Button onClick={handleReserve} color="primary">
+//       Confirm
+//     </Button>
+//   </DialogActions>
+// </Dialog> */}

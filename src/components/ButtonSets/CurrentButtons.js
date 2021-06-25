@@ -2,52 +2,47 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { Button, ThemeProvider } from "@material-ui/core";
 import { theme } from "../../Theme";
-import axios from "axios";
+import useOffer from "../../hooks/useOffer";
+import useSwap from "../../hooks/useSwap";
 
-export default function CurrentButtons(props) {
-  const headers = {
-    Authorization: `Bearer ${localStorage.getItem("token")}`,
-  };
+export default function CurrentButtons({
+  offerDetails,
+  status,
+  initiatorSwap,
+  creatorSwap,
+}) {
+  const { updateOffer, withdrawOffers } = useOffer();
+  const { updateSwap } = useSwap();
+
   function handleAccept() {
-    axios
-      .put(
-        `http://localhost:3001/api/v1/offers/${props.offerDetails.id}`,
-        {
-          accepted: true,
-          pending: false,
-        },
-        {
-          headers,
-        }
-      )
-      .then((response) => {
-        props.parentCallback(true);
-        console.log("success");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    updateOffer(offerDetails.id, true, false);
+    withdrawOffers(offerDetails.creatorSwapId);
+    updateSwap(
+      initiatorSwap.id,
+      initiatorSwap.module_code,
+      initiatorSwap.slot_type,
+      initiatorSwap.current_slot,
+      initiatorSwap.desired_slots,
+      true
+    );
+    updateSwap(
+      creatorSwap.id,
+      creatorSwap.module_code,
+      creatorSwap.slot_type,
+      creatorSwap.current_slot,
+      creatorSwap.desired_slots,
+      true
+    );
+    setTimeout(() => {
+      status();
+    }, 1500);
   }
 
   function handleReject() {
-    axios
-      .put(
-        `http://localhost:3001/api/v1/offers/${props.offerDetails.id}`,
-        {
-          accepted: false,
-          pending: false,
-        },
-        {
-          headers,
-        }
-      )
-      .then((response) => {
-        props.parentCallback(true);
-        console.log("success");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    updateOffer(offerDetails.id, false, false);
+    setTimeout(() => {
+      status();
+    }, 1500);
   }
 
   return (
