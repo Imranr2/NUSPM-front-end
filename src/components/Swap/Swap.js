@@ -18,6 +18,7 @@ import { PinDropSharp } from "@material-ui/icons";
 export default function Swap(props) {
   const classes = useStyles();
   let buttonset = null;
+  const { completedSwap, showSwap } = useSwap();
 
   switch (props.buttonset) {
     case "open":
@@ -41,6 +42,16 @@ export default function Swap(props) {
       );
       break;
   }
+
+  useEffect(() => {
+    if (props.offer.length > 0) {
+      if (props.offer.initiatorSwapId === props.card.id) {
+        showSwap(props.offer.initiatorSwapId);
+      } else {
+        showSwap(props.offer.creatorSwapId);
+      }
+    }
+  }, []);
 
   return (
     <Grid key={props} container item xs={12} sm={6} md={4} justify="center">
@@ -78,8 +89,8 @@ export default function Swap(props) {
               New: [{props.card.current_slot}], broken, new should be old
               <br />
               {/* need to find a way to get current slot and email of other guy */}
-              Old: [{props.card.desired_slots.toString()}], broken, old should
-              not be an array
+              Old: [{completedSwap.current_slot}], broken, old should not be an
+              array
             </Typography>
           )}
         </CardContent>

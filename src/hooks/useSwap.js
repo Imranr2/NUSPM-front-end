@@ -28,6 +28,7 @@ const useSwap = () => {
   const [userSwaps, setUserSwaps] = useState([]);
   const [potentialSwaps, setPotentialSwaps] = useState([]);
   const [slotDets, setSlotDets] = useState([]);
+  const [completedSwap, setCompletedSwap] = useState({});
 
   const [initiatorSwap, setInitiatorSwap] = useState({});
   const [creatorSwap, setCreatorSwap] = useState("");
@@ -198,6 +199,7 @@ const useSwap = () => {
     authAxios
       .get(`/api/v1/swaps/${swapId}`)
       .then((response) => {
+        setCompletedSwap(response.data);
         dispatch(viewSwapSuccess());
         setTimeout(() => {
           dispatch(resetSwap());
@@ -222,6 +224,8 @@ const useSwap = () => {
     setInitiatorSwap,
     slotDets,
     setSlotDets,
+    completedSwap,
+    setCompletedSwap,
     getAllModules,
     getModuleDetails,
     getSlotDetails,
@@ -230,6 +234,7 @@ const useSwap = () => {
     deleteSwap,
     updateSwap,
     searchSwap,
+    showSwap,
   };
 };
 

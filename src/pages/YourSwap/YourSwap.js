@@ -92,18 +92,10 @@ function YourSwap({ success, swapLoading, offerLoading, userId }) {
               current and pending offers
             </Alert>
             <SwapList
-              arr={userSwaps.filter(
-                (swap) =>
-                  !swap.isCompleted &&
-                  !userOffer
-                    .map((offer) => offer.initiator_swap_id)
-                    .includes(swap.id) &&
-                  !userOffer
-                    .map((offer) => offer.creator_swap_id)
-                    .includes(swap.id)
-              )}
+              arr={userSwaps.filter((swap) => !swap.isCompleted)}
               panel="open"
               status={changeStatus}
+              offer={[]}
             />
           </>
         )}
@@ -134,6 +126,7 @@ function YourSwap({ success, swapLoading, offerLoading, userId }) {
               arr={userSwaps.filter((swap) => swap.isCompleted)}
               panel="completed"
               status={changeStatus}
+              offers={userOffer.filter((offer) => offer.isAccepted)}
             />
           </>
         )}

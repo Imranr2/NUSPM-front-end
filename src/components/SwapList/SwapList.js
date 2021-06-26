@@ -13,6 +13,11 @@ function SwapList(props) {
             card={card}
             buttonset={props.panel}
             status={props.status}
+            offer={props.offers.filter(
+              (offer) =>
+                offer.creatorSwapId === card.id ||
+                offer.initiatorSwapId === card.id
+            )}
           ></Swap>
         ))}
       </Grid>
