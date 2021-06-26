@@ -22,7 +22,10 @@ const useStyles = makeStyles((theme) => ({
   },
   main: {
     height: "100vh",
-    marginTop: "15vh",
+    // marginTop: "15vh",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
   },
 }));
 

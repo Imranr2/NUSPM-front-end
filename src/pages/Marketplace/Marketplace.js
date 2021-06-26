@@ -7,6 +7,7 @@ import {
   Grid,
   Button,
   TextField,
+  Typography,
 } from "@material-ui/core";
 import { Alert, Autocomplete } from "@material-ui/lab";
 import { theme } from "./theme";
@@ -142,12 +143,16 @@ function Marketplace({ success, error, errorMsg }) {
                   fullWidth
                   variant="contained"
                   color="primary"
+                  size="large"
                 >
                   Search
                 </Button>
               </Grid>
             </Grid>
           </form>
+          <Alert severity="info">
+            Click on the listing to initiate a swap!
+          </Alert>
           <PotentialSwaps
             creatorSwaps={potentialSwaps}
             initiatorSwaps={userSwaps}

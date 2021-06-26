@@ -6,6 +6,7 @@ import {
   Tab,
   setRef,
   Dialog,
+  Typography,
 } from "@material-ui/core";
 import { theme } from "../../Theme";
 import { useState, useEffect } from "react";
@@ -16,6 +17,7 @@ import SwapList from "../../components/SwapList/SwapList";
 import OfferList from "../../components/OfferList/OfferList";
 import { connect } from "react-redux";
 import { PulseLoader } from "react-spinners";
+import { Alert } from "@material-ui/lab";
 
 function YourSwap({ success, swapLoading, offerLoading, userId }) {
   const [value, setValue] = useState(0);
@@ -45,7 +47,7 @@ function YourSwap({ success, swapLoading, offerLoading, userId }) {
 
   return (
     <ThemeProvider theme={theme}>
-      <NavBar arr={[false, false, true]} />
+      <NavBar arr={[false, true, false]} />
       <Container className={classes.main}>
         <Tabs
           value={value}
@@ -55,7 +57,7 @@ function YourSwap({ success, swapLoading, offerLoading, userId }) {
           onChange={handleChange}
         >
           <Tab label="Current Offers" />
-          <Tab label="Open Swaps" />
+          <Tab label="Current Swaps" />
           <Tab label="Pending Offers" />
           <Tab label="Completed Swaps" />
           <Tab label="Rejected Offers" />
@@ -63,63 +65,91 @@ function YourSwap({ success, swapLoading, offerLoading, userId }) {
         {(swapLoading || offerLoading) && <PulseLoader color="#0D169F" />}
         {/* some other loader in center of page */}
         {value === 0 && (
-          <OfferList
-            arr={userOffer.filter(
-              (offer) =>
-                offer.creatorUserId === userId &&
-                !offer.isAccepted &&
-                offer.isPending
-            )}
-            status={changeStatus}
-            tab="current"
-          />
+          <>
+            <Alert severity="info" className={classes.alert}>
+              Click on the offer to view pending slot details and accept or
+              reject the offer
+            </Alert>
+            <OfferList
+              arr={userOffer.filter(
+                (offer) =>
+                  offer.creatorUserId === userId &&
+                  !offer.isAccepted &&
+                  offer.isPending
+              )}
+              status={changeStatus}
+              tab="current"
+            />
+          </>
         )}
 
         {/* test and check with actual users on what they want */}
         {value === 1 && (
-          <SwapList
-            arr={userSwaps.filter(
-              (swap) =>
-                !swap.isCompleted &&
-                !userOffer
-                  .map((offer) => offer.initiator_swap_id)
-                  .includes(swap.id) &&
-                !userOffer
-                  .map((offer) => offer.creator_swap_id)
-                  .includes(swap.id)
-            )}
-            panel="open"
-            status={changeStatus}
-          />
+          <>
+            <Alert severity="info" className={classes.alert}>
+              Caution: Deleting your swap request will withdraw and reject all
+              offers. Edits to your swap request will be reflected on all
+              current and pending offers
+            </Alert>
+            <SwapList
+              arr={userSwaps.filter(
+                (swap) =>
+                  !swap.isCompleted &&
+                  !userOffer
+                    .map((offer) => offer.initiator_swap_id)
+                    .includes(swap.id) &&
+                  !userOffer
+                    .map((offer) => offer.creator_swap_id)
+                    .includes(swap.id)
+              )}
+              panel="open"
+              status={changeStatus}
+            />
+          </>
         )}
 
         {value === 2 && (
-          <OfferList
-            arr={userOffer.filter(
-              (offer) =>
-                offer.initiatorUserId === userId &&
-                !offer.isAccepted &&
-                offer.isPending
-            )}
-            status={changeStatus}
-            tab="pending"
-          />
+          <>
+            <Alert severity="info" className={classes.alert}>
+              Click on the card to withdraw your offer
+            </Alert>
+            <OfferList
+              arr={userOffer.filter(
+                (offer) =>
+                  offer.initiatorUserId === userId &&
+                  !offer.isAccepted &&
+                  offer.isPending
+              )}
+              status={changeStatus}
+              tab="pending"
+            />
+          </>
         )}
         {value === 3 && (
-          <SwapList
-            arr={userSwaps.filter((swap) => swap.isCompleted)}
-            panel="completed"
-            status={changeStatus}
-          />
+          <>
+            <Alert severity="info" className={classes.alert}>
+              Contact the other party with the email displayed in the card
+            </Alert>
+            <SwapList
+              arr={userSwaps.filter((swap) => swap.isCompleted)}
+              panel="completed"
+              status={changeStatus}
+            />
+          </>
         )}
         {value === 4 && (
-          <OfferList
-            arr={userOffer.filter(
-              (offer) => !offer.isAccepted && !offer.isPending
-            )}
-            status={changeStatus}
-            tab="rejected"
-          />
+          <>
+            <Alert severity="info" className={classes.alert}>
+              All your rejected offers are displayed here
+            </Alert>
+            <OfferList
+              arr={userOffer.filter(
+                (offer) => !offer.isAccepted && !offer.isPending
+              )}
+              status={changeStatus}
+              tab="rejected"
+            />
+          </>
         )}
       </Container>
     </ThemeProvider>

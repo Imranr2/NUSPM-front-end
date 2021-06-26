@@ -10,6 +10,7 @@ import {
   Button,
   TextField,
   Link,
+  Typography,
 } from "@material-ui/core";
 import { Autocomplete } from "@material-ui/lab";
 import { theme } from "../../Theme";
@@ -76,6 +77,11 @@ function CreateSwap({ success, error, errorMsg }) {
         <div>
           <form onSubmit={handleSubmit}>
             <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <Typography variant="h4" color="primary">
+                  Create Swap Request
+                </Typography>
+              </Grid>
               <Grid item xs={12}>
                 <Autocomplete
                   value={moduleCode}

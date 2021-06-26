@@ -105,16 +105,13 @@ function PotentialSwap(props) {
 
   return (
     <Grid key={props} item xs={12} sm={6} md={4}>
-      <Card className={classes.card}>
-        <CardActionArea
-          className={classes.actionArea}
-          onClick={handleDialogClickOpen}
-        >
+      <Card>
+        <CardActionArea onClick={handleDialogClickOpen}>
           <CardContent>
             <Typography variant="h6">
               {props.creatorSwap.module_code}
               <br />
-              {props.creatorSwap.slot_type} [{props.creatorSwap.current_slot}]
+              {props.creatorSwap.slot_type}
               <br />
               {props.creatorSwap.day}
               <br />
@@ -122,7 +119,9 @@ function PotentialSwap(props) {
               <br />
               {`${props.creatorSwap.startTime} - ${props.creatorSwap.endTime}`}
               <br />
-              {props.creatorSwap.desired_slots}
+              Have: [{props.creatorSwap.current_slot}]
+              <br />
+              Want: [{props.creatorSwap.desired_slots.toString()}]
             </Typography>
           </CardContent>
         </CardActionArea>
@@ -141,7 +140,8 @@ function PotentialSwap(props) {
                 <Grid container spacing={4}>
                   <Grid item>
                     <Card>
-                      <ButtonBase
+                      <CardActionArea
+                        className={classes.actionArea}
                         onClick={() =>
                           handleInitiatorSwapClick(filteredUserSwaps[0])
                         }
@@ -162,7 +162,7 @@ function PotentialSwap(props) {
                             {filteredUserSwaps[0].desired_slots}
                           </Typography>
                         </CardContent>
-                      </ButtonBase>
+                      </CardActionArea>
                     </Card>
                   </Grid>
                 </Grid>
@@ -209,42 +209,62 @@ function PotentialSwap(props) {
             )}
             {/*Step 3*/}
             {currentDialog === 2 && (
-              <Container className={classes.comparison}>
-                <Card>
-                  <Typography variant="h6" align="center">
-                    {initiatorSwap.module_code}
-                    <br />
-                    {initiatorSwap.slot_type}
-                    <br />
-                    {initiatorSwap.current_slot}
-                    <br />
-                    {initiatorSwap.day}
-                    <br />
-                    {initiatorSwap.venue}
-                    <br />
-                    {`${initiatorSwap.startTime} - ${initiatorSwap.endTime}`}
-                    <br />
+              <>
+                <Container className={classes.comparison}>
+                  <Card className={classes.card}>
+                    <Typography variant="h6" align="center">
+                      {initiatorSwap.module_code}
+                      <br />
+                      {initiatorSwap.slot_type}
+                      <br />
+                      {initiatorSwap.current_slot}
+                      <br />
+                      {initiatorSwap.day}
+                      <br />
+                      {initiatorSwap.venue}
+                      <br />
+                      {`${initiatorSwap.startTime} - ${initiatorSwap.endTime}`}
+                      <br />
+                    </Typography>
+                  </Card>
+                  <ArrowRightIcon></ArrowRightIcon>
+                  <ArrowRightIcon></ArrowRightIcon>
+                  <ArrowRightIcon></ArrowRightIcon>
+                  <Card className={classes.card}>
+                    <Typography variant="h6" align="center">
+                      {props.creatorSwap.module_code}
+                      <br />
+                      {props.creatorSwap.slot_type}
+                      <br />
+                      {props.creatorSwap.current_slot}
+                      <br />
+                      {props.creatorSwap.day}
+                      <br />
+                      {props.creatorSwap.venue}
+                      <br />
+                      {`${props.creatorSwap.startTime} - ${props.creatorSwap.endTime}`}
+                    </Typography>
+                  </Card>
+                </Container>
+                <Container className={classes.comparison}>
+                  <Typography
+                    className={classes.typography}
+                    color="primary"
+                    variant="h6"
+                    align="center"
+                  >
+                    Current Slot
                   </Typography>
-                </Card>
-                <ArrowRightIcon></ArrowRightIcon>
-                <ArrowRightIcon></ArrowRightIcon>
-                <ArrowRightIcon></ArrowRightIcon>
-                <Card>
-                  <Typography variant="h6" align="center">
-                    {props.creatorSwap.module_code}
-                    <br />
-                    {props.creatorSwap.slot_type}
-                    <br />
-                    {props.creatorSwap.current_slot}
-                    <br />
-                    {props.creatorSwap.day}
-                    <br />
-                    {props.creatorSwap.venue}
-                    <br />
-                    {`${props.creatorSwap.startTime} - ${props.creatorSwap.endTime}`}
+                  <Typography
+                    className={classes.typography}
+                    color="primary"
+                    variant="h6"
+                    align="center"
+                  >
+                    Desired Slot
                   </Typography>
-                </Card>
-              </Container>
+                </Container>
+              </>
             )}
           </DialogContent>
           <DialogActions>

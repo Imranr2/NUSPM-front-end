@@ -9,16 +9,16 @@ const useStyles = makeStyles((theme) => ({
     minWidth: 200,
   },
   typography: {
-    width: "15vw",
+    // width: "15vw",
     minWidth: 200,
   },
   dialog: {
-    minWidth: "70vw",
-    minHeight: "70vh",
+    // minWidth: "70vw",
+    // minHeight: "70vh",
   },
   dialogContent: {
-    display: "flex",
-    flexDirection: "column",
+    // display: "flex",
+    // flexDirection: "column",
   },
   container: {
     display: "flex",

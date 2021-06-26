@@ -211,8 +211,8 @@ export default function OpenButtons({ swapDetails, status }) {
           </Button>
         </DialogActions>
       </Dialog>
-      <DeleteButton variant="contained" onClick={handleDeleteClickOpen}>
-        DELETE
+      <DeleteButton variant="outlined" onClick={handleDeleteClickOpen}>
+        Delete
       </DeleteButton>
       <Dialog
         open={deleteOpen}

@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
     justifyContent: "flex-start",
-    height: "88vh",
+    height: "100vh",
   },
   button: {
     borderRadius: 30,
@@ -45,6 +45,7 @@ const useStyles = makeStyles((theme) => ({
   card: {
     height: 400,
   },
+  alert: {},
 }));
 
 export { theme, useStyles };

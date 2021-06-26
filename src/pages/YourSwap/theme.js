@@ -21,11 +21,14 @@ const useStyles = makeStyles((theme) => ({
   },
   main: {
     width: "100vw",
-    height: "88vh",
+    height: "100vh",
     display: "flex",
     flexDirection: "column",
     justifyContent: "flex-start",
     alignItems: "center",
+  },
+  alert: {
+    marginTop: "1vh",
   },
 }));
 

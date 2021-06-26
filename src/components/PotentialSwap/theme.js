@@ -11,7 +11,17 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: "#dedede",
     },
   },
-  card: {},
+  card: {
+    height: "100%",
+    display: "flex",
+    flexDirection: "column",
+    width: "15vw",
+    minWidth: 200,
+  },
+  typography: {
+    // width: "15vw",
+    minWidth: 200,
+  },
   field: {
     marginBottom: 8,
   },

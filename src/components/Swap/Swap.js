@@ -46,19 +46,42 @@ export default function Swap(props) {
     <Grid key={props} container item xs={12} sm={6} md={4} justify="center">
       <Card className={classes.card}>
         <CardContent className={classes.cardContent}>
-          <Typography variant="h6">
-            {props.card.module_code}
-            <br />
-            {props.card.slot_type} [{props.card.current_slot}]
-            <br />
-            {props.card.day}
-            <br />
-            {props.card.venue}
-            <br />
-            {`${props.card.startTime} - ${props.card.endTime}`}
-            <br />
-            {props.card.desired_slots}
-          </Typography>
+          {props.buttonset === "open" && (
+            <Typography variant="h6">
+              {props.card.module_code}
+              <br />
+              {props.card.slot_type}
+              <br />
+              {props.card.day}
+              <br />
+              {props.card.venue}
+              <br />
+              {`${props.card.startTime} - ${props.card.endTime}`}
+              <br />
+              Have: [{props.card.current_slot}]
+              <br />
+              Want: [{props.card.desired_slots.toString()}]
+            </Typography>
+          )}
+          {props.buttonset === "completed" && (
+            <Typography variant="h6">
+              {props.card.module_code}
+              <br />
+              {props.card.slot_type}
+              <br />
+              {props.card.day}
+              <br />
+              {props.card.venue}
+              <br />
+              {`${props.card.startTime} - ${props.card.endTime}`}
+              <br />
+              New: [{props.card.current_slot}], broken, new should be old
+              <br />
+              {/* need to find a way to get current slot and email of other guy */}
+              Old: [{props.card.desired_slots.toString()}], broken, old should
+              not be an array
+            </Typography>
+          )}
         </CardContent>
         <CardActions className={classes.button}>{buttonset}</CardActions>
       </Card>
