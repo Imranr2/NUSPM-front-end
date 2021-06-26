@@ -39,12 +39,12 @@ function App({ isAuthenticated }) {
               component={CreateSwap}
               auth={isAuthenticated}
             ></GuardedRoute>
-            <GuardedRoute
+            {/* <GuardedRoute
               exact
               path="/changePassword"
               component={ChangePassword}
               auth={isAuthenticated}
-            ></GuardedRoute>
+            ></GuardedRoute> */}
             <GuardedRoute
               exact
               path="/myAccount"
@@ -57,12 +57,12 @@ function App({ isAuthenticated }) {
               component={YourSwap}
               auth={isAuthenticated}
             ></GuardedRoute>
-            <GuardedRoute
+            {/* <GuardedRoute
               exact
               path="/offers"
               component={Offers}
               auth={isAuthenticated}
-            ></GuardedRoute>
+            ></GuardedRoute> */}
           </Switch>
         </BrowserRouter>
       </header>

@@ -15,7 +15,7 @@ import { theme } from "../../Theme";
 import { DeleteButton } from "./theme";
 import useSwap from "../../hooks/useSwap";
 
-export default function OpenButtons({ swapDetails, status }) {
+export default function CurrentSwapButtons({ swapDetails, status }) {
   const [editOpen, setEditOpen] = useState(false);
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [moduleCode, setModuleCode] = useState(swapDetails.module_code);

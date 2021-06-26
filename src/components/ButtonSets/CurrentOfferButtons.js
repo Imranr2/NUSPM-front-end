@@ -5,7 +5,7 @@ import { theme } from "../../Theme";
 import useOffer from "../../hooks/useOffer";
 import useSwap from "../../hooks/useSwap";
 
-export default function CurrentButtons({
+export default function CurrentOfferButtons({
   offerDetails,
   status,
   initiatorSwap,

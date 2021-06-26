@@ -109,7 +109,11 @@ function CreateSwap({ success, error, errorMsg }) {
                   value={slotType}
                   classes={{ paper: classes.paper }}
                   options={slotTypeOptions}
-                  onChange={(event, value) => setSlotType(value)}
+                  onChange={(event, value) => {
+                    setSlotType(value);
+                    setCurrentSlot([]);
+                    setDesiredSlots([]);
+                  }}
                   renderInput={(params) => (
                     <TextField
                       {...params}
@@ -128,6 +132,7 @@ function CreateSwap({ success, error, errorMsg }) {
                   options={slotOptions}
                   onChange={(event, value) => {
                     setCurrentSlot(value);
+                    setDesiredSlots([]);
                   }}
                   renderInput={(params) => (
                     <TextField

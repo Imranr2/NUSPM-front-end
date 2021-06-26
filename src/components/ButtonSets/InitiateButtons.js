@@ -10,7 +10,7 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import { ThemeProvider } from "@material-ui/core";
 import { theme } from "../../Theme";
 
-export default function ReservedButtons() {
+export default function InitiateButtons() {
   const [initiateOpen, setInitiateOpen] = useState(false);
 
   const handleInitiateClickOpen = () => {

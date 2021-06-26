@@ -17,7 +17,7 @@ import {
   resetSwap,
 } from "../redux/actions/swapActions";
 import axios from "axios";
-import { useDispatch } from "react-redux";
+import { useDispatch, connect } from "react-redux";
 import { useState } from "react";
 import authAxios from "../helpers/authAxios";
 
@@ -35,7 +35,7 @@ const useSwap = () => {
 
   const getAllModules = () => {
     axios
-      .get("https://api.nusmods.com/v2/2020-2021/moduleList.json")
+      .get("https://api.nusmods.com/v2/2021-2022/moduleList.json")
       .then((response) => {
         return response.data;
       })
@@ -46,7 +46,7 @@ const useSwap = () => {
   const getModuleDetails = (moduleCode) => {
     // maybe should have date to automatically change parameters
     axios
-      .get(`https://api.nusmods.com/v2/2020-2021/modules/${moduleCode}.json`)
+      .get(`https://api.nusmods.com/v2/2021-2022/modules/${moduleCode}.json`)
       .then((response) => response.data.semesterData[0].timetable)
       .then((result) => setModDets(result));
   };
@@ -168,6 +168,32 @@ const useSwap = () => {
   };
 
   // finding a potential swap
+  // const searchSwap = (moduleCode, slotType, currentSlot) => {
+  //   dispatch(searchSwapRequest());
+  //   authAxios
+  //     .post(`/api/v1/searchSwap`, {
+  //       module_code: moduleCode,
+  //       slot_type: slotType,
+  //       desired_slots: currentSlot,
+  //     })
+  //     .then((swapResponse) => {
+  //       // authaxios post
+  //       dispatch(searchSwapSuccess());
+  //       console.log(response.data);
+  //       setPotentialSwaps(response.data.filter((swap) => !swap.isCompleted));
+  //       console.log(potentialSwaps);
+  //       setTimeout(() => {
+  //         dispatch(resetSwap());
+  //       }, 5000);
+  //     })
+  //     .catch((error) => {
+  //       dispatch(searchSwapFail(error.response.data));
+  //       setTimeout(() => {
+  //         dispatch(resetSwap());
+  //       }, 2000);
+  //     });
+  // };
+
   const searchSwap = (moduleCode, slotType, currentSlot) => {
     dispatch(searchSwapRequest());
     authAxios
@@ -176,20 +202,32 @@ const useSwap = () => {
         slot_type: slotType,
         desired_slots: currentSlot,
       })
-      .then((response) => {
-        dispatch(searchSwapSuccess());
-        console.log(response.data);
-        setPotentialSwaps(response.data.filter((swap) => !swap.isCompleted));
-        console.log(potentialSwaps);
-        setTimeout(() => {
-          dispatch(resetSwap());
-        }, 5000);
+      .then((swapResponse) => swapResponse.data)
+      .then((swapData) => {
+        authAxios
+          .get("api/v1/offers")
+          .then((offerResponse) => offerResponse.data)
+          .then((offerData) =>
+            setPotentialSwaps(
+              swapData.filter(
+                (swap) =>
+                  // !swap.user_id !== user.id &&
+                  !swap.isCompleted &&
+                  !offerData
+                    .map((offer) => offer.initiatorSwapId)
+                    .includes(swap.id) &&
+                  !offerData
+                    .map((offer) => offer.creatorSwapId)
+                    .includes(swap.id)
+              )
+            )
+          )
+          .catch((error) => {
+            console.log(error);
+          });
       })
       .catch((error) => {
-        dispatch(searchSwapFail(error.response.data));
-        setTimeout(() => {
-          dispatch(resetSwap());
-        }, 2000);
+        console.log(error);
       });
   };
 
@@ -238,4 +276,11 @@ const useSwap = () => {
   };
 };
 
+// const mapStateToProps = (state) => {
+//   return {
+//     user: state.auth.user,
+//   };
+// };
+
+// export default connect(mapStateToProps)(useSwap);
 export default useSwap;

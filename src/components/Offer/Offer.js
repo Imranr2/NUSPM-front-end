@@ -20,8 +20,8 @@ import ArrowRightIcon from "@material-ui/icons/ArrowRight";
 import axios from "axios";
 import authAxios from "../../helpers/authAxios";
 import useOffer from "../../hooks/useOffer";
-import CurrentButtons from "../ButtonSets/CurrentButtons";
-import PendingButtons from "../ButtonSets/PendingButtons";
+import CurrentOfferButtons from "../ButtonSets/CurrentOfferButtons";
+import PendingOfferButtons from "../ButtonSets/PendingOfferButtons";
 
 export default function Offer(props) {
   const classes = useStyles();
@@ -45,7 +45,6 @@ export default function Offer(props) {
       .get(`/api/v1/swaps/${props.card.initiatorSwapId}`)
       .then((response) => {
         setCurrentSwap(response.data);
-        console.log(currentSwap);
         setLoading1(false);
       })
       .catch((error) => {
@@ -58,7 +57,6 @@ export default function Offer(props) {
       .get(`/api/v1/swaps/${props.card.creatorSwapId}`)
       .then((response) => {
         setIncomingSwap(response.data);
-        console.log(incomingSwap);
         setLoading2(false);
       })
       .catch((error) => {
@@ -69,9 +67,9 @@ export default function Offer(props) {
   let buttonset = null;
 
   switch (props.tab) {
-    case "current":
+    case "currentOffer":
       buttonset = (
-        <CurrentButtons
+        <CurrentOfferButtons
           offerDetails={props.card}
           status={props.status}
           initiatorSwap={currentSwap}
@@ -79,9 +77,9 @@ export default function Offer(props) {
         />
       );
       break;
-    case "pending":
+    case "pendingOffer":
       buttonset = (
-        <PendingButtons offerDetails={props.card} status={props.status} />
+        <PendingOfferButtons offerDetails={props.card} status={props.status} />
       );
       break;
     default:
@@ -94,7 +92,7 @@ export default function Offer(props) {
         <ButtonBase onClick={handleOfferOpen}>
           {!loading1 &&
             !loading2 &&
-            (props.tab === "current" || props.tab === "rejected") && (
+            (props.tab === "currentOffer" || props.tab === "rejectedOffer") && (
               <CardContent>
                 <Typography variant="h6">
                   {incomingSwap.module_code}
@@ -109,11 +107,20 @@ export default function Offer(props) {
                   <br />
                   Current Slot: [{incomingSwap.current_slot}]
                   <br />
-                  Pending Slot: [{currentSwap.current_slot}]
+                  {props.tab === "rejectedOffer" && (
+                    <Typography variant="h6">
+                      Rejected Slot [{currentSwap.current_slot}]
+                    </Typography>
+                  )}
+                  {props.tab === "currentOffer" && (
+                    <Typography variant="h6">
+                      Pending Slot [{currentSwap.current_slot}]
+                    </Typography>
+                  )}
                 </Typography>
               </CardContent>
             )}
-          {!loading1 && !loading2 && props.tab === "pending" && (
+          {!loading1 && !loading2 && props.tab === "pendingOffer" && (
             <CardContent>
               <Typography variant="h6">
                 {currentSwap.module_code}

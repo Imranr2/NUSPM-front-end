@@ -133,11 +133,11 @@ export default function NavBar(props) {
                 className={classes.menu}
               >
                 <ListItemIcon>
-                  <VisibilityIcon />
+                  <LocalOffer />
                 </ListItemIcon>
-                <ListItemText primary="Your Swap" />
+                <ListItemText primary="Your Swap and Offers" />
               </MenuItem>
-              <MenuItem
+              {/* <MenuItem
                 component={RouterLink}
                 to="/offers"
                 className={classes.menu}
@@ -146,7 +146,7 @@ export default function NavBar(props) {
                   <LocalOffer />
                 </ListItemIcon>
                 <ListItemText primary="Offers" />
-              </MenuItem>
+              </MenuItem> */}
             </Menu>
             <Button
               className={classes.button}
@@ -169,12 +169,12 @@ export default function NavBar(props) {
               open={Boolean(anchorEl2)}
               onClose={handleProfileClosed}
             >
-              <MenuItem className={classes.menu} onClick={handleProfileClosed}>
+              {/* <MenuItem className={classes.menu} onClick={handleProfileClosed}>
                 <ListItemIcon>
                   <AccountCircle />
                 </ListItemIcon>
                 <ListItemText primary="My Account" />
-              </MenuItem>
+              </MenuItem> */}
               <MenuItem
                 component={RouterLink}
                 to="/myAccount"

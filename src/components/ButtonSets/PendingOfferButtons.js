@@ -5,7 +5,7 @@ import { theme } from "../../Theme";
 import axios from "axios";
 import useOffer from "../../hooks/useOffer";
 
-export default function PendingButtons({ offerDetails, status }) {
+export default function PendingOfferButtons({ offerDetails, status }) {
   const { deleteOffer } = useOffer();
 
   function handleWithdraw() {

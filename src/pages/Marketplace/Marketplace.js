@@ -16,7 +16,7 @@ import useSwap from "../../hooks/useSwap";
 import { connect } from "react-redux";
 import PotentialSwaps from "../../components/PotentialSwaps/PotentialSwaps";
 
-function Marketplace({ success, error, errorMsg }) {
+function Marketplace({ success, error, errorMsg, user }) {
   const classes = useStyles();
   const {
     moduleList,
@@ -70,6 +70,7 @@ function Marketplace({ success, error, errorMsg }) {
             <Grid className={classes.search} container spacing={2}>
               <Grid item>
                 <Autocomplete
+                  value={moduleCode}
                   classes={{
                     root: classes.fields,
                     paper: classes.paper,
@@ -77,6 +78,8 @@ function Marketplace({ success, error, errorMsg }) {
                   options={moduleList}
                   onChange={(event, value) => {
                     setModuleCode(value);
+                    setSlotType([]);
+                    setCurrentSlot([]);
                   }}
                   renderInput={(params) => (
                     <TextField
@@ -91,6 +94,7 @@ function Marketplace({ success, error, errorMsg }) {
               </Grid>
               <Grid item>
                 <Autocomplete
+                  value={slotType}
                   classes={{
                     root: classes.fields,
                     paper: classes.paper,
@@ -102,7 +106,10 @@ function Marketplace({ success, error, errorMsg }) {
                         .filter((lessonType) => lessonType !== "Lecture")
                     )
                   )}
-                  onChange={(event, value) => setSlotType(value)}
+                  onChange={(event, value) => {
+                    setSlotType(value);
+                    setCurrentSlot([]);
+                  }}
                   renderInput={(params) => (
                     <TextField
                       {...params}
@@ -116,6 +123,7 @@ function Marketplace({ success, error, errorMsg }) {
               </Grid>
               <Grid item>
                 <Autocomplete
+                  value={currentSlot}
                   classes={{
                     root: classes.fields,
                     paper: classes.paper,
@@ -150,11 +158,13 @@ function Marketplace({ success, error, errorMsg }) {
               </Grid>
             </Grid>
           </form>
-          <Alert severity="info">
+          <Alert severity="info" className={classes.alert}>
             Click on the listing to initiate a swap!
           </Alert>
           <PotentialSwaps
-            creatorSwaps={potentialSwaps}
+            creatorSwaps={potentialSwaps.filter(
+              (swap) => swap.user_id !== user.id
+            )}
             initiatorSwaps={userSwaps}
             initiatorSlot={currentSlot}
             slotDets={slotDets}
@@ -176,6 +186,7 @@ const mapStateToProps = (state) => {
     success: state.swap.success,
     error: state.swap.error,
     errorMsg: state.swap.errorMsg,
+    user: state.auth.user,
   };
 };
 export default connect(mapStateToProps)(Marketplace);

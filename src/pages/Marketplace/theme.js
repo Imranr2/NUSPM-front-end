@@ -45,7 +45,9 @@ const useStyles = makeStyles((theme) => ({
   card: {
     height: 400,
   },
-  alert: {},
+  alert: {
+    marginTop: "1vh",
+  },
 }));
 
 export { theme, useStyles };

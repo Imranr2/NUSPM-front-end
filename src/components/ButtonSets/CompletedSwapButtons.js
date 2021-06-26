@@ -11,7 +11,7 @@ import { ThemeProvider } from "@material-ui/core";
 import { theme } from "../../Theme";
 import useSwap from "../../hooks/useSwap";
 
-export default function ReservedButtons({ swapDetails, status }) {
+export default function CompletedSwapButtons({ swapDetails, status }) {
   const [freeOpen, setFreeOpen] = useState(false);
   const [reserveOpen, setReserveOpen] = useState(false);
   const [deleteOpen, setDeleteOpen] = useState(false);

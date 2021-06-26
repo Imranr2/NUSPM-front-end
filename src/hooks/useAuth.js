@@ -33,6 +33,7 @@ const useAuth = () => {
   const [oldPassword, setOldPassword] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConf, setPasswordConf] = useState("");
+  const [user, setUser] = useState({});
 
   const signIn = (email, password) => {
     dispatch(signInRequest());
@@ -120,6 +121,17 @@ const useAuth = () => {
       });
   };
 
+  //add redux later
+  const getUser = (id) => {
+    authAxios
+      .get(`/users/${id}`)
+      .then((response) => {
+        console.log("hello");
+        setUser(response.data);
+      })
+      .catch((error) => console.log(error));
+  };
+
   return {
     email,
     setEmail,
@@ -129,10 +141,13 @@ const useAuth = () => {
     setPassword,
     passwordConf,
     setPasswordConf,
+    user,
+    setUser,
     signIn,
     signOut,
     registerAccount,
     changePassword,
+    getUser,
   };
 };
 
