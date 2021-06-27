@@ -14,6 +14,8 @@ import { Autocomplete } from "@material-ui/lab";
 import { theme } from "../../Theme";
 import { DeleteButton } from "./theme";
 import useSwap from "../../hooks/useSwap";
+import useOffer from "../../hooks/useOffer";
+import { withdrawOfferFail } from "../../redux/actions/offerActions";
 
 export default function CurrentSwapButtons({ swapDetails, status }) {
   const [editOpen, setEditOpen] = useState(false);
@@ -33,6 +35,8 @@ export default function CurrentSwapButtons({ swapDetails, status }) {
     getModuleDetails,
     slotDets,
   } = useSwap();
+
+  const { rejectOffers, withdrawOffers } = useOffer();
 
   const handleEditClickOpen = () => {
     setModuleCode(swapDetails.module_code);
@@ -70,6 +74,8 @@ export default function CurrentSwapButtons({ swapDetails, status }) {
       swapDetails.isCompleted,
       swapDetails.isReserved
     );
+    rejectOffers(swapDetails.id);
+    withdrawOffers(swapDetails.id);
     setEditOpen(false);
     setTimeout(() => {
       status();

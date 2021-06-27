@@ -158,9 +158,11 @@ function Marketplace({ success, error, errorMsg, user }) {
               </Grid>
             </Grid>
           </form>
-          <Alert severity="info" className={classes.alert}>
-            Click on the listing to initiate a swap!
-          </Alert>
+          <Container className={classes.alertContainer}>
+            <Alert severity="info" className={classes.alert}>
+              Click on the listing to initiate a swap!
+            </Alert>
+          </Container>
           <PotentialSwaps
             creatorSwaps={potentialSwaps.filter(
               (swap) => swap.user_id !== user.id

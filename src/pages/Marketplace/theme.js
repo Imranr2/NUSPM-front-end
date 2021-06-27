@@ -48,6 +48,10 @@ const useStyles = makeStyles((theme) => ({
   alert: {
     marginTop: "1vh",
   },
+  alertContainer: {
+    display: "flex",
+    justifyContent: "center",
+  },
 }));
 
 export { theme, useStyles };

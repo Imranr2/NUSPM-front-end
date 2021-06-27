@@ -87,9 +87,8 @@ function YourSwap({ success, swapLoading, offerLoading, userId }) {
         {value === 1 && (
           <>
             <Alert severity="info" className={classes.alert}>
-              Caution: Deleting your swap request will withdraw and reject all
-              offers. Edits to your swap request will be reflected on all
-              current and pending offers
+              Caution: Editing or deleting your swap request will withdraw and
+              reject all offers pertaining to the request
             </Alert>
             <SwapList
               arr={userSwaps.filter((swap) => !swap.isCompleted)}

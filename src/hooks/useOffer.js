@@ -127,7 +127,7 @@ const useOffer = () => {
   const withdrawOffers = (swapId) => {
     dispatch(withdrawOfferRequest());
     authAxios
-      .post(`http://localhost:3001/api/v1/withdrawOffer`, {
+      .post(`/api/v1/withdrawOffer`, {
         swap_id: swapId,
       })
       .then((response) => {
@@ -144,6 +144,19 @@ const useOffer = () => {
       });
   };
 
+  const rejectOffers = (swapId) => {
+    authAxios
+      .post("/api/v1/rejectOffers", {
+        swap_id: swapId,
+      })
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return {
     userOffer,
     setUserOffer,
@@ -152,6 +165,7 @@ const useOffer = () => {
     deleteOffer,
     updateOffer,
     withdrawOffers,
+    rejectOffers,
   };
 };
 

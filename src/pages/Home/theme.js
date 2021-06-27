@@ -2,9 +2,10 @@ import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   main: {
-    padding: 0,
-    margin: 0,
-    width: "100vw",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
     height: "100vh",
   },
 }));

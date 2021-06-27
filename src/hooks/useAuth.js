@@ -68,10 +68,10 @@ const useAuth = () => {
         dispatch(registerSuccess());
         setTimeout(() => {
           history.push("/");
-        }, 2000);
+        }, 500);
         setTimeout(() => {
           dispatch(resetAuth());
-        }, 2000);
+        }, 500);
       })
       .catch((error) => {
         dispatch(registerFail(error.response.data));
@@ -126,7 +126,6 @@ const useAuth = () => {
     authAxios
       .get(`/users/${id}`)
       .then((response) => {
-        console.log("hello");
         setUser(response.data);
       })
       .catch((error) => console.log(error));

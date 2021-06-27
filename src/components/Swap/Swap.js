@@ -56,7 +56,7 @@ export default function Swap(props) {
   }, []);
 
   useEffect(() => {
-    if (completedSwap !== undefined) {
+    if (Object.keys(completedSwap).length !== 0) {
       console.log(completedSwap);
       getUser(completedSwap.user_id);
     }

@@ -1,9 +1,6 @@
 import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
-  top: {
-    marginTop: "150px",
-  },
   button: {
     borderRadius: 30,
     alignItems: "center",

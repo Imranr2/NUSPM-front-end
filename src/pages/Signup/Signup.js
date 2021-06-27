@@ -43,7 +43,7 @@ function Signup({ loading, registerError, errorMsg, success }) {
 
   return (
     <ThemeProvider theme={theme}>
-      <Container className={classes.top} maxWidth="xs">
+      <Container maxWidth="xs">
         <div>
           <Logo></Logo>
           <form onSubmit={handleSubmit}>
