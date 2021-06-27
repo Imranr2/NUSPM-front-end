@@ -29,6 +29,20 @@ function YourSwap({ success, swapLoading, offerLoading, userId }) {
   const { userSwaps, viewSwaps } = useSwap();
   const { userOffer, viewOffers } = useOffer();
 
+  const currentOffer = userOffer.filter(
+    (offer) =>
+      offer.creatorUserId === userId && !offer.isAccepted && offer.isPending
+  );
+  const currentSwap = userSwaps.filter((swap) => !swap.isCompleted);
+  const pendingOffer = userOffer.filter(
+    (offer) =>
+      offer.initiatorUserId === userId && !offer.isAccepted && offer.isPending
+  );
+  const completedSwap = userSwaps.filter((swap) => swap.isCompleted);
+  const rejectedOffer = userOffer.filter(
+    (offer) => !offer.isAccepted && !offer.isPending
+  );
+
   useEffect(() => {
     if (refresh) {
       viewSwaps();
@@ -56,6 +70,7 @@ function YourSwap({ success, swapLoading, offerLoading, userId }) {
         </Tabs>
         {(swapLoading || offerLoading) && <PulseLoader color="#0D169F" />}
         {/* some other loader in center of page */}
+
         {value === 0 && (
           <>
             <Alert severity="info" className={classes.alert}>
@@ -63,15 +78,17 @@ function YourSwap({ success, swapLoading, offerLoading, userId }) {
               reject the offer
             </Alert>
             <OfferList
-              arr={userOffer.filter(
-                (offer) =>
-                  offer.creatorUserId === userId &&
-                  !offer.isAccepted &&
-                  offer.isPending
-              )}
+              arr={currentOffer}
               status={changeStatus}
               tab="currentOffer"
             />
+          </>
+        )}
+
+        {value === 0 && currentOffer.length === 0 && (
+          <>
+            <br />
+            <Alert severity="warning">No offers at the moment</Alert>
           </>
         )}
 
@@ -83,11 +100,18 @@ function YourSwap({ success, swapLoading, offerLoading, userId }) {
               reject all offers pertaining to the request
             </Alert>
             <SwapList
-              arr={userSwaps.filter((swap) => !swap.isCompleted)}
+              arr={currentSwap}
               panel="currentSwap"
               status={changeStatus}
               offers={[]}
             />
+          </>
+        )}
+
+        {value === 1 && currentSwap.length === 0 && (
+          <>
+            <br />
+            <Alert severity="warning">No swaps at the moment</Alert>
           </>
         )}
 
@@ -97,42 +121,56 @@ function YourSwap({ success, swapLoading, offerLoading, userId }) {
               Click on the card to withdraw your offer
             </Alert>
             <OfferList
-              arr={userOffer.filter(
-                (offer) =>
-                  offer.initiatorUserId === userId &&
-                  !offer.isAccepted &&
-                  offer.isPending
-              )}
+              arr={pendingOffer}
               status={changeStatus}
               tab="pendingOffer"
             />
           </>
         )}
+        {value === 2 && pendingOffer.length === 0 && (
+          <>
+            <br />
+            <Alert severity="warning">No pending offers at the moment</Alert>
+          </>
+        )}
+
         {value === 3 && (
           <>
             <Alert severity="info" className={classes.alert}>
               Contact the other party with the email displayed in the card
             </Alert>
             <SwapList
-              arr={userSwaps.filter((swap) => swap.isCompleted)}
+              arr={completedSwap}
               panel="completedSwap"
               status={changeStatus}
               offers={userOffer.filter((offer) => offer.isAccepted)}
             />
           </>
         )}
+        {value === 3 && completedSwap.length === 0 && (
+          <>
+            <br />
+            <Alert severity="warning">No completed swaps at the moment</Alert>
+          </>
+        )}
+
         {value === 4 && (
           <>
             <Alert severity="info" className={classes.alert}>
               All your rejected offers are displayed here
             </Alert>
             <OfferList
-              arr={userOffer.filter(
-                (offer) => !offer.isAccepted && !offer.isPending
-              )}
+              arr={rejectedOffer}
               status={changeStatus}
               tab="rejectedOffer"
             />
+          </>
+        )}
+
+        {value === 4 && rejectedOffer.length === 0 && (
+          <>
+            <br />
+            <Alert severity="warning">No rejected offers at the moment</Alert>
           </>
         )}
       </Container>
