@@ -205,14 +205,36 @@ export default function Offer(props) {
               >
                 Current Slot
               </Typography>
-              <Typography
-                className={classes.typography}
-                color="primary"
-                variant="h5"
-                align="center"
-              >
-                Pending Slot
-              </Typography>
+              {props.tab === "pendingOffer" && (
+                <Typography
+                  className={classes.typography}
+                  color="primary"
+                  variant="h5"
+                  align="center"
+                >
+                  Pending Slot
+                </Typography>
+              )}
+              {props.tab === "rejectedOffer" && (
+                <Typography
+                  className={classes.typography}
+                  color="primary"
+                  variant="h5"
+                  align="center"
+                >
+                  Rejected Slot
+                </Typography>
+              )}
+              {props.tab === "currentOffer" && (
+                <Typography
+                  className={classes.typography}
+                  color="primary"
+                  variant="h5"
+                  align="center"
+                >
+                  New Slot
+                </Typography>
+              )}
             </Container>
           </DialogContent>
           <DialogActions>{buttonset}</DialogActions>

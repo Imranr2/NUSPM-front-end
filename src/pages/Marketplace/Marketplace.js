@@ -35,6 +35,7 @@ function Marketplace({ success, error, errorMsg, user }) {
   const [slotType, setSlotType] = useState("");
   const [currentSlot, setCurrentSlot] = useState("");
   const [localSuccess, setLocalSuccess] = useState(false);
+  const [search, setSearch] = useState(false);
 
   useEffect(() => getAllModules(), []);
 
@@ -58,6 +59,7 @@ function Marketplace({ success, error, errorMsg, user }) {
   function handleSubmit(e) {
     e.preventDefault();
     searchSwap(moduleCode, slotType, currentSlot);
+    setSearch(true);
     console.log(userSwaps);
     console.log(slotDets);
   }
@@ -158,25 +160,27 @@ function Marketplace({ success, error, errorMsg, user }) {
               </Grid>
             </Grid>
           </form>
-          <Container className={classes.alertContainer}>
+          <Container className={classes.container}>
             <Alert severity="info" className={classes.alert}>
               Click on the listing to initiate a swap!
             </Alert>
           </Container>
-          <PotentialSwaps
-            creatorSwaps={potentialSwaps.filter(
-              (swap) => swap.user_id !== user.id
+          {search &&
+            potentialSwaps.filter((swap) => swap.user_id !== user.id).length >
+              0 && (
+              <PotentialSwaps
+                creatorSwaps={potentialSwaps.filter(
+                  (swap) => swap.user_id !== user.id
+                )}
+                initiatorSwaps={userSwaps}
+                initiatorSlot={currentSlot}
+                slotDets={slotDets}
+              />
             )}
-            initiatorSwaps={userSwaps}
-            initiatorSlot={currentSlot}
-            slotDets={slotDets}
-          />
+          {search &&
+            potentialSwaps.filter((swap) => swap.user_id !== user.id).length ===
+              0 && <Alert severity="warning">No swap found.</Alert>}
 
-          {/* {localSuccess && <SwapList arr={potentialSwaps}></SwapList>} */}
-          {/* display some other thing, not alert */}
-          {/* {potentialSwaps.length === 0 && (
-            <Alert severity="error">No swaps found!</Alert>
-          )} */}
           {/* {error} */}
         </div>
       </Container>

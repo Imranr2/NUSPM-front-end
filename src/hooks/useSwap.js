@@ -207,7 +207,7 @@ const useSwap = () => {
         authAxios
           .get("api/v1/offers")
           .then((offerResponse) => offerResponse.data)
-          .then((offerData) =>
+          .then((offerData) => {
             setPotentialSwaps(
               swapData.filter(
                 (swap) =>
@@ -220,8 +220,9 @@ const useSwap = () => {
                     .map((offer) => offer.creatorSwapId)
                     .includes(swap.id)
               )
-            )
-          )
+            );
+            dispatch(searchSwapSuccess());
+          })
           .catch((error) => {
             console.log(error);
           });

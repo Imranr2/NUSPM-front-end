@@ -1,8 +1,9 @@
 import PotentialSwap from "../PotentialSwap/PotentialSwap";
 import { Grid, Container } from "@material-ui/core";
+import { Alert } from "@material-ui/lab";
 // import { useStyles } from "./theme";
 
-function SwapList(props) {
+function PotentialSwaps(props) {
   //   const classes = useStyles();
   return (
     <Container>
@@ -21,4 +22,4 @@ function SwapList(props) {
   );
 }
 
-export default SwapList;
+export default PotentialSwaps;

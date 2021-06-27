@@ -1,6 +1,5 @@
 import {
   Button,
-  ButtonBase,
   Card,
   CardActionArea,
   CardContent,
@@ -13,7 +12,7 @@ import {
   TextField,
   Typography,
 } from "@material-ui/core";
-import { Autocomplete } from "@material-ui/lab";
+import { Autocomplete, Alert } from "@material-ui/lab";
 import { useState, useEffect } from "react";
 import useSwap from "../../hooks/useSwap";
 import useOffer from "../../hooks/useOffer";
@@ -167,6 +166,11 @@ function PotentialSwap(props) {
                   </Grid>
                 </Grid>
               </Container>
+            )}
+            {filteredUserSwaps.length === 0 && currentDialog === 0 && (
+              <Alert severity="info">
+                No available swap present. Select the 'Create Swap' option below
+              </Alert>
             )}
             {/*Step 2*/}
             {currentDialog === 1 && (

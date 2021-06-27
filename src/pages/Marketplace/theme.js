@@ -48,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
   alert: {
     marginTop: "1vh",
   },
-  alertContainer: {
+  container: {
     display: "flex",
     justifyContent: "center",
   },
