@@ -15,8 +15,9 @@ import { useStyles } from "./theme";
 import useSwap from "../../hooks/useSwap";
 import { connect } from "react-redux";
 import PotentialSwaps from "../../components/PotentialSwaps/PotentialSwaps";
+import { PulseLoader } from "react-spinners";
 
-function Marketplace({ success, error, errorMsg, user }) {
+function Marketplace({ success, error, errorMsg, user, loading }) {
   const classes = useStyles();
   const {
     moduleList,
@@ -154,6 +155,7 @@ function Marketplace({ success, error, errorMsg, user }) {
                   variant="contained"
                   color="primary"
                   size="large"
+                  disabled={loading}
                 >
                   Search
                 </Button>
@@ -165,6 +167,8 @@ function Marketplace({ success, error, errorMsg, user }) {
               Click on the listing to initiate a swap!
             </Alert>
           </Container>
+          {loading && <PulseLoader color="#0D169F" />}
+
           {search &&
             potentialSwaps.filter((swap) => swap.user_id !== user.id).length >
               0 && (
@@ -193,6 +197,7 @@ const mapStateToProps = (state) => {
     error: state.swap.error,
     errorMsg: state.swap.errorMsg,
     user: state.auth.user,
+    loading: state.swap.isLoading,
   };
 };
 export default connect(mapStateToProps)(Marketplace);

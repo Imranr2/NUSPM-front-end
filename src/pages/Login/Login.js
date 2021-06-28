@@ -88,6 +88,7 @@ function Login({ loading, loginError, errorMsg }) {
               fullWidth
               variant="contained"
               color="primary"
+              disabled={loading}
             >
               Log In
             </Button>

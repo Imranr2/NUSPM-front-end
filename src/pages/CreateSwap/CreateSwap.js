@@ -18,7 +18,7 @@ import { useStyles } from "./theme";
 import useSwap from "../../hooks/useSwap";
 import Alert from "@material-ui/lab/Alert";
 
-function CreateSwap({ success, error, errorMsg }) {
+function CreateSwap({ success, error, errorMsg, loading }) {
   const classes = useStyles();
   const {
     moduleList,
@@ -174,6 +174,7 @@ function CreateSwap({ success, error, errorMsg }) {
               fullWidth
               variant="contained"
               color="primary"
+              disabled={loading}
             >
               Create
             </Button>
@@ -202,6 +203,7 @@ const mapStateToProps = (state) => {
     success: state.swap.success,
     error: state.swap.error,
     errorMsg: state.swap.errorMsg,
+    loading: state.swap.isLoading,
   };
 };
 export default connect(mapStateToProps)(CreateSwap);

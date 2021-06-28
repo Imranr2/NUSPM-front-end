@@ -22,6 +22,7 @@ import useAuth from "../../hooks/useAuth";
 import { connect } from "react-redux";
 import Alert from "@material-ui/lab/Alert";
 import { useStyles } from "./theme";
+import { PulseLoader } from "react-spinners";
 
 function Signup({ loading, registerError, errorMsg, success }) {
   const {
@@ -114,6 +115,7 @@ function Signup({ loading, registerError, errorMsg, success }) {
               fullWidth
               variant="contained"
               color="primary"
+              disabled={loading}
             >
               Sign Up
             </Button>
@@ -125,6 +127,7 @@ function Signup({ loading, registerError, errorMsg, success }) {
               </Grid>
             </Grid>
           </form>
+          {loading && <PulseLoader color="#0D169F" />}
           {registerError && (
             <>
               {errorMsg.map((error) => (
