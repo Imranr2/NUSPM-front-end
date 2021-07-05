@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     height: "100%",
     width: "10vw",
-    minWidth : 110
+    minWidth: 110,
   },
   paper: {
     borderRadius: 4,
@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
-    marginTop: "3vh"
+    marginTop: "3vh",
   },
   search: {
     flexWrap: "nowrap",
@@ -62,6 +62,7 @@ const useStyles = makeStyles((theme) => ({
   },
   alert: {
     marginTop: "1vh",
+    borderRadius: 30,
   },
   container: {
     display: "flex",

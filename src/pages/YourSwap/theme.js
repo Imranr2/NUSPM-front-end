@@ -9,6 +9,19 @@ const theme = createMuiTheme({
       main: "#9b9b9b",
     },
   },
+  overrides: {
+    MuiSvgIcon: {
+      colorAction: {
+        color: "#039e25",
+      },
+      colorDisabled: {
+        color: "#666666",
+      },
+      colorError: {
+        color: "#ff0000",
+      },
+    },
+  },
 });
 
 const useStyles = makeStyles((theme) => ({
@@ -31,6 +44,7 @@ const useStyles = makeStyles((theme) => ({
   },
   alert: {
     marginTop: "1vh",
+    borderRadius: 30,
   },
 }));
 

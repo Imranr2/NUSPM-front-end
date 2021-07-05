@@ -14,6 +14,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
     justifyContent: "flex-start",
+    // alignItems: "center",
     marginLeft: 0,
   },
   reactPlayer: {

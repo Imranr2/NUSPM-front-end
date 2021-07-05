@@ -17,7 +17,6 @@ import useSwap from "../../hooks/useSwap";
 import { connect } from "react-redux";
 import PotentialSwaps from "../../components/PotentialSwaps/PotentialSwaps";
 import { PulseLoader } from "react-spinners";
-import { Ghost } from "react-kawaii";
 import NotFound from "../../assets/not-found.png";
 import { useMediaQuery } from "react-responsive";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";

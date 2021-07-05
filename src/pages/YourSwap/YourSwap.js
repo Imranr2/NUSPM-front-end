@@ -1,8 +1,7 @@
 import NavBar from "../../components/NavBar";
 import { ThemeProvider, Container, Tabs, Tab } from "@material-ui/core";
-import { theme } from "../../Theme";
 import { useState, useEffect } from "react";
-import { useStyles } from "./theme";
+import { theme, useStyles } from "./theme";
 import useSwap from "../../hooks/useSwap";
 import useOffer from "../../hooks/useOffer";
 import SwapList from "../../components/SwapList/SwapList";
@@ -83,6 +82,7 @@ function YourSwap({
           <Tabs
             value={value}
             indicatorColor="primary"
+            textColor="primary"
             className={classes.tabs}
             onChange={handleChange}
             centered={true}
@@ -121,12 +121,16 @@ function YourSwap({
               {currentOffer.length === 0 && !viewOfferLoading && (
                 <>
                   <br />
-                  <Alert severity="warning">No offers at the moment</Alert>
+                  <Alert severity="warning" className={classes.alert}>
+                    No offers at the moment
+                  </Alert>
                 </>
               )}
               {offerError && (
                 <>
-                  <Alert severity="warning">{offerErrorMsg}</Alert>
+                  <Alert severity="warning" className={classes.alert}>
+                    {offerErrorMsg}
+                  </Alert>
                 </>
               )}
             </>
@@ -147,12 +151,16 @@ function YourSwap({
               {currentSwap.length === 0 && !viewSwapLoading && (
                 <>
                   <br />
-                  <Alert severity="warning">No swaps at the moment</Alert>
+                  <Alert severity="warning" className={classes.alert}>
+                    No swaps at the moment
+                  </Alert>
                 </>
               )}
               {swapError && (
                 <>
-                  <Alert severity="warning">{swapErrorMsg}</Alert>
+                  <Alert severity="warning" className={classes.alert}>
+                    {swapErrorMsg}
+                  </Alert>
                 </>
               )}
             </>
@@ -167,14 +175,16 @@ function YourSwap({
               {pendingOffer.length === 0 && !viewOfferLoading && (
                 <>
                   <br />
-                  <Alert severity="warning">
+                  <Alert severity="warning" className={classes.alert}>
                     No pending offers at the moment
                   </Alert>
                 </>
               )}
               {offerError && (
                 <>
-                  <Alert severity="warning">{offerErrorMsg}</Alert>
+                  <Alert severity="warning" className={classes.alert}>
+                    {offerErrorMsg}
+                  </Alert>
                 </>
               )}
             </>
@@ -193,14 +203,16 @@ function YourSwap({
               {completedSwap.length === 0 && !viewSwapLoading && (
                 <>
                   <br />
-                  <Alert severity="warning">
+                  <Alert severity="warning" className={classes.alert}>
                     No completed swaps at the moment
                   </Alert>
                 </>
               )}
               {swapError && (
                 <>
-                  <Alert severity="warning">{swapErrorMsg}</Alert>
+                  <Alert severity="warning" className={classes.alert}>
+                    {swapErrorMsg}
+                  </Alert>
                 </>
               )}
             </>
@@ -215,14 +227,16 @@ function YourSwap({
               {rejectedOffer.length === 0 && !viewOfferLoading && (
                 <>
                   <br />
-                  <Alert severity="warning">
+                  <Alert severity="warning" className={classes.alert}>
                     No rejected offers at the moment
                   </Alert>
                 </>
               )}
               {offerError && (
                 <>
-                  <Alert severity="warning">{offerErrorMsg}</Alert>
+                  <Alert severity="warning" className={classes.alert}>
+                    {offerErrorMsg}
+                  </Alert>
                 </>
               )}
             </>

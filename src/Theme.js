@@ -21,17 +21,6 @@ const theme = createMuiTheme({
         textTransform: "none",
       },
     },
-    MuiSvgIcon: {
-      colorAction: {
-        color: "#039e25",
-      },
-      colorDisabled: {
-        color: "#666666",
-      },
-      colorError: {
-        color: "#ff0000",
-      },
-    },
   },
 });
 

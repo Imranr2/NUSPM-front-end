@@ -23,9 +23,9 @@ export default function Home() {
             <ReactPlayer
               url="https://youtu.be/iDnB0zWXZp4"
               className="react-player"
-              playing
-              width="70%"
-              height="70%"
+              playing={false}
+              width="100%"
+              height="100%"
               controls={false}
             />
           </div>
