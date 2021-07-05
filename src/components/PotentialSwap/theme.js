@@ -31,5 +31,16 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "space-between",
     alignItems: "center",
   },
+  standardButton: {
+    color: "#0D169F",
+  },
+  cancelButton: {
+    color: "#f00",
+  },
+  container: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+  },
 }));
 export { useStyles };

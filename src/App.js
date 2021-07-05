@@ -1,16 +1,14 @@
 import "./App.css";
-import { Provider, connect } from "react-redux";
+import { connect } from "react-redux";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import Login from "./pages/Login/Login";
 import Signup from "./pages/Signup/Signup";
 import CreateSwap from "./pages/CreateSwap/CreateSwap";
 import Marketplace from "./pages/Marketplace/Marketplace";
-import pushtest from "./pages/Pushtest/pushtest";
 import Home from "./pages/Home/Home";
 import ChangePassword from "./pages/ChangePassword/ChangePassword";
 import GuardedRoute from "./helpers/GuardedRoute";
 import YourSwap from "./pages/YourSwap/YourSwap";
-import Offers from "./pages/Offers/Offers";
+import Landing from "./pages/Landing/Landing";
 
 function App({ isAuthenticated }) {
   return (
@@ -18,9 +16,8 @@ function App({ isAuthenticated }) {
       <header className="App-header">
         <BrowserRouter>
           <Switch>
-            <Route exact path="/" component={Login} />
+            <Route exact path="/" component={Landing} />
             <Route exact path="/signup" component={Signup} />
-            <Route exact path="/pushtest" component={pushtest}></Route>
             <GuardedRoute
               exact
               path="/home"
@@ -39,12 +36,6 @@ function App({ isAuthenticated }) {
               component={CreateSwap}
               auth={isAuthenticated}
             ></GuardedRoute>
-            {/* <GuardedRoute
-              exact
-              path="/changePassword"
-              component={ChangePassword}
-              auth={isAuthenticated}
-            ></GuardedRoute> */}
             <GuardedRoute
               exact
               path="/myAccount"
@@ -57,12 +48,6 @@ function App({ isAuthenticated }) {
               component={YourSwap}
               auth={isAuthenticated}
             ></GuardedRoute>
-            {/* <GuardedRoute
-              exact
-              path="/offers"
-              component={Offers}
-              auth={isAuthenticated}
-            ></GuardedRoute> */}
           </Switch>
         </BrowserRouter>
       </header>

@@ -12,7 +12,6 @@ function SwapList(props) {
             key={index}
             card={card}
             buttonset={props.panel}
-            status={props.status}
             offer={props.offers.filter(
               (offer) =>
                 offer.creatorSwapId === card.id ||

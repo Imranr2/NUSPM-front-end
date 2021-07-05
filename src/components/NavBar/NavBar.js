@@ -4,22 +4,28 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Button from "@material-ui/core/Button";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
-import { ThemeProvider, ListItemIcon, ListItemText } from "@material-ui/core";
+import {
+  ThemeProvider,
+  ListItemIcon,
+  ListItemText,
+  Container,
+} from "@material-ui/core";
 import { theme, useStyles } from "./theme";
-import { useHistory } from "react-router-dom";
-import Logo from "../../assets/nuspmlogo.png";
+// import Logo from "../../assets/nuspmlogo.svg";
+import Logo from "../Logo";
 import {
   Storefront,
   AddBox,
   LocalOffer,
-  AccountCircle,
   ExitToApp,
   ArrowDropDown,
-  LocalShippingOutlined,
 } from "@material-ui/icons";
-import VisibilityIcon from "@material-ui/icons/Visibility";
 import { Link as RouterLink } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
+import { useMediaQuery } from "react-responsive";
+import HomeIcon from "@material-ui/icons/Home";
+import SwapHorizIcon from "@material-ui/icons/SwapHoriz";
+import PersonIcon from "@material-ui/icons/Person";
 
 export default function NavBar(props) {
   const classes = useStyles();
@@ -29,6 +35,11 @@ export default function NavBar(props) {
   const [profileClicked, setProfileClicked] = useState(props.arr[2]);
   const [anchorEl2, setAnchorEl2] = useState(null);
   const { signOut } = useAuth();
+
+  const isSmallScreen = useMediaQuery({ query: "(max-width:700px)" });
+  const isDesktopOrLaptop = useMediaQuery({
+    query: "(min-width: 701px)",
+  });
 
   const handleSwapClicked = (event) => {
     if (!swapClicked) {
@@ -71,124 +82,233 @@ export default function NavBar(props) {
   return (
     <ThemeProvider theme={theme}>
       <div>
-        <AppBar className={classes.appbar} position="sticky" color="default">
+        <AppBar
+          className={isSmallScreen ? classes.appbarSmall : classes.appbar}
+          position="sticky"
+          color="default"
+          elevation={isSmallScreen ? 0 : 5}
+        >
           <Toolbar>
             <div className={classes.container}>
-              <img src={Logo} width="150" alt="NUSPM" />
+              <Logo width="150" />
             </div>
-            <Button
-              className={classes.button}
-              component={RouterLink}
-              to="/home"
-              variant="text"
-              color={homeClicked ? "primary" : "secondary"}
-            >
-              Home
-            </Button>
-            <Button
-              className={classes.button}
-              aria-controls="simple-menu"
-              aria-haspopup="true"
-              variant="text"
-              onClick={handleSwapClicked}
-              color={swapClicked ? "primary" : "secondary"}
-              endIcon={<ArrowDropDown />}
-            >
-              Swap
-            </Button>
-            <Menu
-              id="simple-menu"
-              getContentAnchorEl={null}
-              anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-              transformOrigin={{ vertical: "top", horizontal: "center" }}
-              anchorEl={anchorEl1}
-              keepMounted
-              open={Boolean(anchorEl1)}
-              onClose={handleSwapClosed}
-            >
-              <MenuItem
-                component={RouterLink}
-                to="/marketplace"
-                className={classes.menu}
-                onClose={handleSwapClosed}
-              >
-                <ListItemIcon>
-                  <Storefront />
-                </ListItemIcon>
-                <ListItemText primary="Marketplace" />
-              </MenuItem>
-              <MenuItem
-                component={RouterLink}
-                to="/create"
-                className={classes.menu}
-              >
-                <ListItemIcon>
-                  <AddBox />
-                </ListItemIcon>
-                <ListItemText primary="Create Swap" />
-              </MenuItem>
-              <MenuItem
-                component={RouterLink}
-                to="/yourSwap"
-                className={classes.menu}
-              >
-                <ListItemIcon>
-                  <LocalOffer />
-                </ListItemIcon>
-                <ListItemText primary="Your Swap and Offers" />
-              </MenuItem>
-              {/* <MenuItem
-                component={RouterLink}
-                to="/offers"
-                className={classes.menu}
-              >
-                <ListItemIcon>
-                  <LocalOffer />
-                </ListItemIcon>
-                <ListItemText primary="Offers" />
-              </MenuItem> */}
-            </Menu>
-            <Button
-              className={classes.button}
-              aria-controls="simple-menu"
-              aria-haspopup="true"
-              variant="text"
-              onClick={handleProfileClicked}
-              color={profileClicked ? "primary" : "secondary"}
-              endIcon={<ArrowDropDown />}
-            >
-              Profile
-            </Button>
-            <Menu
-              id="simple-menu"
-              getContentAnchorEl={null}
-              anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-              transformOrigin={{ vertical: "top", horizontal: "center" }}
-              anchorEl={anchorEl2}
-              keepMounted
-              open={Boolean(anchorEl2)}
-              onClose={handleProfileClosed}
-            >
-              {/* <MenuItem className={classes.menu} onClick={handleProfileClosed}>
-                <ListItemIcon>
-                  <AccountCircle />
-                </ListItemIcon>
-                <ListItemText primary="My Account" />
-              </MenuItem> */}
-              <MenuItem
-                component={RouterLink}
-                to="/myAccount"
-                className={classes.menu}
-                onClick={logOut}
-              >
-                <ListItemIcon>
-                  <ExitToApp />
-                </ListItemIcon>
-                <ListItemText primary="Logout" />
-              </MenuItem>
-            </Menu>
+            {!isSmallScreen && (
+              <>
+                <Button
+                  className={classes.button}
+                  component={RouterLink}
+                  to="/home"
+                  variant="text"
+                  color={homeClicked ? "primary" : "secondary"}
+                >
+                  {/* Home */}
+                  {isSmallScreen && <HomeIcon />}
+                  {isDesktopOrLaptop && "Home"}
+                </Button>
+                <Button
+                  className={classes.button}
+                  aria-controls="simple-menu"
+                  aria-haspopup="true"
+                  variant="text"
+                  onClick={handleSwapClicked}
+                  color={swapClicked ? "primary" : "secondary"}
+                  endIcon={<ArrowDropDown />}
+                >
+                  {isSmallScreen && <SwapHorizIcon />}
+                  {isDesktopOrLaptop && "Swap"}
+                </Button>
+                <Menu
+                  id="simple-menu"
+                  getContentAnchorEl={null}
+                  anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+                  transformOrigin={{ vertical: "top", horizontal: "center" }}
+                  anchorEl={anchorEl1}
+                  keepMounted
+                  open={Boolean(anchorEl1)}
+                  onClose={handleSwapClosed}
+                >
+                  <MenuItem
+                    component={RouterLink}
+                    to="/marketplace"
+                    className={classes.menu}
+                    onClose={handleSwapClosed}
+                  >
+                    <ListItemIcon>
+                      <Storefront />
+                    </ListItemIcon>
+                    <ListItemText primary="Marketplace" />
+                  </MenuItem>
+                  <MenuItem
+                    component={RouterLink}
+                    to="/create"
+                    className={classes.menu}
+                  >
+                    <ListItemIcon>
+                      <AddBox />
+                    </ListItemIcon>
+                    <ListItemText primary="Create Swap" />
+                  </MenuItem>
+                  <MenuItem
+                    component={RouterLink}
+                    to="/yourSwap"
+                    className={classes.menu}
+                  >
+                    <ListItemIcon>
+                      <LocalOffer />
+                    </ListItemIcon>
+                    <ListItemText primary="Your Swap and Offers" />
+                  </MenuItem>
+                </Menu>
+                <Button
+                  className={classes.button}
+                  aria-controls="simple-menu"
+                  aria-haspopup="true"
+                  variant="text"
+                  onClick={handleProfileClicked}
+                  color={profileClicked ? "primary" : "secondary"}
+                  endIcon={<ArrowDropDown />}
+                >
+                  {isSmallScreen && <PersonIcon />}
+                  {isDesktopOrLaptop && "Profile"}
+                </Button>
+                <Menu
+                  id="simple-menu"
+                  getContentAnchorEl={null}
+                  anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+                  transformOrigin={{ vertical: "top", horizontal: "center" }}
+                  anchorEl={anchorEl2}
+                  keepMounted
+                  open={Boolean(anchorEl2)}
+                  onClose={handleProfileClosed}
+                >
+                  <MenuItem
+                    component={RouterLink}
+                    to="/myAccount"
+                    className={classes.menu}
+                    onClick={logOut}
+                  >
+                    <ListItemIcon>
+                      <ExitToApp />
+                    </ListItemIcon>
+                    <ListItemText primary="Logout" />
+                  </MenuItem>
+                </Menu>
+              </>
+            )}
           </Toolbar>
         </AppBar>
+        {isSmallScreen && (
+          <>
+            <AppBar
+              className={classes.appbarSmall}
+              position="relative"
+              color="default"
+              // elevation={3}
+            >
+              <Toolbar>
+                <Button
+                  className={classes.buttonStandard}
+                  component={RouterLink}
+                  to="/home"
+                  variant="text"
+                  color={homeClicked ? "primary" : "secondary"}
+                >
+                  {/* Home */}
+                  {isSmallScreen && <HomeIcon />}
+                  {isDesktopOrLaptop && "Home"}
+                </Button>
+                <Button
+                  className={classes.buttonStandard}
+                  aria-controls="simple-menu"
+                  aria-haspopup="true"
+                  variant="text"
+                  onClick={handleSwapClicked}
+                  color={swapClicked ? "primary" : "secondary"}
+                  endIcon={<ArrowDropDown />}
+                >
+                  {isSmallScreen && <SwapHorizIcon />}
+                  {isDesktopOrLaptop && "Swap"}
+                </Button>
+                <Menu
+                  id="simple-menu"
+                  getContentAnchorEl={null}
+                  anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+                  transformOrigin={{ vertical: "top", horizontal: "center" }}
+                  anchorEl={anchorEl1}
+                  keepMounted
+                  open={Boolean(anchorEl1)}
+                  onClose={handleSwapClosed}
+                >
+                  <MenuItem
+                    component={RouterLink}
+                    to="/marketplace"
+                    className={classes.menu}
+                    onClose={handleSwapClosed}
+                  >
+                    <ListItemIcon>
+                      <Storefront />
+                    </ListItemIcon>
+                    <ListItemText primary="Marketplace" />
+                  </MenuItem>
+                  <MenuItem
+                    component={RouterLink}
+                    to="/create"
+                    className={classes.menu}
+                  >
+                    <ListItemIcon>
+                      <AddBox />
+                    </ListItemIcon>
+                    <ListItemText primary="Create Swap" />
+                  </MenuItem>
+                  <MenuItem
+                    component={RouterLink}
+                    to="/yourSwap"
+                    className={classes.menu}
+                  >
+                    <ListItemIcon>
+                      <LocalOffer />
+                    </ListItemIcon>
+                    <ListItemText primary="Your Swap and Offers" />
+                  </MenuItem>
+                </Menu>
+                <Button
+                  className={classes.buttonStandard}
+                  aria-controls="simple-menu"
+                  aria-haspopup="true"
+                  variant="text"
+                  onClick={handleProfileClicked}
+                  color={profileClicked ? "primary" : "secondary"}
+                  endIcon={<ArrowDropDown />}
+                >
+                  {isSmallScreen && <PersonIcon />}
+                  {isDesktopOrLaptop && "Profile"}
+                </Button>
+                <Menu
+                  id="simple-menu"
+                  getContentAnchorEl={null}
+                  anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+                  transformOrigin={{ vertical: "top", horizontal: "center" }}
+                  anchorEl={anchorEl2}
+                  keepMounted
+                  open={Boolean(anchorEl2)}
+                  onClose={handleProfileClosed}
+                >
+                  <MenuItem
+                    component={RouterLink}
+                    to="/myAccount"
+                    className={classes.menu}
+                    onClick={logOut}
+                  >
+                    <ListItemIcon>
+                      <ExitToApp />
+                    </ListItemIcon>
+                    <ListItemText primary="Logout" />
+                  </MenuItem>
+                </Menu>
+              </Toolbar>
+            </AppBar>
+          </>
+        )}
       </div>
     </ThemeProvider>
   );

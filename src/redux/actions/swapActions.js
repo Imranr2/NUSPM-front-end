@@ -14,6 +14,9 @@ import {
   SEARCH_SWAP_FAIL,
   SEARCH_SWAP_SUCCESS,
   SEARCH_SWAP_REQUEST,
+  SHOW_SWAP_FAIL,
+  SHOW_SWAP_REQUEST,
+  SHOW_SWAP_SUCCESS,
   RESET_SWAP,
 } from "../actionTypes";
 
@@ -99,15 +102,35 @@ export const searchSwapRequest = () => {
   };
 };
 
-export const searchSwapFail = () => {
+export const searchSwapFail = (error) => {
   return {
     type: SEARCH_SWAP_FAIL,
+    payload: error,
   };
 };
 
 export const searchSwapSuccess = () => {
   return {
     type: SEARCH_SWAP_SUCCESS,
+  };
+};
+
+export const showSwapRequest = () => {
+  return {
+    type: SHOW_SWAP_REQUEST,
+  };
+};
+
+export const showSwapFail = () => {
+  return {
+    type: SHOW_SWAP_FAIL,
+  };
+};
+
+export const showSwapSuccess = (error) => {
+  return {
+    type: SHOW_SWAP_SUCCESS,
+    payload: error,
   };
 };
 

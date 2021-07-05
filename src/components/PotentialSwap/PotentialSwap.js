@@ -12,19 +12,16 @@ import {
   TextField,
   Typography,
 } from "@material-ui/core";
-import { Autocomplete, Alert } from "@material-ui/lab";
+import { Alert } from "@material-ui/lab";
 import { useState, useEffect } from "react";
 import useSwap from "../../hooks/useSwap";
 import useOffer from "../../hooks/useOffer";
 import ArrowRightIcon from "@material-ui/icons/ArrowRight";
 import { connect } from "react-redux";
-import { HighlightButton } from "./theme";
 import { useStyles } from "./theme";
-import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 
 function PotentialSwap(props) {
   const classes = useStyles();
-  // const [initiatorSwap, setInitiatorSwap] = useState({});
   const [dialogOpen, setDialogOpen] = useState(false);
   const [currentDialog, setCurrentDialog] = useState(0);
   const [disabled, setDisabled] = useState(true);
@@ -37,6 +34,7 @@ function PotentialSwap(props) {
   const {
     userSwaps,
     createSwap,
+    deleteSwap,
     initiatorSwap,
     slotDets,
     setInitiatorSwap,
@@ -46,8 +44,6 @@ function PotentialSwap(props) {
   const { createOffer } = useOffer();
 
   const handleDialogClickOpen = () => {
-    // console.log(userSwaps);
-    // console.log(filteredUserSwaps);
     setDialogOpen(true);
   };
 
@@ -101,7 +97,6 @@ function PotentialSwap(props) {
   };
 
   useEffect(() => setSlotDets(props.slotDets));
-
   return (
     <Grid key={props} item xs={12} sm={6} md={4}>
       <Card>
@@ -127,13 +122,23 @@ function PotentialSwap(props) {
 
         <Dialog open={dialogOpen} onClose={handleDialogClose}>
           <DialogTitle>
-            {currentDialog === 0 && <Typography>Choose Your Swap</Typography>}
-            {currentDialog === 1 && <Typography>Create Swap</Typography>}
-            {currentDialog === 2 && <Typography>Initiate Swap</Typography>}
+            {currentDialog === 0 && (
+              <Typography variant="h5" align="center">
+                Choose Your Swap
+              </Typography>
+            )}
+            {currentDialog === 1 && (
+              <Typography variant="h5" align="center">
+                Create Swap
+              </Typography>
+            )}
+            {currentDialog === 2 && (
+              <Typography variant="h5" align="center">
+                Initiate Swap
+              </Typography>
+            )}
           </DialogTitle>
           <DialogContent>
-            {/* conditionally render content */}
-            {/*Step 1*/}
             {filteredUserSwaps.length > 0 && currentDialog === 0 && (
               <Container>
                 <Grid container spacing={4}>
@@ -169,49 +174,54 @@ function PotentialSwap(props) {
             )}
             {filteredUserSwaps.length === 0 && currentDialog === 0 && (
               <Alert severity="info">
-                No available swap present. Select the 'Create Swap' option below
+                No available swap present.
+                <br />
+                Select the 'Create Swap' option below
               </Alert>
             )}
-            {/*Step 2*/}
             {currentDialog === 1 && (
-              <Container>
-                <TextField
-                  className={classes.field}
-                  value={props.creatorSwap.module_code}
-                  label="Module"
-                  variant="outlined"
-                  disabled={true}
-                ></TextField>
+              <>
+                <Container className={classes.container}>
+                  <TextField
+                    className={classes.field}
+                    value={props.creatorSwap.module_code}
+                    label="Module"
+                    variant="outlined"
+                    disabled={true}
+                  ></TextField>
+                  <br />
+                  <TextField
+                    className={classes.field}
+                    value={props.creatorSwap.slot_type}
+                    label="Slot Type"
+                    variant="outlined"
+                    disabled={true}
+                  ></TextField>
+                  <br />
+                  <TextField
+                    className={classes.field}
+                    value={props.initiatorSlot}
+                    label="Current Slot"
+                    variant="outlined"
+                    disabled={true}
+                  ></TextField>
+                  <br />
+                  <TextField
+                    className={classes.field}
+                    value={props.creatorSwap.current_slot}
+                    label="Desired Slot"
+                    variant="outlined"
+                    disabled={true}
+                  ></TextField>
+                </Container>
                 <br />
-                <br />
-                <TextField
-                  className={classes.field}
-                  value={props.creatorSwap.slot_type}
-                  label="Slot Type"
-                  variant="outlined"
-                  disabled={true}
-                ></TextField>
-                <br />
-                <br />
-                <TextField
-                  className={classes.field}
-                  value={props.initiatorSlot}
-                  label="Current Slot"
-                  variant="outlined"
-                  disabled={true}
-                ></TextField>
-                <br />
-                <br />
-                <TextField
-                  className={classes.field}
-                  value={props.creatorSwap.current_slot}
-                  label="Desired Slot"
-                  variant="outlined"
-                  disabled={true}
-                ></TextField>
-              </Container>
+                <Alert severity="info">
+                  Clicking confirm will create a swap for
+                  <br />
+                  you even if you do not initiate the swap!
+                </Alert>
+              </>
             )}
-            {/*Step 3*/}
             {currentDialog === 2 && (
               <>
                 <Container className={classes.comparison}>
@@ -273,29 +283,54 @@ function PotentialSwap(props) {
           </DialogContent>
           <DialogActions>
             {currentDialog === 0 && (
-              <Container>
+              <>
                 <Button
+                  className={classes.standardButton}
                   disabled={filteredUserSwaps.length > 0}
                   onClick={handleCreate}
                 >
                   Create Swap
                 </Button>
-                <Button disabled={disabled} onClick={handleNext}>
+                <Button
+                  className={classes.standardButton}
+                  disabled={disabled}
+                  onClick={handleNext}
+                >
                   Next
                 </Button>
-              </Container>
+              </>
             )}
             {currentDialog === 1 && (
-              <Container>
-                <Button onClick={handleCreateSwap}>Confirm</Button>
-                <Button onClick={handleDialogClose}>Cancel</Button>
-              </Container>
+              <>
+                <Button
+                  className={classes.standardButton}
+                  onClick={handleCreateSwap}
+                >
+                  Confirm
+                </Button>
+                <Button
+                  className={classes.cancelButton}
+                  onClick={handleDialogClose}
+                >
+                  Cancel
+                </Button>
+              </>
             )}
             {currentDialog === 2 && (
-              <Container>
-                <Button onClick={handleInitiateSwap}>Initiate</Button>
-                <Button onClick={handleDialogClose}>Cancel</Button>
-              </Container>
+              <>
+                <Button
+                  className={classes.standardButton}
+                  onClick={handleInitiateSwap}
+                >
+                  Initiate
+                </Button>
+                <Button
+                  className={classes.cancelButton}
+                  onClick={handleDialogClose}
+                >
+                  Cancel
+                </Button>
+              </>
             )}
           </DialogActions>
         </Dialog>
@@ -306,8 +341,7 @@ function PotentialSwap(props) {
 
 const mapStateToProps = (state) => {
   return {
-    success: state.swap.success,
-    loading: state.swap.isLoading,
+    loading: state.swap.viewLoading,
   };
 };
 

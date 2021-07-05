@@ -1,8 +1,4 @@
-// import React, { useEffect, useState } from "react";
-import {
-  Link as RouterLink,
-  // Redirect, useHistory
-} from "react-router-dom";
+import { Link as RouterLink } from "react-router-dom";
 import { connect } from "react-redux";
 import {
   Button,
@@ -36,9 +32,8 @@ function Login({ loading, loginError, errorMsg }) {
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
-        <CssBaseline />
         <div>
-          <Logo></Logo>
+          <Logo width="300"></Logo>
           <form onSubmit={handleSubmit}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
@@ -110,7 +105,7 @@ function Login({ loading, loginError, errorMsg }) {
 
 const mapStateToProps = (state) => {
   return {
-    loading: state.auth.isLoading,
+    loading: state.auth.loginLoading,
     loginError: state.auth.loginError,
     errorMsg: state.auth.errorMsg,
   };

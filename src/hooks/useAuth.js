@@ -10,6 +10,12 @@ import {
   changePasswordRequest,
   changePasswordSuccess,
   changePasswordFail,
+  fetchUserRequest,
+  fetchUserSuccess,
+  fetchUserFail,
+  pingHerokuRequest,
+  pingHerokuSuccess,
+  pingHerokuFail,
   resetAuth,
 } from "../redux/actions/authActions";
 import authAxios from "../helpers/authAxios";
@@ -34,6 +40,16 @@ const useAuth = () => {
   const [password, setPassword] = useState("");
   const [passwordConf, setPasswordConf] = useState("");
   const [user, setUser] = useState({});
+
+  const pingHeroku = () => {
+    dispatch(pingHerokuRequest());
+    authAxios
+      .get("")
+      .then((response) => {
+        dispatch(pingHerokuSuccess());
+      })
+      .catch((error) => pingHerokuFail(error.response));
+  };
 
   const signIn = (email, password) => {
     dispatch(signInRequest());
@@ -123,12 +139,16 @@ const useAuth = () => {
 
   //add redux later
   const getUser = (id) => {
+    dispatch(fetchUserRequest());
     authAxios
       .get(`/users/${id}`)
       .then((response) => {
+        dispatch(fetchUserSuccess());
         setUser(response.data);
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        dispatch(fetchUserFail(error.response));
+      });
   };
 
   return {
@@ -147,6 +167,7 @@ const useAuth = () => {
     registerAccount,
     changePassword,
     getUser,
+    pingHeroku,
   };
 };
 

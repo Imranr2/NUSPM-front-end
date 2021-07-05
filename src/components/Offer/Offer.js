@@ -71,16 +71,13 @@ export default function Offer(props) {
       buttonset = (
         <CurrentOfferButtons
           offerDetails={props.card}
-          status={props.status}
           initiatorSwap={currentSwap}
           creatorSwap={incomingSwap}
         />
       );
       break;
     case "pendingOffer":
-      buttonset = (
-        <PendingOfferButtons offerDetails={props.card} status={props.status} />
-      );
+      buttonset = <PendingOfferButtons offerDetails={props.card} />;
       break;
     default:
       break;

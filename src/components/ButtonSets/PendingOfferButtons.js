@@ -5,14 +5,11 @@ import { theme } from "../../Theme";
 import axios from "axios";
 import useOffer from "../../hooks/useOffer";
 
-export default function PendingOfferButtons({ offerDetails, status }) {
+export default function PendingOfferButtons({ offerDetails }) {
   const { deleteOffer } = useOffer();
 
   function handleWithdraw() {
     deleteOffer(offerDetails.id);
-    setTimeout(() => {
-      status();
-    }, 1500);
   }
 
   return (

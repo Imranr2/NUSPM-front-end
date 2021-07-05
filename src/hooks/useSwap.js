@@ -14,6 +14,9 @@ import {
   searchSwapFail,
   searchSwapRequest,
   searchSwapSuccess,
+  showSwapFail,
+  showSwapRequest,
+  showSwapSuccess,
   resetSwap,
 } from "../redux/actions/swapActions";
 import axios from "axios";
@@ -224,31 +227,25 @@ const useSwap = () => {
             dispatch(searchSwapSuccess());
           })
           .catch((error) => {
-            console.log(error);
+            dispatch(searchSwapFail(error.response));
           });
       })
       .catch((error) => {
-        console.log(error);
+        dispatch(searchSwapFail(error.response));
       });
   };
 
   // NEW METHOD FOR OFFER
   const showSwap = (swapId) => {
-    dispatch(viewSwapRequest());
+    dispatch(showSwapRequest());
     authAxios
       .get(`/api/v1/swaps/${swapId}`)
       .then((response) => {
         setCompletedSwap(response.data);
-        dispatch(viewSwapSuccess());
-        setTimeout(() => {
-          dispatch(resetSwap());
-        }, 3000);
+        dispatch(showSwapSuccess());
       })
       .catch((error) => {
-        dispatch(viewSwapFail());
-        setTimeout(() => {
-          dispatch(resetSwap());
-        }, 3000);
+        dispatch(showSwapFail(error));
       });
   };
 

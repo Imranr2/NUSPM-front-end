@@ -46,7 +46,7 @@ function Signup({ loading, registerError, errorMsg, success }) {
     <ThemeProvider theme={theme}>
       <Container maxWidth="xs">
         <div>
-          <Logo></Logo>
+          <Logo width="300" />
           <form onSubmit={handleSubmit}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
@@ -150,10 +150,10 @@ function Signup({ loading, registerError, errorMsg, success }) {
 
 const mapStateToProps = (state) => {
   return {
-    loading: state.auth.isLoading,
+    loading: state.auth.registerLoading,
     registerError: state.auth.registerError,
     errorMsg: state.auth.errorMsg,
-    success: state.auth.success,
+    success: state.auth.registerSuccess,
   };
 };
 

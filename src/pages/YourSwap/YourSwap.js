@@ -11,15 +11,25 @@ import { connect } from "react-redux";
 import { PulseLoader } from "react-spinners";
 import { Alert } from "@material-ui/lab";
 
-function YourSwap({ success, swapLoading, offerLoading, userId }) {
+function YourSwap({
+  swapLoading,
+  offerLoading,
+  swapError,
+  offerError,
+  swapErrorMsg,
+  offerErrorMsg,
+  updateSwapSuccess,
+  updateOfferSuccess,
+  deleteSwapSuccess,
+  deleteOfferSuccess,
+  viewOfferLoading,
+  viewSwapLoading,
+  userId,
+}) {
   const [value, setValue] = useState(0);
   const [refresh, setRefresh] = useState(true);
 
   const classes = useStyles();
-
-  const changeStatus = () => {
-    setRefresh(!refresh);
-  };
 
   const handleChange = (event, newValue) => {
     event.preventDefault();
@@ -44,12 +54,14 @@ function YourSwap({ success, swapLoading, offerLoading, userId }) {
   );
 
   useEffect(() => {
-    if (refresh) {
-      viewSwaps();
-      viewOffers();
-      setRefresh(false);
-    }
-  }, [refresh]);
+    viewSwaps();
+    viewOffers();
+  }, [
+    updateOfferSuccess,
+    updateSwapSuccess,
+    deleteOfferSuccess,
+    deleteSwapSuccess,
+  ]);
 
   return (
     <ThemeProvider theme={theme}>
@@ -69,7 +81,6 @@ function YourSwap({ success, swapLoading, offerLoading, userId }) {
           <Tab label="Rejected Offers" />
         </Tabs>
         {(swapLoading || offerLoading) && <PulseLoader color="#0D169F" />}
-        {/* some other loader in center of page */}
 
         {value === 0 && (
           <>
@@ -77,18 +88,18 @@ function YourSwap({ success, swapLoading, offerLoading, userId }) {
               Click on the offer to view pending slot details and accept or
               reject the offer
             </Alert>
-            <OfferList
-              arr={currentOffer}
-              status={changeStatus}
-              tab="currentOffer"
-            />
-          </>
-        )}
-
-        {value === 0 && currentOffer.length === 0 && (
-          <>
-            <br />
-            <Alert severity="warning">No offers at the moment</Alert>
+            <OfferList arr={currentOffer} tab="currentOffer" />
+            {currentOffer.length === 0 && !viewOfferLoading && (
+              <>
+                <br />
+                <Alert severity="warning">No offers at the moment</Alert>
+              </>
+            )}
+            {offerError && (
+              <>
+                <Alert severity="warning">{offerErrorMsg}</Alert>
+              </>
+            )}
           </>
         )}
 
@@ -102,16 +113,19 @@ function YourSwap({ success, swapLoading, offerLoading, userId }) {
             <SwapList
               arr={currentSwap}
               panel="currentSwap"
-              status={changeStatus}
-              offers={[]}
+              offers={userOffer.filter((offer) => offer.isPending)}
             />
-          </>
-        )}
-
-        {value === 1 && currentSwap.length === 0 && (
-          <>
-            <br />
-            <Alert severity="warning">No swaps at the moment</Alert>
+            {currentSwap.length === 0 && !viewSwapLoading && (
+              <>
+                <br />
+                <Alert severity="warning">No swaps at the moment</Alert>
+              </>
+            )}
+            {swapError && (
+              <>
+                <Alert severity="warning">{swapErrorMsg}</Alert>
+              </>
+            )}
           </>
         )}
 
@@ -120,17 +134,20 @@ function YourSwap({ success, swapLoading, offerLoading, userId }) {
             <Alert severity="info" className={classes.alert}>
               Click on the card to withdraw your offer
             </Alert>
-            <OfferList
-              arr={pendingOffer}
-              status={changeStatus}
-              tab="pendingOffer"
-            />
-          </>
-        )}
-        {value === 2 && pendingOffer.length === 0 && (
-          <>
-            <br />
-            <Alert severity="warning">No pending offers at the moment</Alert>
+            <OfferList arr={pendingOffer} tab="pendingOffer" />
+            {pendingOffer.length === 0 && !viewOfferLoading && (
+              <>
+                <br />
+                <Alert severity="warning">
+                  No pending offers at the moment
+                </Alert>
+              </>
+            )}
+            {offerError && (
+              <>
+                <Alert severity="warning">{offerErrorMsg}</Alert>
+              </>
+            )}
           </>
         )}
 
@@ -142,15 +159,21 @@ function YourSwap({ success, swapLoading, offerLoading, userId }) {
             <SwapList
               arr={completedSwap}
               panel="completedSwap"
-              status={changeStatus}
               offers={userOffer.filter((offer) => offer.isAccepted)}
             />
-          </>
-        )}
-        {value === 3 && completedSwap.length === 0 && (
-          <>
-            <br />
-            <Alert severity="warning">No completed swaps at the moment</Alert>
+            {completedSwap.length === 0 && !viewSwapLoading && (
+              <>
+                <br />
+                <Alert severity="warning">
+                  No completed swaps at the moment
+                </Alert>
+              </>
+            )}
+            {swapError && (
+              <>
+                <Alert severity="warning">{swapErrorMsg}</Alert>
+              </>
+            )}
           </>
         )}
 
@@ -159,18 +182,20 @@ function YourSwap({ success, swapLoading, offerLoading, userId }) {
             <Alert severity="info" className={classes.alert}>
               All your rejected offers are displayed here
             </Alert>
-            <OfferList
-              arr={rejectedOffer}
-              status={changeStatus}
-              tab="rejectedOffer"
-            />
-          </>
-        )}
-
-        {value === 4 && rejectedOffer.length === 0 && (
-          <>
-            <br />
-            <Alert severity="warning">No rejected offers at the moment</Alert>
+            <OfferList arr={rejectedOffer} tab="rejectedOffer" />
+            {rejectedOffer.length === 0 && !viewOfferLoading && (
+              <>
+                <br />
+                <Alert severity="warning">
+                  No rejected offers at the moment
+                </Alert>
+              </>
+            )}
+            {offerError && (
+              <>
+                <Alert severity="warning">{offerErrorMsg}</Alert>
+              </>
+            )}
           </>
         )}
       </Container>
@@ -180,9 +205,18 @@ function YourSwap({ success, swapLoading, offerLoading, userId }) {
 
 const mapStateToProps = (state) => {
   return {
-    success: state.swap.success,
-    swapLoading: state.swap.isLoading,
-    offerLoading: state.offer.isLoading,
+    swapLoading: state.swap.viewLoading,
+    offerLoading: state.offer.viewLoading,
+    swapError: state.swap.viewError,
+    offerError: state.offer.viewError,
+    swapErrorMsg: state.swap.errorMsg,
+    offerErrorMsg: state.offer.errorMsg,
+    updateOfferSuccess: state.offer.updateSuccess,
+    updateSwapSuccess: state.swap.updateSuccess,
+    deleteOfferSuccess: state.offer.deleteSuccess,
+    deleteSwapSuccess: state.swap.deleteSuccess,
+    viewOfferLoading: state.offer.viewLoading,
+    viewSwapLoading: state.swap.viewLoading,
     userId: state.auth.user.id,
   };
 };

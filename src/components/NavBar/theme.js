@@ -29,6 +29,17 @@ const useStyles = makeStyles((theme) => ({
       color: "#0D169F",
     },
   },
+  buttonStandard: {
+    variant: "outlined",
+    flexGrow: 1,
+    maxWidth: "150px",
+    borderRadius: 4,
+    fontSize: "20px",
+    "&:hover": {
+      backgroundColor: "#",
+      color: "#0D169F",
+    },
+  },
   menu: {
     "&:hover": {
       backgroundColor: "#e1e2fc",
@@ -37,7 +48,15 @@ const useStyles = makeStyles((theme) => ({
   },
   appbar: {
     width: "100vw",
-    // minHeight: "12vh",
+    display: "flex",
+    flexWrap: "wrap",
+  },
+  appbarSmall: {
+    width: "100vw",
+    display: "flex",
+    flexWrap: "wrap",
+    alignItems: "center",
+    boxShadow: "0px 5px 10px 1px #d9d9d9",
   },
 }));
 

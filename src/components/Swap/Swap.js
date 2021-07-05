@@ -1,9 +1,10 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import {
   Grid,
   Card,
   CardContent,
+  Container,
   Typography,
   CardActions,
 } from "@material-ui/core";
@@ -11,46 +12,35 @@ import { useStyles } from "./theme";
 import useAuth from "../../hooks/useAuth";
 import useSwap from "../../hooks/useSwap";
 import CurrentSwapButtons from "../ButtonSets/CurrentSwapButtons";
-import ReservedButtons from "../ButtonSets/ReservedButtons";
 import CompletedSwapButtons from "../ButtonSets/CompletedSwapButtons";
 import InitiateButtons from "../ButtonSets/InitiateButtons";
-import { PinDropSharp } from "@material-ui/icons";
+import { connect } from "react-redux";
+import LocalOfferIcon from "@material-ui/icons/LocalOffer";
 
-export default function Swap(props) {
+function Swap({ key, card, buttonset, offer, userSuccess, swapSuccess }) {
   const classes = useStyles();
-  let buttonset = null;
+  let buttons = null;
   const { completedSwap, showSwap } = useSwap();
   const { user, getUser } = useAuth();
 
-  switch (props.buttonset) {
+  switch (buttonset) {
     case "currentSwap":
-      buttonset = (
-        <CurrentSwapButtons swapDetails={props.card} status={props.status} />
-      );
+      buttons = <CurrentSwapButtons swapDetails={card} />;
       break;
-    // case "reserved":
-    //   buttonset = (
-    //     <ReservedButtons swapDetails={props.card} status={props.status} />
-    //   );
-    //   break;
     case "completedSwap":
-      buttonset = (
-        <CompletedSwapButtons swapDetails={props.card} status={props.status} />
-      );
+      buttons = <CompletedSwapButtons swapDetails={card} />;
       break;
     default:
-      buttonset = (
-        <InitiateButtons swapDetails={props.card} status={props.status} />
-      );
+      buttons = <InitiateButtons swapDetails={card} />;
       break;
   }
 
   useEffect(() => {
-    if (props.offer.length > 0) {
-      if (props.offer[0].initiatorSwapId !== props.card.id) {
-        showSwap(props.offer[0].initiatorSwapId);
+    if (offer.length > 0) {
+      if (offer[0].initiatorSwapId !== card.id) {
+        showSwap(offer[0].initiatorSwapId);
       } else {
-        showSwap(props.offer[0].creatorSwapId);
+        showSwap(offer[0].creatorSwapId);
       }
     }
   }, []);
@@ -63,49 +53,87 @@ export default function Swap(props) {
   }, [completedSwap]);
 
   return (
-    <Grid key={props} container item xs={12} sm={6} md={4} justify="center">
-      <Card className={classes.card}>
-        <CardContent className={classes.cardContent}>
-          {props.buttonset === "currentSwap" && (
-            <Typography variant="h6">
-              {props.card.module_code}
-              <br />
-              {props.card.slot_type}
-              <br />
-              {props.card.day}
-              <br />
-              {props.card.venue}
-              <br />
-              {`${props.card.startTime} - ${props.card.endTime}`}
-              <br />
-              Have: [{props.card.current_slot}]
-              <br />
-              Want: [{props.card.desired_slots.toString()}]
-            </Typography>
-          )}
-          {props.buttonset === "completedSwap" && (
-            <Typography variant="h6">
-              {props.card.module_code}
-              <br />
-              {props.card.slot_type}
-              <br />
-              {props.card.day}
-              <br />
-              {props.card.venue}
-              <br />
-              {`${props.card.startTime} - ${props.card.endTime}`}
-              <br />
-              New: [{completedSwap.current_slot}]
-              <br />
-              {/* need to find a way to get current slot and email of other guy */}
-              Old: [{props.card.current_slot}]
-              <br />
-              {user.email}
-            </Typography>
-          )}
-        </CardContent>
-        <CardActions className={classes.button}>{buttonset}</CardActions>
-      </Card>
-    </Grid>
+    <>
+      {buttonset === "currentSwap" && (
+        <Grid key={key} container item xs={12} sm={6} md={4} justify="center">
+          <Card className={classes.card}>
+            <CardContent className={classes.cardContent}>
+              <Typography variant="h6">
+                {card.module_code}
+                <br />
+                {card.slot_type}
+                <br />
+                {card.day}
+                <br />
+                {card.venue}
+                <br />
+                {`${card.startTime} - ${card.endTime}`}
+                <br />
+                Have: [{card.current_slot}]
+                <br />
+                Want: [{card.desired_slots.toString()}]
+              </Typography>
+              <Container className={classes.tag}>
+                {offer
+                  .map((offer) => offer.creatorSwapId)
+                  .includes(card.id) && (
+                  <Container className={classes.innerTag}>
+                    <LocalOfferIcon color="primary" />
+                    <Typography variant="subtitle2">Current Offer</Typography>
+                  </Container>
+                )}
+                {offer
+                  .map((offer) => offer.initiatorSwapId)
+                  .includes(card.id) && (
+                  <Container className={classes.innerTag}>
+                    <LocalOfferIcon color="disabled" />
+                    <Typography variant="subtitle2">Pending Offer</Typography>
+                  </Container>
+                )}
+              </Container>
+            </CardContent>
+            <CardActions className={classes.button}>{buttons}</CardActions>
+          </Card>
+        </Grid>
+      )}
+
+      {buttonset === "completedSwap" &&
+        Object.keys(user).length !== 0 &&
+        Object.keys(completedSwap).length !== 0 && (
+          <Grid key={key} container item xs={12} sm={6} md={4} justify="center">
+            <Card className={classes.card}>
+              <CardContent className={classes.cardContent}>
+                <Typography variant="h6">
+                  {card.module_code}
+                  <br />
+                  {card.slot_type}
+                  <br />
+                  {card.day}
+                  <br />
+                  {card.venue}
+                  <br />
+                  {`${card.startTime} - ${card.endTime}`}
+                  <br />
+                  New: [{completedSwap.current_slot}]
+                  <br />
+                  Old: [{card.current_slot}]
+                  <br />
+                  {user.email}
+                </Typography>
+              </CardContent>
+              <CardActions className={classes.button}>{buttons}</CardActions>
+            </Card>
+          </Grid>
+        )}
+    </>
   );
 }
+
+const mapStateToProps = (state) => {
+  return {
+    userSuccess: state.auth.fetchSuccess,
+    swapSuccess: state.swap.showSuccess,
+  };
+};
+
+export default connect(mapStateToProps)(Swap);

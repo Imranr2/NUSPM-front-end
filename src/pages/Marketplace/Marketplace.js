@@ -16,8 +16,17 @@ import useSwap from "../../hooks/useSwap";
 import { connect } from "react-redux";
 import PotentialSwaps from "../../components/PotentialSwaps/PotentialSwaps";
 import { PulseLoader } from "react-spinners";
+import { Ghost } from "react-kawaii";
+import NotFound from "../../assets/not-found.png";
 
-function Marketplace({ success, error, errorMsg, user, loading }) {
+function Marketplace({
+  createSuccess,
+  searchSuccess,
+  error,
+  errorMsg,
+  user,
+  loading,
+}) {
   const classes = useStyles();
   const {
     moduleList,
@@ -35,7 +44,6 @@ function Marketplace({ success, error, errorMsg, user, loading }) {
   const [moduleCode, setModuleCode] = useState("");
   const [slotType, setSlotType] = useState("");
   const [currentSlot, setCurrentSlot] = useState("");
-  const [localSuccess, setLocalSuccess] = useState(false);
   const [search, setSearch] = useState(false);
 
   useEffect(() => getAllModules(), []);
@@ -48,22 +56,17 @@ function Marketplace({ success, error, errorMsg, user, loading }) {
   );
 
   useEffect(() => {
-    if (success) {
-      setLocalSuccess(true);
+    if (createSuccess) {
+      viewSwaps();
     }
-  }, [success]);
-
-  useEffect(() => {
-    viewSwaps();
-  }, []);
+  }, [createSuccess]);
 
   function handleSubmit(e) {
     e.preventDefault();
     searchSwap(moduleCode, slotType, currentSlot);
     setSearch(true);
-    console.log(userSwaps);
-    console.log(slotDets);
   }
+
   return (
     <ThemeProvider theme={theme}>
       <NavBar arr={[false, true, false]} />
@@ -167,9 +170,10 @@ function Marketplace({ success, error, errorMsg, user, loading }) {
               Click on the listing to initiate a swap!
             </Alert>
           </Container>
+          <br />
           {loading && <PulseLoader color="#0D169F" />}
 
-          {search &&
+          {searchSuccess &&
             potentialSwaps.filter((swap) => swap.user_id !== user.id).length >
               0 && (
               <PotentialSwaps
@@ -181,11 +185,21 @@ function Marketplace({ success, error, errorMsg, user, loading }) {
                 slotDets={slotDets}
               />
             )}
-          {search &&
+          {/* {searchSuccess &&
             potentialSwaps.filter((swap) => swap.user_id !== user.id).length ===
-              0 && <Alert severity="warning">No swap found.</Alert>}
-
-          {/* {error} */}
+              0 && <Alert severity="warning">No swap found.</Alert>} */}
+          {searchSuccess &&
+            potentialSwaps.filter((swap) => swap.user_id !== user.id).length ===
+              0 && (
+              <>
+                <img src={NotFound} width="500" alt="Not-Found" />
+              </>
+            )}
+          {error && (
+            <>
+              <Alert severity="warning">{errorMsg}</Alert>
+            </>
+          )}
         </div>
       </Container>
     </ThemeProvider>
@@ -193,47 +207,12 @@ function Marketplace({ success, error, errorMsg, user, loading }) {
 }
 const mapStateToProps = (state) => {
   return {
-    success: state.swap.success,
-    error: state.swap.error,
+    error: state.swap.searchError,
     errorMsg: state.swap.errorMsg,
     user: state.auth.user,
-    loading: state.swap.isLoading,
+    loading: state.swap.searchLoading,
+    searchSuccess: state.swap.searchSuccess,
+    createSuccess: state.swap.createSuccess,
   };
 };
 export default connect(mapStateToProps)(Marketplace);
-
-/*
-//Marketplace get potetialSwaps, userSwapss
-  //potentialSwaps, new SwapList(PotentialSwaps), map into new Swap component(<PotentialSwap swap={swap} />)
-    //PotentialSwap => ButtonBase, onclick=open dialog, setState for creatorSwap 
-      Dialog
-        Step 1:
-        DialogContent
-        userSwapss.map into layout and individual swap (not a separate component)
-          Each swap => ButtonBase, onClick = setState for initiatorSwap
-        DialogActions
-        Next Button onClick={compare 2 swaps to match modcode etc...if dont match, render error else value == 3}
-        Create Button onclick{value == 2}
-        Step 2(optional): 
-        AutoCompletes for creation of swap
-        Submit onClick={useEffect [success], if true, set value === 3,create swap, setState of initiatorSwap}
-        Step 3:
-        initiatorSwap >>> creatorSwap
-        confirm button onclick={create offer using the 2 swap details}
-
-
-*/
-
-/*
-Button to open
-Dialog
-  value == 1 && 
-  userSwapss
-
-  value == 2 &&
-  step 2
-
-  value = 3 &&
-
-Dialog
-*/

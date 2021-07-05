@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="309" height="293" viewBox="0 0 309 293">
+  <defs>
+    <clipPath id="clip-Web_1920_1">
+      <rect width="309" height="293"/>
+    </clipPath>
+  </defs>
+  <g id="Web_1920_1" data-name="Web 1920 – 1" clip-path="url(#clip-Web_1920_1)">
+    <rect width="309" height="293" fill="rgba(255,255,255,0)"/>
+    <g id="Group_1" data-name="Group 1" transform="translate(-770 -319)">
+      <g id="Polygon_1" data-name="Polygon 1" transform="translate(770 319)" fill="rgba(255,255,255,0)">
+        <path d="M 244.5422058105469 285.5 L 64.45779418945312 285.5 L 8.823360443115234 114.7855682373047 L 154.5 9.260951995849609 L 300.1766357421875 114.7855682373047 L 244.5422058105469 285.5 Z" stroke="none"/>
+        <path d="M 154.5 18.52191162109375 L 17.64675903320312 117.6550598144531 L 69.90182495117188 278 L 239.0981140136719 278 L 291.3532409667969 117.6550598144531 L 154.5 18.52191162109375 M 154.5 0 L 309 111.9160461425781 L 249.9862060546875 293 L 59.01373291015625 293 L 0 111.9160461425781 L 154.5 0 Z" stroke="none" fill="#0d169f"/>
+      </g>
+      <text id="PM" transform="translate(827 530)" fill="#622baa" font-size="135" font-family="SFProDisplay-Semibold, SF Pro Display" font-weight="600"><tspan x="0" y="0">P</tspan><tspan y="0" fill="#0d169f">M</tspan></text>
+    </g>
+  </g>
+</svg>

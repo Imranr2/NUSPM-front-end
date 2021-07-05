@@ -30,9 +30,9 @@ function CreateSwap({ success, error, errorMsg, loading }) {
     slotDets,
   } = useSwap();
 
-  const [moduleCode, setModuleCode] = useState("");
-  const [slotType, setSlotType] = useState("");
-  const [currentSlot, setCurrentSlot] = useState("");
+  const [moduleCode, setModuleCode] = useState([]);
+  const [slotType, setSlotType] = useState([]);
+  const [currentSlot, setCurrentSlot] = useState([]);
   const [desiredSlots, setDesiredSlots] = useState([]);
 
   useEffect(() => getAllModules(), []);
@@ -53,7 +53,7 @@ function CreateSwap({ success, error, errorMsg, loading }) {
     setDesiredSlots([]);
   }
 
-  const slotTypeOptions = Array.from(
+  let slotTypeOptions = Array.from(
     new Set(
       modDets
         .map((element) => element.lessonType)
@@ -69,6 +69,20 @@ function CreateSwap({ success, error, errorMsg, loading }) {
   const desiredSlotOptions = slotOptions.filter(
     (classNo) => classNo !== currentSlot
   );
+
+  let newDesiredSlots = desiredSlots.filter((x) => x !== currentSlot);
+
+  // destructive filter
+  Array.prototype.removeIf = function (callback) {
+    var i = 0;
+    while (i < this.length) {
+      if (callback(this[i], i)) {
+        this.splice(i, 1);
+      } else {
+        ++i;
+      }
+    }
+  };
 
   return (
     <ThemeProvider theme={theme}>
@@ -89,7 +103,6 @@ function CreateSwap({ success, error, errorMsg, loading }) {
                   options={moduleList}
                   onChange={(event, value) => {
                     setModuleCode(value);
-                    // getModuleDetails(value);
                     setSlotType([]);
                     setCurrentSlot([]);
                     setDesiredSlots([]);
@@ -107,6 +120,7 @@ function CreateSwap({ success, error, errorMsg, loading }) {
               <Grid item xs={12}>
                 <Autocomplete
                   value={slotType}
+                  disabled={slotTypeOptions.length === 0 || moduleCode === null}
                   classes={{ paper: classes.paper }}
                   options={slotTypeOptions}
                   onChange={(event, value) => {
@@ -128,11 +142,15 @@ function CreateSwap({ success, error, errorMsg, loading }) {
               <Grid item xs={12}>
                 <Autocomplete
                   value={currentSlot}
+                  disabled={
+                    slotType === null ||
+                    moduleCode === null ||
+                    slotType.length === 0
+                  }
                   classes={{ paper: classes.paper }}
                   options={slotOptions}
                   onChange={(event, value) => {
                     setCurrentSlot(value);
-                    setDesiredSlots([]);
                   }}
                   renderInput={(params) => (
                     <TextField
@@ -147,7 +165,12 @@ function CreateSwap({ success, error, errorMsg, loading }) {
               <Grid item xs={12}>
                 <Autocomplete
                   classes={{ paper: classes.paper }}
-                  value={desiredSlots}
+                  value={desiredSlots.removeIf((slot) => slot === currentSlot)}
+                  disabled={
+                    slotType === null ||
+                    moduleCode === null ||
+                    slotType.length === 0
+                  }
                   options={desiredSlotOptions}
                   onChange={(event, value) => {
                     setDesiredSlots(value);
@@ -200,10 +223,10 @@ function CreateSwap({ success, error, errorMsg, loading }) {
 
 const mapStateToProps = (state) => {
   return {
-    success: state.swap.success,
-    error: state.swap.error,
+    success: state.swap.createSuccess,
+    error: state.swap.createError,
     errorMsg: state.swap.errorMsg,
-    loading: state.swap.isLoading,
+    loading: state.swap.createLoading,
   };
 };
 export default connect(mapStateToProps)(CreateSwap);

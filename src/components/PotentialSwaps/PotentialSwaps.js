@@ -1,10 +1,7 @@
 import PotentialSwap from "../PotentialSwap/PotentialSwap";
 import { Grid, Container } from "@material-ui/core";
-import { Alert } from "@material-ui/lab";
-// import { useStyles } from "./theme";
 
 function PotentialSwaps(props) {
-  //   const classes = useStyles();
   return (
     <Container>
       <Grid container spacing={4}>

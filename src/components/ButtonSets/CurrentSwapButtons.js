@@ -17,7 +17,7 @@ import useSwap from "../../hooks/useSwap";
 import useOffer from "../../hooks/useOffer";
 import { withdrawOfferFail } from "../../redux/actions/offerActions";
 
-export default function CurrentSwapButtons({ swapDetails, status }) {
+export default function CurrentSwapButtons({ swapDetails }) {
   const [editOpen, setEditOpen] = useState(false);
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [moduleCode, setModuleCode] = useState(swapDetails.module_code);
@@ -77,18 +77,12 @@ export default function CurrentSwapButtons({ swapDetails, status }) {
     rejectOffers(swapDetails.id);
     withdrawOffers(swapDetails.id);
     setEditOpen(false);
-    setTimeout(() => {
-      status();
-    }, 1500);
   };
 
   const handleDelete = (e) => {
     e.preventDefault();
     deleteSwap(swapDetails.id);
     setDeleteOpen(false);
-    setTimeout(() => {
-      status();
-    }, 1500);
   };
 
   useEffect(() => getAllModules(), []);
@@ -114,6 +108,18 @@ export default function CurrentSwapButtons({ swapDetails, status }) {
   const desiredSlotOptions = slotOptions.filter(
     (classNo) => classNo !== currentSlot
   );
+
+  // destructive filter
+  Array.prototype.removeIf = function (callback) {
+    var i = 0;
+    while (i < this.length) {
+      if (callback(this[i], i)) {
+        this.splice(i, 1);
+      } else {
+        ++i;
+      }
+    }
+  };
 
   return (
     <ThemeProvider theme={theme}>
@@ -153,9 +159,9 @@ export default function CurrentSwapButtons({ swapDetails, status }) {
             value={slotType}
             options={slotTypeOptions}
             onChange={(event, value) => {
-              console.log(modDets);
-              console.log(slotDets);
               setSlotType(value);
+              setCurrentSlot([]);
+              setDesiredSlots([]);
             }}
             renderInput={(params) => (
               <TextField
@@ -186,7 +192,10 @@ export default function CurrentSwapButtons({ swapDetails, status }) {
             )}
           />
           <Autocomplete
-            value={desiredSlots}
+            value={
+              desiredSlots.removeIf((slot) => slot === currentSlot) ||
+              desiredSlots
+            }
             options={desiredSlotOptions}
             onChange={(event, value) => {
               setDesiredSlots(value);

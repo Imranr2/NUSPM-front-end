@@ -1,7 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
@@ -11,12 +10,10 @@ import { ThemeProvider } from "@material-ui/core";
 import { theme } from "../../Theme";
 import useSwap from "../../hooks/useSwap";
 
-export default function CompletedSwapButtons({ swapDetails, status }) {
+export default function CompletedSwapButtons({ swapDetails }) {
   const [freeOpen, setFreeOpen] = useState(false);
-  const [reserveOpen, setReserveOpen] = useState(false);
-  const [deleteOpen, setDeleteOpen] = useState(false);
 
-  const { deleteSwap, updateSwap } = useSwap();
+  const { updateSwap } = useSwap();
 
   const handleUnreserveClickOpen = () => {
     setFreeOpen(true);
@@ -25,14 +22,6 @@ export default function CompletedSwapButtons({ swapDetails, status }) {
   const handleUnreserveClose = () => {
     setFreeOpen(false);
   };
-
-  // const handleDeleteClickOpen = () => {
-  //   setDeleteOpen(true);
-  // };
-
-  // const handleDeleteClose = () => {
-  //   setDeleteOpen(false);
-  // };
 
   const handleUnreserve = () => {
     setFreeOpen(false);
@@ -44,18 +33,7 @@ export default function CompletedSwapButtons({ swapDetails, status }) {
       swapDetails.desired_slots,
       false
     );
-    setTimeout(() => {
-      status();
-    }, 1500);
   };
-
-  // const handleDelete = () => {
-  //   setDeleteOpen(false);
-  //   deleteSwap(swapDetails.id);
-  //   setTimeout(() => {
-  //     status();
-  //   }, 1500);
-  // };
 
   return (
     <ThemeProvider theme={theme}>
@@ -84,80 +62,6 @@ export default function CompletedSwapButtons({ swapDetails, status }) {
           </Button>
         </DialogActions>
       </Dialog>
-
-      {/* <Button
-        variant="outlined"
-        color="primary"
-        onClick={handleDeleteClickOpen}
-      >
-        DELETE
-      </Button>
-      <Dialog
-        open={deleteOpen}
-        onClose={handleDeleteClose}
-        aria-labelledby="form-dialog-title"
-      >
-        <DialogTitle id="form-dialog-title">Delete Swap</DialogTitle>
-        <DialogContent>
-          <DialogContentText>Are you sure?</DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleDeleteClose} color="primary">
-            Cancel
-          </Button>
-          <Button onClick={handleDelete} color="primary">
-            Confirm
-          </Button>
-        </DialogActions>
-      </Dialog> */}
     </ThemeProvider>
   );
 }
-
-// const handleReserveClickOpen = () => {
-//   setReserveOpen(true);
-// };
-
-// const handleReserveClose = () => {
-//   setReserveOpen(false);
-// };
-
-// const handleReserve = () => {
-//   setReserveOpen(false);
-//   updateSwap(
-//     swapDetails.id,
-//     swapDetails.module_code,
-//     swapDetails.slot_type,
-//     swapDetails.current_slot,
-//     swapDetails.desired_slots,
-//     false
-//   );
-//   setTimeout(() => {
-//     status();
-//   }, 1500);
-// };
-// {/* <Button
-//   variant="outlined"
-//   color="primary"
-//   onClick={handleReserveClickOpen}
-// >
-//   Reserve
-// </Button>
-// <Dialog
-//   open={reserveOpen}
-//   onClose={handleReserveClose}
-//   aria-labelledby="form-dialog-title"
-// >
-//   <DialogTitle id="form-dialog-title">Reserve Swap</DialogTitle>
-//   <DialogContent>
-//     <DialogContentText>Are you sure?</DialogContentText>
-//   </DialogContent>
-//   <DialogActions>
-//     <Button onClick={handleReserveClose} color="primary">
-//       Cancel
-//     </Button>
-//     <Button onClick={handleReserve} color="primary">
-//       Confirm
-//     </Button>
-//   </DialogActions>
-// </Dialog> */}

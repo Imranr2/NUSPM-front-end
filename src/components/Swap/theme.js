@@ -11,6 +11,14 @@ const useStyles = makeStyles((theme) => ({
   button: {
     justifyContent: "center",
   },
+  tag: {
+    display: "flex",
+    flexDirection: "column",
+  },
+  innerTag: {
+    display: "flex",
+    justifyContent: "center",
+  },
 }));
 
 export { useStyles };

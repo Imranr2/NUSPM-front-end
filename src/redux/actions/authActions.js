@@ -10,6 +10,12 @@ import {
   CHANGE_PASSWORD_SUCCESS,
   CHANGE_PASSWORD_REQUEST,
   CHANGE_PASSWORD_FAIL,
+  FETCH_USER_FAIL,
+  FETCH_USER_REQUEST,
+  FETCH_USER_SUCCESS,
+  PING_HEROKU_SUCCESS,
+  PING_HEROKU_REQUEST,
+  PING_HEROKU_FAIL,
 } from "../actionTypes";
 
 export const resetAuth = () => {
@@ -79,5 +85,42 @@ export const changePasswordFail = (error) => {
   return {
     type: CHANGE_PASSWORD_FAIL,
     payload: error,
+  };
+};
+
+export const fetchUserRequest = () => {
+  return {
+    type: FETCH_USER_REQUEST,
+  };
+};
+
+export const fetchUserSuccess = () => {
+  return {
+    type: FETCH_USER_SUCCESS,
+  };
+};
+
+export const fetchUserFail = (error) => {
+  return {
+    type: FETCH_USER_FAIL,
+    payload: error,
+  };
+};
+
+export const pingHerokuRequest = () => {
+  return {
+    type: PING_HEROKU_REQUEST
+  }
+}
+
+export const pingHerokuSuccess = () => {
+  return {
+    type: PING_HEROKU_SUCCESS,
+  };
+};
+
+export const pingHerokuFail = () => {
+  return {
+    type: PING_HEROKU_FAIL,
   };
 };

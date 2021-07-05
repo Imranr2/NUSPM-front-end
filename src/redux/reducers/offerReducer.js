@@ -18,43 +18,119 @@ import {
 } from "../actionTypes";
 
 const initialState = {
-  isLoading: false,
-  success: false,
-  error: false,
+  createLoading: false,
+  deleteLoading: false,
+  viewLoading: false,
+  withdrawLoading: false,
+  updateLoading: false,
+
+  createSuccess: false,
+  deleteSuccess: false,
+  viewSuccess: false,
+  withdrawSuccess: false,
+  updateSuccess: false,
+
+  createError: false,
+  deleteError: false,
+  viewError: false,
+  withdrawError: false,
+  updateError: false,
+
   errorMsg: [],
 };
 
 const offerReducer = (state = initialState, action) => {
   switch (action.type) {
     case CREATE_OFFER_REQUEST:
+      return {
+        ...state,
+        createLoading: true,
+      };
     case VIEW_OFFER_REQUEST:
+      return {
+        ...state,
+        viewLoading: true,
+      };
     case DELETE_OFFER_REQUEST:
+      return {
+        ...state,
+        deleteLoading: true,
+      };
     case WITHDRAW_OFFER_REQUEST:
+      return {
+        ...state,
+        withdrawLoading: true,
+      };
     case UPDATE_OFFER_REQUEST:
       return {
         ...state,
-        isLoading: true,
+        updateLoading: true,
       };
+
     case CREATE_OFFER_SUCCESS:
+      return {
+        ...state,
+        createLoading: false,
+        createSuccess: true,
+      };
     case VIEW_OFFER_SUCCESS:
+      return {
+        ...state,
+        viewLoading: false,
+        viewSuccess: true,
+      };
     case DELETE_OFFER_SUCCESS:
+      return {
+        ...state,
+        deleteLoading: false,
+        deleteSuccess: true,
+      };
     case WITHDRAW_OFFER_SUCCESS:
+      return {
+        ...state,
+        withdrawLoading: false,
+        withdrawSuccess: true,
+      };
     case UPDATE_OFFER_SUCCESS:
       return {
         ...state,
-        isLoading: false,
-        success: true,
+        updateLoading: false,
+        updateSuccess: true,
       };
 
     case CREATE_OFFER_FAIL:
+      return {
+        ...state,
+        createLoading: true,
+        createError: true,
+        errorMsg: action.payload,
+      };
     case VIEW_OFFER_FAIL:
+      return {
+        ...state,
+        viewLoading: true,
+        viewError: true,
+        errorMsg: action.payload,
+      };
     case DELETE_OFFER_FAIL:
+      return {
+        ...state,
+        deleteLoading: true,
+        deleteError: true,
+        errorMsg: action.payload,
+      };
     case WITHDRAW_OFFER_FAIL:
+      return {
+        ...state,
+        withdrawLoading: true,
+        withdrawError: true,
+        errorMsg: action.payload,
+      };
     case UPDATE_OFFER_FAIL:
       return {
         ...state,
-        isLoading: true,
-        error: true,
+        updateLoading: true,
+        updateError: true,
         errorMsg: action.payload,
       };
     case RESET_OFFER:

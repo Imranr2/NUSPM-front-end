@@ -7,7 +7,6 @@ import useSwap from "../../hooks/useSwap";
 
 export default function CurrentOfferButtons({
   offerDetails,
-  status,
   initiatorSwap,
   creatorSwap,
 }) {
@@ -33,16 +32,10 @@ export default function CurrentOfferButtons({
       creatorSwap.desired_slots,
       true
     );
-    setTimeout(() => {
-      status();
-    }, 1500);
   }
 
   function handleReject() {
     updateOffer(offerDetails.id, false, false);
-    setTimeout(() => {
-      status();
-    }, 1500);
   }
 
   return (
