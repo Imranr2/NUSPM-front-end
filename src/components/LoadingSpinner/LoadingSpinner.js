@@ -1,7 +1,7 @@
 import { PacmanLoader } from "react-spinners";
 
 function LoadingSpinner() {
-  return <PacmanLoader size="400" />;
+  return <PacmanLoader />;
 }
 
 export default LoadingSpinner;

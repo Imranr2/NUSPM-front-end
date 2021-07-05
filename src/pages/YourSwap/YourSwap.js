@@ -10,6 +10,8 @@ import OfferList from "../../components/OfferList/OfferList";
 import { connect } from "react-redux";
 import { PulseLoader } from "react-spinners";
 import { Alert } from "@material-ui/lab";
+import CheckCircleIcon from "@material-ui/icons/CheckCircle";
+import { useMediaQuery } from "react-responsive";
 
 function YourSwap({
   swapLoading,
@@ -53,6 +55,11 @@ function YourSwap({
     (offer) => !offer.isAccepted && !offer.isPending
   );
 
+  const isSmallScreen = useMediaQuery({ query: "(max-width:700px)" });
+  const isDesktopOrLaptop = useMediaQuery({
+    query: "(min-width: 701px)",
+  });
+
   useEffect(() => {
     viewSwaps();
     viewOffers();
@@ -74,11 +81,44 @@ function YourSwap({
           className={classes.tabs}
           onChange={handleChange}
         >
-          <Tab label="Current Offers" />
-          <Tab label="Current Swaps" />
-          <Tab label="Pending Offers" />
-          <Tab label="Completed Swaps" />
-          <Tab label="Rejected Offers" />
+          {/* {isSmallScreen && (
+            <>
+              <Tab icon={<CheckCircleIcon />} />
+              <Tab icon={<CheckCircleIcon />} />
+              <Tab icon={<CheckCircleIcon />} />
+              <Tab icon={<CheckCircleIcon />} />
+              <Tab icon={<CheckCircleIcon />} />
+            </>
+          )}
+          {isDesktopOrLaptop && (
+            <>
+              <Tab label="Current Offers" />
+              <Tab label="Current Swaps" />
+              <Tab label="Pending Offers" />
+              <Tab label="Completed Swaps" />
+              <Tab label="Rejected Offers" />
+            </>
+          )} */}
+          <Tab
+            label={isSmallScreen ? null : "Current Offers"}
+            icon={isSmallScreen ? <CheckCircleIcon /> : null}
+          />
+          <Tab
+            label={isSmallScreen ? null : "Current Swaps"}
+            icon={isSmallScreen ? <CheckCircleIcon /> : null}
+          />
+          <Tab
+            label={isSmallScreen ? null : "Pending Offers"}
+            icon={isSmallScreen ? <CheckCircleIcon /> : null}
+          />
+          <Tab
+            label={isSmallScreen ? null : "Completed Swaps"}
+            icon={isSmallScreen ? <CheckCircleIcon /> : null}
+          />
+          <Tab
+            label={isSmallScreen ? null : "Rejected Offers"}
+            icon={isSmallScreen ? <CheckCircleIcon /> : null}
+          />
         </Tabs>
         {(swapLoading || offerLoading) && <PulseLoader color="#0D169F" />}
 
