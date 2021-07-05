@@ -22,7 +22,7 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: black;
-  overflow: auto;
+  /* overflow: auto; */
 }
 
 .App-link {

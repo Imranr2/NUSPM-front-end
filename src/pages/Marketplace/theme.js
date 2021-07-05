@@ -16,19 +16,33 @@ const theme = createMuiTheme({
 
 const useStyles = makeStyles((theme) => ({
   main: {
+    height: "100vh",
     display: "flex",
     flexDirection: "column",
     justifyContent: "flex-start",
-    height: "100vh",
+    marginLeft: 0,
+  },
+  content: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
   },
   button: {
     borderRadius: 30,
     alignItems: "center",
     height: "100%",
     width: "10vw",
+    minWidth : 110
   },
   paper: {
     borderRadius: 4,
+  },
+  verticalSearch: {
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: "3vh"
   },
   search: {
     flexWrap: "nowrap",
@@ -41,6 +55,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     height: "100%",
     width: "22vw",
+    minWidth: 200,
   },
   card: {
     height: 400,

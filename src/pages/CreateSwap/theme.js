@@ -20,12 +20,20 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     borderRadius: 4,
   },
-  main: {
-    height: "100vh",
-    // marginTop: "15vh",
+  form: {
+    marginTop: "20vh",
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
+    alignItems: "center",
+  },
+  main: {
+    // width: "100vw",
+    height: "100vh",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "flex-start",
+    marginLeft: 0,
   },
 }));
 

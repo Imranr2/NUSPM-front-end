@@ -10,7 +10,8 @@ import OfferList from "../../components/OfferList/OfferList";
 import { connect } from "react-redux";
 import { PulseLoader } from "react-spinners";
 import { Alert } from "@material-ui/lab";
-import CheckCircleIcon from "@material-ui/icons/CheckCircle";
+import SwapHorizIcon from "@material-ui/icons/SwapHoriz";
+import LocalOfferIcon from "@material-ui/icons/LocalOffer";
 import { useMediaQuery } from "react-responsive";
 
 function YourSwap({
@@ -55,10 +56,10 @@ function YourSwap({
     (offer) => !offer.isAccepted && !offer.isPending
   );
 
-  const isSmallScreen = useMediaQuery({ query: "(max-width:700px)" });
-  const isDesktopOrLaptop = useMediaQuery({
-    query: "(min-width: 701px)",
-  });
+  const isSmallScreen = useMediaQuery({ query: "(max-width:850px)" });
+  // const isDesktopOrLaptop = useMediaQuery({
+  //   query: "(min-width: 701px)",
+  // });
 
   useEffect(() => {
     viewSwaps();
@@ -72,172 +73,161 @@ function YourSwap({
 
   return (
     <ThemeProvider theme={theme}>
-      <NavBar arr={[false, true, false]} />
-      <Container className={classes.main}>
-        <Tabs
-          value={value}
-          indicatorColor="primary"
-          textColor="primary"
-          className={classes.tabs}
-          onChange={handleChange}
-        >
-          {/* {isSmallScreen && (
+      <Container
+        disableGutters={true}
+        className={classes.main}
+        maxWidth="false"
+      >
+        <NavBar arr={[false, true, false]} />
+        <Container className={classes.content}>
+          <Tabs
+            value={value}
+            indicatorColor="primary"
+            className={classes.tabs}
+            onChange={handleChange}
+            centered={true}
+            variant="fullwidth"
+          >
+            <Tab
+              label={isSmallScreen ? null : "Current Offers"}
+              icon={isSmallScreen ? <LocalOfferIcon color="primary" /> : null}
+            />
+            <Tab
+              label={isSmallScreen ? null : "Current Swaps"}
+              icon={isSmallScreen ? <SwapHorizIcon color="primary" /> : null}
+            />
+            <Tab
+              label={isSmallScreen ? null : "Pending Offers"}
+              icon={isSmallScreen ? <LocalOfferIcon color="disabled" /> : null}
+            />
+            <Tab
+              label={isSmallScreen ? null : "Completed Swaps"}
+              icon={isSmallScreen ? <SwapHorizIcon color="action" /> : null}
+            />
+            <Tab
+              label={isSmallScreen ? null : "Rejected Offers"}
+              icon={isSmallScreen ? <LocalOfferIcon color="error" /> : null}
+            />
+          </Tabs>
+          {(swapLoading || offerLoading) && <PulseLoader color="#0D169F" />}
+
+          {value === 0 && (
             <>
-              <Tab icon={<CheckCircleIcon />} />
-              <Tab icon={<CheckCircleIcon />} />
-              <Tab icon={<CheckCircleIcon />} />
-              <Tab icon={<CheckCircleIcon />} />
-              <Tab icon={<CheckCircleIcon />} />
+              <Alert severity="info" className={classes.alert}>
+                Click on the offer to view pending slot details and accept or
+                reject the offer
+              </Alert>
+              <OfferList arr={currentOffer} tab="currentOffer" />
+              {currentOffer.length === 0 && !viewOfferLoading && (
+                <>
+                  <br />
+                  <Alert severity="warning">No offers at the moment</Alert>
+                </>
+              )}
+              {offerError && (
+                <>
+                  <Alert severity="warning">{offerErrorMsg}</Alert>
+                </>
+              )}
             </>
           )}
-          {isDesktopOrLaptop && (
+
+          {/* test and check with actual users on what they want */}
+          {value === 1 && (
             <>
-              <Tab label="Current Offers" />
-              <Tab label="Current Swaps" />
-              <Tab label="Pending Offers" />
-              <Tab label="Completed Swaps" />
-              <Tab label="Rejected Offers" />
+              <Alert severity="info" className={classes.alert}>
+                Caution: Editing or deleting your swap request will withdraw and
+                reject all offers pertaining to the request
+              </Alert>
+              <SwapList
+                arr={currentSwap}
+                panel="currentSwap"
+                offers={userOffer.filter((offer) => offer.isPending)}
+              />
+              {currentSwap.length === 0 && !viewSwapLoading && (
+                <>
+                  <br />
+                  <Alert severity="warning">No swaps at the moment</Alert>
+                </>
+              )}
+              {swapError && (
+                <>
+                  <Alert severity="warning">{swapErrorMsg}</Alert>
+                </>
+              )}
             </>
-          )} */}
-          <Tab
-            label={isSmallScreen ? null : "Current Offers"}
-            icon={isSmallScreen ? <CheckCircleIcon /> : null}
-          />
-          <Tab
-            label={isSmallScreen ? null : "Current Swaps"}
-            icon={isSmallScreen ? <CheckCircleIcon /> : null}
-          />
-          <Tab
-            label={isSmallScreen ? null : "Pending Offers"}
-            icon={isSmallScreen ? <CheckCircleIcon /> : null}
-          />
-          <Tab
-            label={isSmallScreen ? null : "Completed Swaps"}
-            icon={isSmallScreen ? <CheckCircleIcon /> : null}
-          />
-          <Tab
-            label={isSmallScreen ? null : "Rejected Offers"}
-            icon={isSmallScreen ? <CheckCircleIcon /> : null}
-          />
-        </Tabs>
-        {(swapLoading || offerLoading) && <PulseLoader color="#0D169F" />}
+          )}
 
-        {value === 0 && (
-          <>
-            <Alert severity="info" className={classes.alert}>
-              Click on the offer to view pending slot details and accept or
-              reject the offer
-            </Alert>
-            <OfferList arr={currentOffer} tab="currentOffer" />
-            {currentOffer.length === 0 && !viewOfferLoading && (
-              <>
-                <br />
-                <Alert severity="warning">No offers at the moment</Alert>
-              </>
-            )}
-            {offerError && (
-              <>
-                <Alert severity="warning">{offerErrorMsg}</Alert>
-              </>
-            )}
-          </>
-        )}
+          {value === 2 && (
+            <>
+              <Alert severity="info" className={classes.alert}>
+                Click on the card to withdraw your offer
+              </Alert>
+              <OfferList arr={pendingOffer} tab="pendingOffer" />
+              {pendingOffer.length === 0 && !viewOfferLoading && (
+                <>
+                  <br />
+                  <Alert severity="warning">
+                    No pending offers at the moment
+                  </Alert>
+                </>
+              )}
+              {offerError && (
+                <>
+                  <Alert severity="warning">{offerErrorMsg}</Alert>
+                </>
+              )}
+            </>
+          )}
 
-        {/* test and check with actual users on what they want */}
-        {value === 1 && (
-          <>
-            <Alert severity="info" className={classes.alert}>
-              Caution: Editing or deleting your swap request will withdraw and
-              reject all offers pertaining to the request
-            </Alert>
-            <SwapList
-              arr={currentSwap}
-              panel="currentSwap"
-              offers={userOffer.filter((offer) => offer.isPending)}
-            />
-            {currentSwap.length === 0 && !viewSwapLoading && (
-              <>
-                <br />
-                <Alert severity="warning">No swaps at the moment</Alert>
-              </>
-            )}
-            {swapError && (
-              <>
-                <Alert severity="warning">{swapErrorMsg}</Alert>
-              </>
-            )}
-          </>
-        )}
+          {value === 3 && (
+            <>
+              <Alert severity="info" className={classes.alert}>
+                Contact the other party with the email displayed in the card
+              </Alert>
+              <SwapList
+                arr={completedSwap}
+                panel="completedSwap"
+                offers={userOffer.filter((offer) => offer.isAccepted)}
+              />
+              {completedSwap.length === 0 && !viewSwapLoading && (
+                <>
+                  <br />
+                  <Alert severity="warning">
+                    No completed swaps at the moment
+                  </Alert>
+                </>
+              )}
+              {swapError && (
+                <>
+                  <Alert severity="warning">{swapErrorMsg}</Alert>
+                </>
+              )}
+            </>
+          )}
 
-        {value === 2 && (
-          <>
-            <Alert severity="info" className={classes.alert}>
-              Click on the card to withdraw your offer
-            </Alert>
-            <OfferList arr={pendingOffer} tab="pendingOffer" />
-            {pendingOffer.length === 0 && !viewOfferLoading && (
-              <>
-                <br />
-                <Alert severity="warning">
-                  No pending offers at the moment
-                </Alert>
-              </>
-            )}
-            {offerError && (
-              <>
-                <Alert severity="warning">{offerErrorMsg}</Alert>
-              </>
-            )}
-          </>
-        )}
-
-        {value === 3 && (
-          <>
-            <Alert severity="info" className={classes.alert}>
-              Contact the other party with the email displayed in the card
-            </Alert>
-            <SwapList
-              arr={completedSwap}
-              panel="completedSwap"
-              offers={userOffer.filter((offer) => offer.isAccepted)}
-            />
-            {completedSwap.length === 0 && !viewSwapLoading && (
-              <>
-                <br />
-                <Alert severity="warning">
-                  No completed swaps at the moment
-                </Alert>
-              </>
-            )}
-            {swapError && (
-              <>
-                <Alert severity="warning">{swapErrorMsg}</Alert>
-              </>
-            )}
-          </>
-        )}
-
-        {value === 4 && (
-          <>
-            <Alert severity="info" className={classes.alert}>
-              All your rejected offers are displayed here
-            </Alert>
-            <OfferList arr={rejectedOffer} tab="rejectedOffer" />
-            {rejectedOffer.length === 0 && !viewOfferLoading && (
-              <>
-                <br />
-                <Alert severity="warning">
-                  No rejected offers at the moment
-                </Alert>
-              </>
-            )}
-            {offerError && (
-              <>
-                <Alert severity="warning">{offerErrorMsg}</Alert>
-              </>
-            )}
-          </>
-        )}
+          {value === 4 && (
+            <>
+              <Alert severity="info" className={classes.alert}>
+                All your rejected offers are displayed here
+              </Alert>
+              <OfferList arr={rejectedOffer} tab="rejectedOffer" />
+              {rejectedOffer.length === 0 && !viewOfferLoading && (
+                <>
+                  <br />
+                  <Alert severity="warning">
+                    No rejected offers at the moment
+                  </Alert>
+                </>
+              )}
+              {offerError && (
+                <>
+                  <Alert severity="warning">{offerErrorMsg}</Alert>
+                </>
+              )}
+            </>
+          )}
+        </Container>
       </Container>
     </ThemeProvider>
   );

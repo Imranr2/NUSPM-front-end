@@ -8,6 +8,7 @@ import {
   Button,
   TextField,
   Typography,
+  Drawer,
 } from "@material-ui/core";
 import { Alert, Autocomplete } from "@material-ui/lab";
 import { theme } from "./theme";
@@ -18,6 +19,9 @@ import PotentialSwaps from "../../components/PotentialSwaps/PotentialSwaps";
 import { PulseLoader } from "react-spinners";
 import { Ghost } from "react-kawaii";
 import NotFound from "../../assets/not-found.png";
+import { useMediaQuery } from "react-responsive";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import ExpandLessIcon from "@material-ui/icons/ExpandLess";
 
 function Marketplace({
   createSuccess,
@@ -41,10 +45,13 @@ function Marketplace({
     userSwaps,
   } = useSwap();
 
+  const isSmallScreen = useMediaQuery({ query: "(max-width:900px)" });
+
   const [moduleCode, setModuleCode] = useState("");
   const [slotType, setSlotType] = useState("");
   const [currentSlot, setCurrentSlot] = useState("");
   const [search, setSearch] = useState(false);
+  const [drawer, setDrawer] = useState(true);
 
   useEffect(() => getAllModules(), []);
 
@@ -67,140 +74,177 @@ function Marketplace({
     setSearch(true);
   }
 
+  const toggleDrawer = () => {
+    setDrawer(!drawer);
+  };
+
+  const slotTypeOptions = Array.from(
+    new Set(
+      modDets
+        .map((element) => element.lessonType)
+        .filter((lessonType) => lessonType !== "Lecture")
+    )
+  );
+
+  const slotOptions = modDets
+    .filter((element) => element.lessonType === slotType)
+    .map((lesson) => lesson.classNo)
+    .sort();
+
+  const SearchBar = (
+    <Container className={classes.content} disableGutters={true}>
+      <div>
+        <form onSubmit={handleSubmit}>
+          <Grid
+            className={isSmallScreen ? classes.verticalSearch : classes.search}
+            container
+            spacing={2}
+          >
+            <Grid item>
+              <Autocomplete
+                value={moduleCode}
+                classes={{
+                  root: classes.fields,
+                  paper: classes.paper,
+                }}
+                options={moduleList}
+                onChange={(event, value) => {
+                  setModuleCode(value);
+                  setSlotType([]);
+                  setCurrentSlot([]);
+                }}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    required
+                    label="Module Code"
+                    variant="outlined"
+                  />
+                )}
+                required
+              />
+            </Grid>
+            <Grid item>
+              <Autocomplete
+                value={slotType}
+                disabled={slotTypeOptions.length === 0 || moduleCode === null}
+                classes={{
+                  root: classes.fields,
+                  paper: classes.paper,
+                }}
+                options={slotTypeOptions}
+                onChange={(event, value) => {
+                  setSlotType(value);
+                  setCurrentSlot([]);
+                }}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    required
+                    label="Type"
+                    variant="outlined"
+                  />
+                )}
+                required
+              />
+            </Grid>
+            <Grid item>
+              <Autocomplete
+                value={currentSlot}
+                disabled={
+                  slotType === null ||
+                  moduleCode === null ||
+                  slotType.length === 0
+                }
+                classes={{
+                  root: classes.fields,
+                  paper: classes.paper,
+                }}
+                options={slotOptions}
+                onChange={(event, value) => setCurrentSlot(value)}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    required
+                    label="Your Current Slot"
+                    variant="outlined"
+                  />
+                )}
+                required
+              />
+            </Grid>
+            <Grid item>
+              <Button
+                className={classes.button}
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="primary"
+                size="large"
+                disabled={loading}
+              >
+                Search
+              </Button>
+            </Grid>
+          </Grid>
+        </form>
+      </div>
+    </Container>
+  );
+
   return (
     <ThemeProvider theme={theme}>
-      <NavBar arr={[false, true, false]} />
-      <Container className={classes.main} disableGutters={true}>
-        <div>
-          <form onSubmit={handleSubmit}>
-            <Grid className={classes.search} container spacing={2}>
-              <Grid item>
-                <Autocomplete
-                  value={moduleCode}
-                  classes={{
-                    root: classes.fields,
-                    paper: classes.paper,
-                  }}
-                  options={moduleList}
-                  onChange={(event, value) => {
-                    setModuleCode(value);
-                    setSlotType([]);
-                    setCurrentSlot([]);
-                  }}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      required
-                      label="Module Code"
-                      variant="outlined"
-                    />
-                  )}
-                  required
-                />
-              </Grid>
-              <Grid item>
-                <Autocomplete
-                  value={slotType}
-                  classes={{
-                    root: classes.fields,
-                    paper: classes.paper,
-                  }}
-                  options={Array.from(
-                    new Set(
-                      modDets
-                        .map((element) => element.lessonType)
-                        .filter((lessonType) => lessonType !== "Lecture")
-                    )
-                  )}
-                  onChange={(event, value) => {
-                    setSlotType(value);
-                    setCurrentSlot([]);
-                  }}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      required
-                      label="Type"
-                      variant="outlined"
-                    />
-                  )}
-                  required
-                />
-              </Grid>
-              <Grid item>
-                <Autocomplete
-                  value={currentSlot}
-                  classes={{
-                    root: classes.fields,
-                    paper: classes.paper,
-                  }}
-                  options={modDets
-                    .filter((element) => element.lessonType === slotType)
-                    .map((lesson) => lesson.classNo)
-                    .sort()}
-                  onChange={(event, value) => setCurrentSlot(value)}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      required
-                      label="Your Current Slot"
-                      variant="outlined"
-                    />
-                  )}
-                  required
-                />
-              </Grid>
-              <Grid item>
-                <Button
-                  className={classes.button}
-                  type="submit"
-                  fullWidth
-                  variant="contained"
-                  color="primary"
-                  size="large"
-                  disabled={loading}
-                >
-                  Search
-                </Button>
-              </Grid>
-            </Grid>
-          </form>
-          <Container className={classes.container}>
-            <Alert severity="info" className={classes.alert}>
-              Click on the listing to initiate a swap!
-            </Alert>
-          </Container>
-          <br />
-          {loading && <PulseLoader color="#0D169F" />}
+      <Container
+        disableGutters={true}
+        className={classes.main}
+        maxWidth="false"
+      >
+        <NavBar arr={[false, true, false]} />
+        {isSmallScreen && (
+          <>
+            <Button onClick={toggleDrawer}>{<ExpandMoreIcon />}</Button>
+            <Drawer anchor="top" open={drawer}>
+              {SearchBar}
+              <Button onClick={toggleDrawer}>{<ExpandLessIcon />}</Button>
+            </Drawer>
+          </>
+        )}
+        {!isSmallScreen && SearchBar}
+        <Container className={classes.container}>
+          <Alert severity="info" className={classes.alert}>
+            Click on the listing to initiate a swap!
+          </Alert>
+        </Container>
+        <br />
+        {loading && <PulseLoader color="#0D169F" />}
 
-          {searchSuccess &&
-            potentialSwaps.filter((swap) => swap.user_id !== user.id).length >
-              0 && (
-              <PotentialSwaps
-                creatorSwaps={potentialSwaps.filter(
-                  (swap) => swap.user_id !== user.id
-                )}
-                initiatorSwaps={userSwaps}
-                initiatorSlot={currentSlot}
-                slotDets={slotDets}
-              />
-            )}
-          {/* {searchSuccess &&
+        {searchSuccess &&
+          potentialSwaps.filter((swap) => swap.user_id !== user.id).length >
+            0 && (
+            <PotentialSwaps
+              creatorSwaps={potentialSwaps.filter(
+                (swap) => swap.user_id !== user.id
+              )}
+              initiatorSwaps={userSwaps}
+              initiatorSlot={currentSlot}
+              slotDets={slotDets}
+            />
+          )}
+        {/* {searchSuccess &&
             potentialSwaps.filter((swap) => swap.user_id !== user.id).length ===
               0 && <Alert severity="warning">No swap found.</Alert>} */}
-          {searchSuccess &&
-            potentialSwaps.filter((swap) => swap.user_id !== user.id).length ===
-              0 && (
-              <>
-                <img src={NotFound} width="500" alt="Not-Found" />
-              </>
-            )}
-          {error && (
+        {searchSuccess &&
+          potentialSwaps.filter((swap) => swap.user_id !== user.id).length ===
+            0 && (
             <>
-              <Alert severity="warning">{errorMsg}</Alert>
+              <img src={NotFound} width="500" alt="Not-Found" />
             </>
           )}
-        </div>
+        {error && (
+          <>
+            <Alert severity="warning">{errorMsg}</Alert>
+          </>
+        )}
       </Container>
     </ThemeProvider>
   );

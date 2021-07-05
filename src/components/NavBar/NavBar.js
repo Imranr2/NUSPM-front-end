@@ -101,9 +101,11 @@ export default function NavBar(props) {
                   variant="text"
                   color={homeClicked ? "primary" : "secondary"}
                 >
+                  Home
                   {/* Home */}
-                  {isSmallScreen && <HomeIcon />}
-                  {isDesktopOrLaptop && "Home"}
+                  {/* {isSmallScreen ? <HomeIcon /> : "Home"} */}
+                  {/* {isSmallScreen && <HomeIcon />} */}
+                  {/* {isDesktopOrLaptop && "Home"} */}
                 </Button>
                 <Button
                   className={classes.button}
@@ -114,8 +116,10 @@ export default function NavBar(props) {
                   color={swapClicked ? "primary" : "secondary"}
                   endIcon={<ArrowDropDown />}
                 >
-                  {isSmallScreen && <SwapHorizIcon />}
-                  {isDesktopOrLaptop && "Swap"}
+                  Swap
+                  {/* {isSmallScreen ? <SwapHorizIcon /> : "Swap"} */}
+                  {/* {isSmallScreen && <SwapHorizIcon />} */}
+                  {/* {isDesktopOrLaptop && "Swap"} */}
                 </Button>
                 <Menu
                   id="simple-menu"
@@ -168,8 +172,10 @@ export default function NavBar(props) {
                   color={profileClicked ? "primary" : "secondary"}
                   endIcon={<ArrowDropDown />}
                 >
-                  {isSmallScreen && <PersonIcon />}
-                  {isDesktopOrLaptop && "Profile"}
+                  Profile
+                  {/* {isSmallScreen ? <PersonIcon /> : "Profile"} */}
+                  {/* {isSmallScreen && <PersonIcon />} */}
+                  {/* {isDesktopOrLaptop && "Profile"} */}
                 </Button>
                 <Menu
                   id="simple-menu"
@@ -213,9 +219,11 @@ export default function NavBar(props) {
                   variant="text"
                   color={homeClicked ? "primary" : "secondary"}
                 >
+                  <HomeIcon />
                   {/* Home */}
-                  {isSmallScreen && <HomeIcon />}
-                  {isDesktopOrLaptop && "Home"}
+                  {/* {isSmallScreen ? <HomeIcon /> : "Home"} */}
+                  {/* {isSmallScreen && <HomeIcon />} */}
+                  {/* {isDesktopOrLaptop && "Home"} */}
                 </Button>
                 <Button
                   className={classes.buttonStandard}
@@ -226,8 +234,11 @@ export default function NavBar(props) {
                   color={swapClicked ? "primary" : "secondary"}
                   endIcon={<ArrowDropDown />}
                 >
-                  {isSmallScreen && <SwapHorizIcon />}
-                  {isDesktopOrLaptop && "Swap"}
+                  <SwapHorizIcon />
+                  {/* {isSmallScreen ? <SwapHorizIcon /> : "Swap"} */}
+
+                  {/* {isSmallScreen && <SwapHorizIcon />}
+                  {isDesktopOrLaptop && "Swap"} */}
                 </Button>
                 <Menu
                   id="simple-menu"
@@ -280,8 +291,10 @@ export default function NavBar(props) {
                   color={profileClicked ? "primary" : "secondary"}
                   endIcon={<ArrowDropDown />}
                 >
-                  {isSmallScreen && <PersonIcon />}
-                  {isDesktopOrLaptop && "Profile"}
+                  <PersonIcon />
+                  {/* {isSmallScreen ? <PersonIcon /> : "Profile"} */}
+                  {/* {isSmallScreen && <PersonIcon />}
+                  {isDesktopOrLaptop && "Profile"} */}
                 </Button>
                 <Menu
                   id="simple-menu"

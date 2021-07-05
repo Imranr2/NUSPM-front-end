@@ -13,19 +13,21 @@ const theme = createMuiTheme({
 
 const useStyles = makeStyles((theme) => ({
   tabs: {
-    // height: "80vh",
-    // width: "30vw",
-    // minWidth: "10vw",
-    // maxWidth: "10vw",
     marginTop: "5vh",
+    width: "100vw",
+  },
+  content: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
   },
   main: {
-    width: "100vw",
     height: "100vh",
     display: "flex",
     flexDirection: "column",
     justifyContent: "flex-start",
-    alignItems: "center",
+    marginLeft: 0,
   },
   alert: {
     marginTop: "1vh",
