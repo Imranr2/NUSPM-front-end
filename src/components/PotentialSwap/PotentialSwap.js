@@ -12,6 +12,8 @@ import {
   TextField,
   Typography,
 } from "@material-ui/core";
+import { resetSwap, resetCreate } from "../../redux/actions/swapActions";
+import { useDispatch } from "react-redux";
 import { Alert } from "@material-ui/lab";
 import { useState, useEffect } from "react";
 import useSwap from "../../hooks/useSwap";
@@ -40,6 +42,7 @@ function PotentialSwap(props) {
     setInitiatorSwap,
     setSlotDets,
   } = useSwap();
+  const dispatch = useDispatch();
 
   const { createOffer } = useOffer();
 
@@ -48,6 +51,7 @@ function PotentialSwap(props) {
   };
 
   const handleDialogClose = () => {
+    resetCreateRedux();
     setDialogOpen(false);
     setCurrentDialog(0);
     setDisabled(true);
@@ -75,10 +79,15 @@ function PotentialSwap(props) {
       props.creatorSwap.slot_type,
       props.initiatorSlot,
       [props.creatorSwap.current_slot],
+      false,
       false
     );
     setCurrentDialog(2);
     console.log(initiatorSwap);
+  };
+
+  const resetCreateRedux = () => {
+    dispatch(resetCreate());
   };
 
   const handleInitiateSwap = () => {
@@ -120,7 +129,11 @@ function PotentialSwap(props) {
           </CardContent>
         </CardActionArea>
 
-        <Dialog open={dialogOpen} onClose={handleDialogClose}>
+        <Dialog
+          open={dialogOpen}
+          onClose={handleDialogClose}
+          onBackdropClick={resetCreateRedux}
+        >
           <DialogTitle>
             {currentDialog === 0 && (
               <Typography variant="h5" align="center">
@@ -151,11 +164,10 @@ function PotentialSwap(props) {
                         }
                       >
                         <CardContent>
-                          <Typography>
+                          <Typography align="center">
                             {filteredUserSwaps[0].module_code}
                             <br />
-                            {filteredUserSwaps[0].slot_type} [
-                            {filteredUserSwaps[0].current_slot}]
+                            {filteredUserSwaps[0].slot_type}
                             <br />
                             {filteredUserSwaps[0].day}
                             <br />
@@ -163,7 +175,13 @@ function PotentialSwap(props) {
                             <br />
                             {`${filteredUserSwaps[0].startTime} - ${filteredUserSwaps[0].endTime}`}
                             <br />
-                            {filteredUserSwaps[0].desired_slots}
+                            Have: [{filteredUserSwaps[0].current_slot}]
+                            <br />
+                            Want: [
+                            {filteredUserSwaps[0].desired_slots
+                              .sort()
+                              .toString()}
+                            ]
                           </Typography>
                         </CardContent>
                       </CardActionArea>
@@ -225,58 +243,62 @@ function PotentialSwap(props) {
             {currentDialog === 2 && (
               <>
                 <Container className={classes.comparison}>
-                  <Card className={classes.card}>
-                    <Typography variant="h6" align="center">
-                      {initiatorSwap.module_code}
-                      <br />
-                      {initiatorSwap.slot_type}
-                      <br />
-                      {initiatorSwap.current_slot}
-                      <br />
-                      {initiatorSwap.day}
-                      <br />
-                      {initiatorSwap.venue}
-                      <br />
-                      {`${initiatorSwap.startTime} - ${initiatorSwap.endTime}`}
-                      <br />
-                    </Typography>
-                  </Card>
-                  <ArrowRightIcon></ArrowRightIcon>
-                  <ArrowRightIcon></ArrowRightIcon>
-                  <ArrowRightIcon></ArrowRightIcon>
-                  <Card className={classes.card}>
-                    <Typography variant="h6" align="center">
-                      {props.creatorSwap.module_code}
-                      <br />
-                      {props.creatorSwap.slot_type}
-                      <br />
-                      {props.creatorSwap.current_slot}
-                      <br />
-                      {props.creatorSwap.day}
-                      <br />
-                      {props.creatorSwap.venue}
-                      <br />
-                      {`${props.creatorSwap.startTime} - ${props.creatorSwap.endTime}`}
-                    </Typography>
-                  </Card>
-                </Container>
-                <Container className={classes.comparison}>
-                  <Typography
-                    className={classes.typography}
-                    color="primary"
-                    variant="h6"
-                    align="center"
+                  <Container
+                    className={classes.cardLabel}
+                    disableGutters="true"
                   >
-                    Current Slot
-                  </Typography>
-                  <Typography
-                    className={classes.typography}
-                    color="primary"
-                    variant="h6"
-                    align="center"
-                  >
-                    Desired Slot
-                  </Typography>
+                    <Card className={classes.card}>
+                      <Typography variant="h6" align="center">
+                        {initiatorSwap.module_code}
+                        <br />
+                        {initiatorSwap.slot_type}
+                        <br />
+                        {initiatorSwap.day}
+                        <br />
+                        {initiatorSwap.venue}
+                        <br />
+                        {`${initiatorSwap.startTime} - ${initiatorSwap.endTime}`}
+                        <br />
+                        Have: [{initiatorSwap.current_slot}]
+                      </Typography>
+                    </Card>
+                    <Typography
+                      className={classes.typography}
+                      color="primary"
+                      variant="h6"
+                      align="center"
+                    >
+                      Current Slot
+                    </Typography>
+                  </Container>
+                  <ArrowRightIcon></ArrowRightIcon>
+                  <ArrowRightIcon></ArrowRightIcon>
+                  <ArrowRightIcon></ArrowRightIcon>
+                  <Container disableGutters="true">
+                    <Card className={classes.card}>
+                      <Typography variant="h6" align="center">
+                        {props.creatorSwap.module_code}
+                        <br />
+                        {props.creatorSwap.slot_type}
+                        <br />
+                        {props.creatorSwap.day}
+                        <br />
+                        {props.creatorSwap.venue}
+                        <br />
+                        {`${props.creatorSwap.startTime} - ${props.creatorSwap.endTime}`}
+                        <br />
+                        Have: [{props.creatorSwap.current_slot}]
+                      </Typography>
+                    </Card>
+                    <Typography
+                      className={classes.typography}
+                      color="primary"
+                      variant="h6"
+                      align="center"
+                    >
+                      Desired Slot
+                    </Typography>
+                  </Container>
                 </Container>
               </>
             )}

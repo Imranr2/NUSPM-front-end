@@ -62,7 +62,6 @@ const useStyles = makeStyles((theme) => ({
   },
   alert: {
     marginTop: "1vh",
-    borderRadius: 30,
   },
   container: {
     display: "flex",

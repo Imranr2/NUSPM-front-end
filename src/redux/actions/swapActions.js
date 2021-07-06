@@ -18,6 +18,7 @@ import {
   SHOW_SWAP_REQUEST,
   SHOW_SWAP_SUCCESS,
   RESET_SWAP,
+  RESET_CREATE,
 } from "../actionTypes";
 
 export const createSwapRequest = () => {
@@ -137,5 +138,11 @@ export const showSwapSuccess = (error) => {
 export const resetSwap = () => {
   return {
     type: RESET_SWAP,
+  };
+};
+
+export const resetCreate = () => {
+  return {
+    type: RESET_CREATE,
   };
 };

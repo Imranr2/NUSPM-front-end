@@ -5,20 +5,10 @@ const useStyles = makeStyles((theme) => ({
     height: "100%",
     display: "flex",
     flexDirection: "column",
-    // width: "15vw",
-    minWidth: 250,
-  },
-  typography: {
-    // width: "15vw",
     minWidth: 200,
   },
-  dialog: {
-    // minWidth: "70vw",
-    // minHeight: "70vh",
-  },
-  dialogContent: {
-    // display: "flex",
-    // flexDirection: "column",
+  typography: {
+    minWidth: 200,
   },
   container: {
     display: "flex",
@@ -28,6 +18,13 @@ const useStyles = makeStyles((theme) => ({
   },
   button: {
     margin: 16,
+  },
+  cardLabel: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
+    alignItems: "center",
+    minWidth: 200,
   },
 }));
 

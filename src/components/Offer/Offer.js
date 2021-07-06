@@ -138,100 +138,101 @@ export default function Offer(props) {
           )}
         </ButtonBase>
         <Dialog
-          classes={{ paper: classes.dialog }}
           open={offerOpen}
           onClose={handleOfferClose}
           onBackdropClick={handleOfferClose}
           aria-labelledby="offer-dialog-title"
         >
           <DialogTitle id="offer-dialog-title">Confirm Offer</DialogTitle>
-          <DialogContent classes={{ root: classes.dialogContent }}>
+          <DialogContent>
             <Container className={classes.container}>
-              <Card>
-                {!loading1 && (
+              <Container className={classes.cardLabel} disableGutters="true">
+                <Card className={classes.card}>
+                  {!loading1 && (
+                    <Typography
+                      className={classes.typography}
+                      variant="h6"
+                      align="center"
+                    >
+                      {currentSwap.module_code}
+                      <br />
+                      {currentSwap.slot_type}
+                      <br />
+                      {currentSwap.current_slot}
+                      <br />
+                      {currentSwap.day}
+                      <br />
+                      {currentSwap.venue}
+                      <br />
+                      {`${currentSwap.startTime} - ${currentSwap.endTime}`}
+                    </Typography>
+                  )}
+                </Card>
+                <Typography
+                  className={classes.typography}
+                  color="primary"
+                  variant="h5"
+                  align="center"
+                >
+                  Current Slot
+                </Typography>
+              </Container>
+              <ArrowRightIcon></ArrowRightIcon>
+              <ArrowRightIcon></ArrowRightIcon>
+              <ArrowRightIcon></ArrowRightIcon>
+              <Container className={classes.cardLabel} disableGutters="true">
+                <Card className={classes.card}>
+                  {!loading2 && (
+                    <Typography
+                      className={classes.typography}
+                      variant="h6"
+                      align="center"
+                    >
+                      {incomingSwap.module_code}
+                      <br />
+                      {incomingSwap.slot_type}
+                      <br />
+                      {incomingSwap.current_slot}
+                      <br />
+                      {incomingSwap.day}
+                      <br />
+                      {incomingSwap.venue}
+                      <br />
+                      {`${incomingSwap.startTime} - ${incomingSwap.endTime}`}
+                    </Typography>
+                  )}
+                </Card>
+                {props.tab === "pendingOffer" && (
                   <Typography
                     className={classes.typography}
-                    variant="h6"
+                    color="primary"
+                    variant="h5"
                     align="center"
                   >
-                    {currentSwap.module_code}
-                    <br />
-                    {currentSwap.slot_type}
-                    <br />
-                    {currentSwap.current_slot}
-                    <br />
-                    {currentSwap.day}
-                    <br />
-                    {currentSwap.venue}
-                    <br />
-                    {`${currentSwap.startTime} - ${currentSwap.endTime}`}
+                    Pending Slot
                   </Typography>
                 )}
-              </Card>
-              <ArrowRightIcon></ArrowRightIcon>
-              <ArrowRightIcon></ArrowRightIcon>
-              <ArrowRightIcon></ArrowRightIcon>
-              <Card>
-                {!loading2 && (
+                {props.tab === "rejectedOffer" && (
                   <Typography
                     className={classes.typography}
-                    variant="h6"
+                    color="primary"
+                    variant="h5"
                     align="center"
                   >
-                    {incomingSwap.module_code}
-                    <br />
-                    {incomingSwap.slot_type}
-                    <br />
-                    {incomingSwap.current_slot}
-                    <br />
-                    {incomingSwap.day}
-                    <br />
-                    {incomingSwap.venue}
-                    <br />
-                    {`${incomingSwap.startTime} - ${incomingSwap.endTime}`}
+                    Rejected Slot
                   </Typography>
                 )}
-              </Card>
-            </Container>
-            <Container className={classes.container}>
-              <Typography
-                className={classes.typography}
-                color="primary"
-                variant="h5"
-                align="center"
-              >
-                Current Slot
-              </Typography>
-              {props.tab === "pendingOffer" && (
-                <Typography
-                  className={classes.typography}
-                  color="primary"
-                  variant="h5"
-                  align="center"
-                >
-                  Pending Slot
-                </Typography>
-              )}
-              {props.tab === "rejectedOffer" && (
-                <Typography
-                  className={classes.typography}
-                  color="primary"
-                  variant="h5"
-                  align="center"
-                >
-                  Rejected Slot
-                </Typography>
-              )}
-              {props.tab === "currentOffer" && (
-                <Typography
-                  className={classes.typography}
-                  color="primary"
-                  variant="h5"
-                  align="center"
-                >
-                  New Slot
-                </Typography>
-              )}
+                {props.tab === "currentOffer" && (
+                  <Typography
+                    className={classes.typography}
+                    color="primary"
+                    variant="h5"
+                    align="center"
+                  >
+                    New Slot
+                  </Typography>
+                )}
+              </Container>
             </Container>
           </DialogContent>
           <DialogActions>{buttonset}</DialogActions>

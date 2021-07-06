@@ -9,6 +9,7 @@ import {
   TextField,
   Typography,
   Drawer,
+  ClickAwayListener,
 } from "@material-ui/core";
 import { Alert, Autocomplete } from "@material-ui/lab";
 import { theme } from "./theme";
@@ -21,10 +22,14 @@ import NotFound from "../../assets/not-found.png";
 import { useMediaQuery } from "react-responsive";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import ExpandLessIcon from "@material-ui/icons/ExpandLess";
+import { resetSwap } from "../../redux/actions/swapActions";
+import { useDispatch } from "react-redux";
+// import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 
 function Marketplace({
   createSuccess,
   searchSuccess,
+  offerSuccess,
   error,
   errorMsg,
   user,
@@ -52,6 +57,8 @@ function Marketplace({
   const [search, setSearch] = useState(false);
   const [drawer, setDrawer] = useState(true);
 
+  const dispatch = useDispatch();
+
   useEffect(() => getAllModules(), []);
 
   useEffect(() => getModuleDetails(moduleCode), [moduleCode]);
@@ -67,9 +74,20 @@ function Marketplace({
     }
   }, [createSuccess]);
 
+  useEffect(() => {
+    dispatch(resetSwap());
+  }, []);
+
+  useEffect(() => {
+    if (offerSuccess) {
+      searchSwap(moduleCode, slotType, currentSlot);
+    }
+  }, [offerSuccess]);
+
   function handleSubmit(e) {
     e.preventDefault();
     searchSwap(moduleCode, slotType, currentSlot);
+    viewSwaps();
     setSearch(true);
   }
 
@@ -202,7 +220,7 @@ function Marketplace({
         {isSmallScreen && (
           <>
             <Button onClick={toggleDrawer}>{<ExpandMoreIcon />}</Button>
-            <Drawer anchor="top" open={drawer}>
+            <Drawer anchor="top" open={drawer} onBackdropClick={toggleDrawer}>
               {SearchBar}
               <Button onClick={toggleDrawer}>{<ExpandLessIcon />}</Button>
             </Drawer>
@@ -256,6 +274,7 @@ const mapStateToProps = (state) => {
     loading: state.swap.searchLoading,
     searchSuccess: state.swap.searchSuccess,
     createSuccess: state.swap.createSuccess,
+    offerSuccess: state.offer.createSuccess,
   };
 };
 export default connect(mapStateToProps)(Marketplace);

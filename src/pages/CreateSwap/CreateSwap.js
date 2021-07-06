@@ -46,7 +46,7 @@ function CreateSwap({ success, error, errorMsg, loading }) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    createSwap(moduleCode, slotType, currentSlot, desiredSlots, false, false);
+    createSwap(moduleCode, slotType, currentSlot, desiredSlots, false);
     setModuleCode([]);
     setSlotType([]);
     setCurrentSlot([]);

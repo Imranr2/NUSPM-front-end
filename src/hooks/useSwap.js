@@ -68,7 +68,8 @@ const useSwap = () => {
     slotType,
     currentSlot,
     desiredSlots,
-    completed
+    completed,
+    reset = true
   ) => {
     dispatch(createSwapRequest());
     authAxios
@@ -86,9 +87,11 @@ const useSwap = () => {
       .then((response) => {
         dispatch(createSwapSuccess());
         setInitiatorSwap(response.data);
-        setTimeout(() => {
-          dispatch(resetSwap());
-        }, 3000);
+        if (reset) {
+          setTimeout(() => {
+            dispatch(resetSwap());
+          }, 3000);
+        }
       })
       .catch((error) => {
         dispatch(createSwapFail(error.response.data));
@@ -105,9 +108,9 @@ const useSwap = () => {
       .then((response) => {
         setUserSwaps(response.data);
         dispatch(viewSwapSuccess());
-        setTimeout(() => {
-          dispatch(resetSwap());
-        }, 2000);
+        // setTimeout(() => {
+        //   dispatch(resetSwap());
+        // }, 2000);
       })
       .catch((error) => {
         dispatch(viewSwapFail(error.response.data));
@@ -170,33 +173,6 @@ const useSwap = () => {
       });
   };
 
-  // finding a potential swap
-  // const searchSwap = (moduleCode, slotType, currentSlot) => {
-  //   dispatch(searchSwapRequest());
-  //   authAxios
-  //     .post(`/api/v1/searchSwap`, {
-  //       module_code: moduleCode,
-  //       slot_type: slotType,
-  //       desired_slots: currentSlot,
-  //     })
-  //     .then((swapResponse) => {
-  //       // authaxios post
-  //       dispatch(searchSwapSuccess());
-  //       console.log(response.data);
-  //       setPotentialSwaps(response.data.filter((swap) => !swap.isCompleted));
-  //       console.log(potentialSwaps);
-  //       setTimeout(() => {
-  //         dispatch(resetSwap());
-  //       }, 5000);
-  //     })
-  //     .catch((error) => {
-  //       dispatch(searchSwapFail(error.response.data));
-  //       setTimeout(() => {
-  //         dispatch(resetSwap());
-  //       }, 2000);
-  //     });
-  // };
-
   const searchSwap = (moduleCode, slotType, currentSlot) => {
     dispatch(searchSwapRequest());
     authAxios
@@ -214,7 +190,6 @@ const useSwap = () => {
             setPotentialSwaps(
               swapData.filter(
                 (swap) =>
-                  // !swap.user_id !== user.id &&
                   !swap.isCompleted &&
                   !offerData
                     .map((offer) => offer.initiatorSwapId)
@@ -282,3 +257,30 @@ const useSwap = () => {
 
 // export default connect(mapStateToProps)(useSwap);
 export default useSwap;
+
+// finding a potential swap
+// const searchSwap = (moduleCode, slotType, currentSlot) => {
+//   dispatch(searchSwapRequest());
+//   authAxios
+//     .post(`/api/v1/searchSwap`, {
+//       module_code: moduleCode,
+//       slot_type: slotType,
+//       desired_slots: currentSlot,
+//     })
+//     .then((swapResponse) => {
+//       // authaxios post
+//       dispatch(searchSwapSuccess());
+//       console.log(response.data);
+//       setPotentialSwaps(response.data.filter((swap) => !swap.isCompleted));
+//       console.log(potentialSwaps);
+//       setTimeout(() => {
+//         dispatch(resetSwap());
+//       }, 5000);
+//     })
+//     .catch((error) => {
+//       dispatch(searchSwapFail(error.response.data));
+//       setTimeout(() => {
+//         dispatch(resetSwap());
+//       }, 2000);
+//     });
+// };

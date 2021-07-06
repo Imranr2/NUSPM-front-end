@@ -17,6 +17,7 @@ import {
   SHOW_SWAP_FAIL,
   SHOW_SWAP_REQUEST,
   SHOW_SWAP_SUCCESS,
+  RESET_CREATE,
   RESET_SWAP,
 } from "../actionTypes";
 
@@ -154,6 +155,13 @@ const swapReducer = (state = initialState, action) => {
         showLoading: false,
         showError: true,
         errorMsg: action.payload,
+      };
+    case RESET_CREATE:
+      return {
+        ...state,
+        createSuccess: false,
+        createError: false,
+        createLoading: false,
       };
     case RESET_SWAP:
       return {

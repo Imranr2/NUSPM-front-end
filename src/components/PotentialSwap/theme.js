@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
     height: "100%",
     display: "flex",
     flexDirection: "column",
-    width: "15vw",
+    // width: "15vw",
     minWidth: 200,
   },
   typography: {
@@ -41,6 +41,13 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
+  },
+  cardLabel: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
+    alignItems: "center",
+    minWidth: 200,
   },
 }));
 export { useStyles };

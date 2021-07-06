@@ -1,5 +1,11 @@
 import NavBar from "../../components/NavBar";
-import { ThemeProvider, Container, Tabs, Tab } from "@material-ui/core";
+import {
+  ThemeProvider,
+  Container,
+  Tabs,
+  Tab,
+  Typography,
+} from "@material-ui/core";
 import { useState, useEffect } from "react";
 import { theme, useStyles } from "./theme";
 import useSwap from "../../hooks/useSwap";
@@ -113,6 +119,11 @@ function YourSwap({
 
           {value === 0 && (
             <>
+              {isSmallScreen && (
+                <Typography color="primary" variant="h5">
+                  Current Offers
+                </Typography>
+              )}
               <Alert severity="info" className={classes.alert}>
                 Click on the offer to view pending slot details and accept or
                 reject the offer
@@ -139,6 +150,11 @@ function YourSwap({
           {/* test and check with actual users on what they want */}
           {value === 1 && (
             <>
+              {isSmallScreen && (
+                <Typography color="primary" variant="h5">
+                  Current Swaps
+                </Typography>
+              )}
               <Alert severity="info" className={classes.alert}>
                 Caution: Editing or deleting your swap request will withdraw and
                 reject all offers pertaining to the request
@@ -168,6 +184,11 @@ function YourSwap({
 
           {value === 2 && (
             <>
+              {isSmallScreen && (
+                <Typography color="primary" variant="h5" color="primary">
+                  Pending Offers
+                </Typography>
+              )}
               <Alert severity="info" className={classes.alert}>
                 Click on the card to withdraw your offer
               </Alert>
@@ -192,6 +213,11 @@ function YourSwap({
 
           {value === 3 && (
             <>
+              {isSmallScreen && (
+                <Typography variant="h5" color="primary">
+                  Completed Swaps
+                </Typography>
+              )}
               <Alert severity="info" className={classes.alert}>
                 Contact the other party with the email displayed in the card
               </Alert>
@@ -220,6 +246,11 @@ function YourSwap({
 
           {value === 4 && (
             <>
+              {isSmallScreen && (
+                <Typography variant="h5" color="primary">
+                  Rejected Offers
+                </Typography>
+              )}
               <Alert severity="info" className={classes.alert}>
                 All your rejected offers are displayed here
               </Alert>
