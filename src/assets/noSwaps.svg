@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="227" height="260" viewBox="0 0 227 260">
+  <defs>
+    <clipPath id="clip-Custom_Size_1">
+      <rect width="227" height="260"/>
+    </clipPath>
+  </defs>
+  <g id="Custom_Size_1" data-name="Custom Size – 1" clip-path="url(#clip-Custom_Size_1)">
+    <rect width="227" height="260" fill="#fff"/>
+    <g id="Group_1" data-name="Group 1" transform="translate(31.5 27.065)">
+      <g id="Ellipse_1" data-name="Ellipse 1" transform="translate(-40.565 67.917) rotate(-45)" fill="#fff" stroke="#dedede" stroke-width="10">
+        <circle cx="76.355" cy="76.355" r="76.355" stroke="none"/>
+        <circle cx="76.355" cy="76.355" r="71.355" fill="none"/>
+      </g>
+      <rect id="Rectangle_1" data-name="Rectangle 1" width="30.685" height="83.491" transform="translate(105.766 131.495) rotate(-45)" fill="#dedede"/>
+      <rect id="Rectangle_2" data-name="Rectangle 2" width="19.083" height="99.19" transform="translate(96.478 26.84) rotate(45)" fill="#dedede"/>
+      <rect id="Rectangle_3" data-name="Rectangle 3" width="19.083" height="99.19" transform="translate(26.34 40.334) rotate(-45)" fill="#dedede"/>
+    </g>
+    <text id="No_swaps_found" data-name="No swaps found" transform="translate(114 250)" fill="#707070" font-size="20" font-family="SFProDisplay-Semibold, SF Pro Display" font-weight="600" opacity="0.52"><tspan x="-70.645" y="0">No swaps found</tspan></text>
+  </g>
+</svg>

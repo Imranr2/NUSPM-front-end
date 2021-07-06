@@ -18,6 +18,11 @@ import { Alert } from "@material-ui/lab";
 import SwapHorizIcon from "@material-ui/icons/SwapHoriz";
 import LocalOfferIcon from "@material-ui/icons/LocalOffer";
 import { useMediaQuery } from "react-responsive";
+import NoCurrentSwaps from "../../assets/noCurrentSwaps.svg";
+import NoCurrentOffers from "../../assets/noCurrentOffers.svg";
+import NoPendingOffers from "../../assets/noPendingOffers.svg";
+import NoCompletedSwaps from "../../assets/noCompletedSwaps.svg";
+import NoRejectedOffers from "../../assets/noRejectedOffers.svg";
 
 function YourSwap({
   swapLoading,
@@ -131,10 +136,17 @@ function YourSwap({
               <OfferList arr={currentOffer} tab="currentOffer" />
               {currentOffer.length === 0 && !viewOfferLoading && (
                 <>
-                  <br />
+                  {/* <br />
                   <Alert severity="warning" className={classes.alert}>
                     No offers at the moment
-                  </Alert>
+                  </Alert> */}
+                  <Container className={classes.notFound}>
+                    <img
+                      src={NoCurrentOffers}
+                      alt="No Current Offers"
+                      width="500"
+                    />
+                  </Container>
                 </>
               )}
               {offerError && (
@@ -166,10 +178,17 @@ function YourSwap({
               />
               {currentSwap.length === 0 && !viewSwapLoading && (
                 <>
-                  <br />
+                  {/* <br />
                   <Alert severity="warning" className={classes.alert}>
                     No swaps at the moment
-                  </Alert>
+                  </Alert> */}
+                  <Container className={classes.notFound}>
+                    <img
+                      src={NoCurrentSwaps}
+                      alt="No Current Swaps"
+                      width="500"
+                    />
+                  </Container>
                 </>
               )}
               {swapError && (
@@ -195,10 +214,17 @@ function YourSwap({
               <OfferList arr={pendingOffer} tab="pendingOffer" />
               {pendingOffer.length === 0 && !viewOfferLoading && (
                 <>
-                  <br />
+                  {/* <br />
                   <Alert severity="warning" className={classes.alert}>
                     No pending offers at the moment
-                  </Alert>
+                  </Alert> */}
+                  <Container className={classes.notFound}>
+                    <img
+                      src={NoPendingOffers}
+                      width="500"
+                      alt="No Pending Offers"
+                    />
+                  </Container>
                 </>
               )}
               {offerError && (
@@ -228,10 +254,17 @@ function YourSwap({
               />
               {completedSwap.length === 0 && !viewSwapLoading && (
                 <>
-                  <br />
+                  {/* <br />
                   <Alert severity="warning" className={classes.alert}>
                     No completed swaps at the moment
-                  </Alert>
+                  </Alert> */}
+                  <Container className={classes.notFound}>
+                    <img
+                      src={NoCompletedSwaps}
+                      alt="No Completed Swaps"
+                      width="500"
+                    />
+                  </Container>
                 </>
               )}
               {swapError && (
@@ -257,10 +290,17 @@ function YourSwap({
               <OfferList arr={rejectedOffer} tab="rejectedOffer" />
               {rejectedOffer.length === 0 && !viewOfferLoading && (
                 <>
-                  <br />
+                  {/* <br />
                   <Alert severity="warning" className={classes.alert}>
                     No rejected offers at the moment
-                  </Alert>
+                  </Alert> */}
+                  <Container className={classes.notFound}>
+                    <img
+                      src={NoRejectedOffers}
+                      alt="No Rejected Offers"
+                      width="500"
+                    />
+                  </Container>
                 </>
               )}
               {offerError && (

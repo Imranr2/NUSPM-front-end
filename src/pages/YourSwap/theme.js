@@ -49,6 +49,9 @@ const useStyles = makeStyles((theme) => ({
     marginTop: "1vh",
     borderRadius: 30,
   },
+  notFound: {
+    marginTop: "10vh",
+  },
 }));
 
 export { theme, useStyles };

@@ -67,6 +67,10 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "center",
   },
+  notFound: {
+    marginTop: "15vh",
+    // marginTop: 200,
+  },
 }));
 
 export { theme, useStyles };

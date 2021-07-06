@@ -18,7 +18,7 @@ import useSwap from "../../hooks/useSwap";
 import { connect } from "react-redux";
 import PotentialSwaps from "../../components/PotentialSwaps/PotentialSwaps";
 import { PulseLoader } from "react-spinners";
-import NotFound from "../../assets/not-found.png";
+import NoSwaps from "../../assets/noSwaps.svg";
 import { useMediaQuery } from "react-responsive";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import ExpandLessIcon from "@material-ui/icons/ExpandLess";
@@ -54,7 +54,7 @@ function Marketplace({
   const [moduleCode, setModuleCode] = useState("");
   const [slotType, setSlotType] = useState("");
   const [currentSlot, setCurrentSlot] = useState("");
-  const [search, setSearch] = useState(false);
+  // const [search, setSearch] = useState(false);
   const [drawer, setDrawer] = useState(true);
 
   const dispatch = useDispatch();
@@ -88,7 +88,8 @@ function Marketplace({
     e.preventDefault();
     searchSwap(moduleCode, slotType, currentSlot);
     viewSwaps();
-    setSearch(true);
+    // setSearch(true);
+    toggleDrawer();
   }
 
   const toggleDrawer = () => {
@@ -254,7 +255,9 @@ function Marketplace({
           potentialSwaps.filter((swap) => swap.user_id !== user.id).length ===
             0 && (
             <>
-              <img src={NotFound} width="500" alt="Not-Found" />
+              <Container className={classes.notFound}>
+                <img src={NoSwaps} width="500" alt="Not-Found" />
+              </Container>
             </>
           )}
         {error && (
