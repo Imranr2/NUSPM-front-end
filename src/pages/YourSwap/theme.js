@@ -9,6 +9,9 @@ const theme = createMuiTheme({
       main: "#9b9b9b",
     },
   },
+  shape: {
+    borderRadius: 30,
+  },
   overrides: {
     MuiSvgIcon: {
       colorAction: {
