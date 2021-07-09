@@ -116,21 +116,16 @@ const useAuth = () => {
             password_confirmation: passwordConf,
           })
           .then((response) => {
-            console.log(response.data);
             dispatch(changePasswordSuccess());
           })
           .catch((error) => {
             dispatch(changePasswordFail(error.response.data));
-            console.log(error);
             setTimeout(() => {
               dispatch(resetAuth());
             }, 2000);
           });
       })
       .catch((error) => {
-        dispatch(changePasswordFail(error.response.data));
-        console.log(error);
-        console.log(error.response.data.error);
         setTimeout(() => {
           dispatch(resetAuth());
         }, 2000);

@@ -23,14 +23,9 @@ import useOffer from "../../hooks/useOffer";
 import CurrentOfferButtons from "../ButtonSets/CurrentOfferButtons";
 import PendingOfferButtons from "../ButtonSets/PendingOfferButtons";
 
-export default function Offer(props) {
+export default function Offer({ key, card, tab }) {
   const classes = useStyles();
-  const { updateOffer } = useOffer();
   const [offerOpen, setOfferOpen] = useState(false);
-  const [currentSwap, setCurrentSwap] = useState();
-  const [incomingSwap, setIncomingSwap] = useState();
-  const [loading1, setLoading1] = useState(true);
-  const [loading2, setLoading2] = useState(true);
 
   const handleOfferOpen = () => {
     setOfferOpen(true);
@@ -39,100 +34,73 @@ export default function Offer(props) {
     setOfferOpen(false);
   };
 
-  // find way to extract out using useoffer
-  useEffect(() => {
-    authAxios
-      .get(`/api/v1/swaps/${props.card.initiatorSwapId}`)
-      .then((response) => {
-        setCurrentSwap(response.data);
-        setLoading1(false);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
-
-  useEffect(() => {
-    authAxios
-      .get(`/api/v1/swaps/${props.card.creatorSwapId}`)
-      .then((response) => {
-        setIncomingSwap(response.data);
-        setLoading2(false);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
-
   let buttonset = null;
 
-  switch (props.tab) {
+  switch (tab) {
     case "currentOffer":
       buttonset = (
         <CurrentOfferButtons
-          offerDetails={props.card}
-          initiatorSwap={currentSwap}
-          creatorSwap={incomingSwap}
+          offerDetails={card}
+          initiatorSwap={card.initiatorSwap}
+          creatorSwap={card.creatorSwap}
         />
       );
       break;
     case "pendingOffer":
-      buttonset = <PendingOfferButtons offerDetails={props.card} />;
+      buttonset = <PendingOfferButtons offerDetails={card} />;
       break;
     default:
       break;
   }
 
   return (
-    <Grid key={props} container item xs={12} sm={6} md={4} justify="center">
+    <Grid key={key} container item xs={12} sm={6} md={4} justify="center">
       <Card className={classes.card}>
         <ButtonBase onClick={handleOfferOpen}>
-          {!loading1 &&
-            !loading2 &&
-            (props.tab === "currentOffer" || props.tab === "rejectedOffer") && (
-              <CardContent>
-                <Typography variant="h6">
-                  {incomingSwap.module_code}
-                  <br />
-                  {incomingSwap.slot_type}
-                  <br />
-                  {incomingSwap.day}
-                  <br />
-                  {incomingSwap.venue}
-                  <br />
-                  {`${incomingSwap.startTime} - ${incomingSwap.endTime}`}
-                  <br />
-                  Current Slot: [{incomingSwap.current_slot}]
-                  <br />
-                  {props.tab === "rejectedOffer" && (
-                    <Typography variant="h6">
-                      Rejected Slot [{currentSwap.current_slot}]
-                    </Typography>
-                  )}
-                  {props.tab === "currentOffer" && (
-                    <Typography variant="h6">
-                      Pending Slot [{currentSwap.current_slot}]
-                    </Typography>
-                  )}
-                </Typography>
-              </CardContent>
-            )}
-          {!loading1 && !loading2 && props.tab === "pendingOffer" && (
+          {(tab === "currentOffer" || tab === "rejectedOffer") && (
             <CardContent>
               <Typography variant="h6">
-                {currentSwap.module_code}
+                {card.creatorSwap.module_code}
                 <br />
-                {currentSwap.slot_type}
+                {card.creatorSwap.slot_type}
                 <br />
-                {currentSwap.day}
+                {card.creatorSwap.day}
                 <br />
-                {currentSwap.venue}
+                {card.creatorSwap.venue}
                 <br />
-                {`${currentSwap.startTime} - ${currentSwap.endTime}`}
+                {`${card.creatorSwap.startTime} - ${card.creatorSwap.endTime}`}
                 <br />
-                Current Slot: [{incomingSwap.current_slot}]
+                Current Slot: [{card.creatorSwap.current_slot}]
                 <br />
-                Pending Slot: [{currentSwap.current_slot}]
+                {tab === "rejectedOffer" && (
+                  <Typography variant="h6">
+                    Rejected Slot [{card.initiatorSwap.current_slot}]
+                  </Typography>
+                )}
+                {tab === "currentOffer" && (
+                  <Typography variant="h6">
+                    Pending Slot [{card.initiatorSwap.current_slot}]
+                  </Typography>
+                )}
+              </Typography>
+            </CardContent>
+          )}
+          {tab === "pendingOffer" && (
+            <CardContent>
+              <Typography variant="h6">
+                {card.initiatorSwap.module_code}
+                <br />
+                {card.initiatorSwap.slot_type}
+                <br />
+                {card.initiatorSwap.day}
+                <br />
+                {card.initiatorSwap.venue}
+                <br />
+                {`${card.initiatorSwap.startTime} - ${card.initiatorSwap.endTime}`}
+                <br />
+                Current Slot: [{card.creatorSwap.current_slot}]
+                <br />
+                Pending Slot: [{card.initiatorSwap.current_slot}]
               </Typography>
             </CardContent>
           )}
@@ -148,25 +116,23 @@ export default function Offer(props) {
             <Container className={classes.container}>
               <Container className={classes.cardLabel} disableGutters="true">
                 <Card className={classes.card}>
-                  {!loading1 && (
-                    <Typography
-                      className={classes.typography}
-                      variant="h6"
-                      align="center"
-                    >
-                      {currentSwap.module_code}
-                      <br />
-                      {currentSwap.slot_type}
-                      <br />
-                      {currentSwap.current_slot}
-                      <br />
-                      {currentSwap.day}
-                      <br />
-                      {currentSwap.venue}
-                      <br />
-                      {`${currentSwap.startTime} - ${currentSwap.endTime}`}
-                    </Typography>
-                  )}
+                  <Typography
+                    className={classes.typography}
+                    variant="h6"
+                    align="center"
+                  >
+                    {card.initiatorSwap.module_code}
+                    <br />
+                    {card.initiatorSwap.slot_type}
+                    <br />
+                    {card.initiatorSwap.current_slot}
+                    <br />
+                    {card.initiatorSwap.day}
+                    <br />
+                    {card.initiatorSwap.venue}
+                    <br />
+                    {`${card.initiatorSwap.startTime} - ${card.initiatorSwap.endTime}`}
+                  </Typography>
                 </Card>
                 <Typography
                   className={classes.typography}
@@ -182,27 +148,25 @@ export default function Offer(props) {
               <ArrowRightIcon></ArrowRightIcon>
               <Container className={classes.cardLabel} disableGutters="true">
                 <Card className={classes.card}>
-                  {!loading2 && (
-                    <Typography
-                      className={classes.typography}
-                      variant="h6"
-                      align="center"
-                    >
-                      {incomingSwap.module_code}
-                      <br />
-                      {incomingSwap.slot_type}
-                      <br />
-                      {incomingSwap.current_slot}
-                      <br />
-                      {incomingSwap.day}
-                      <br />
-                      {incomingSwap.venue}
-                      <br />
-                      {`${incomingSwap.startTime} - ${incomingSwap.endTime}`}
-                    </Typography>
-                  )}
+                  <Typography
+                    className={classes.typography}
+                    variant="h6"
+                    align="center"
+                  >
+                    {card.creatorSwap.module_code}
+                    <br />
+                    {card.creatorSwap.slot_type}
+                    <br />
+                    {card.creatorSwap.current_slot}
+                    <br />
+                    {card.creatorSwap.day}
+                    <br />
+                    {card.creatorSwap.venue}
+                    <br />
+                    {`${card.creatorSwap.startTime} - ${card.creatorSwap.endTime}`}
+                  </Typography>
                 </Card>
-                {props.tab === "pendingOffer" && (
+                {tab === "pendingOffer" && (
                   <Typography
                     className={classes.typography}
                     color="primary"
@@ -212,7 +176,7 @@ export default function Offer(props) {
                     Pending Slot
                   </Typography>
                 )}
-                {props.tab === "rejectedOffer" && (
+                {tab === "rejectedOffer" && (
                   <Typography
                     className={classes.typography}
                     color="primary"
@@ -222,7 +186,7 @@ export default function Offer(props) {
                     Rejected Slot
                   </Typography>
                 )}
-                {props.tab === "currentOffer" && (
+                {tab === "currentOffer" && (
                   <Typography
                     className={classes.typography}
                     color="primary"

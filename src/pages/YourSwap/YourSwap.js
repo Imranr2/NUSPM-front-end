@@ -67,9 +67,6 @@ function YourSwap({
   );
 
   const isSmallScreen = useMediaQuery({ query: "(max-width:850px)" });
-  // const isDesktopOrLaptop = useMediaQuery({
-  //   query: "(min-width: 701px)",
-  // });
 
   useEffect(() => {
     viewSwaps();
@@ -136,10 +133,6 @@ function YourSwap({
               <OfferList arr={currentOffer} tab="currentOffer" />
               {currentOffer.length === 0 && !viewOfferLoading && (
                 <>
-                  {/* <br />
-                  <Alert severity="warning" className={classes.alert}>
-                    No offers at the moment
-                  </Alert> */}
                   <Container className={classes.notFound}>
                     <img
                       src={NoCurrentOffers}
@@ -158,8 +151,6 @@ function YourSwap({
               )}
             </>
           )}
-
-          {/* test and check with actual users on what they want */}
           {value === 1 && (
             <>
               {isSmallScreen && (
@@ -178,10 +169,6 @@ function YourSwap({
               />
               {currentSwap.length === 0 && !viewSwapLoading && (
                 <>
-                  {/* <br />
-                  <Alert severity="warning" className={classes.alert}>
-                    No swaps at the moment
-                  </Alert> */}
                   <Container className={classes.notFound}>
                     <img
                       src={NoCurrentSwaps}
@@ -214,10 +201,6 @@ function YourSwap({
               <OfferList arr={pendingOffer} tab="pendingOffer" />
               {pendingOffer.length === 0 && !viewOfferLoading && (
                 <>
-                  {/* <br />
-                  <Alert severity="warning" className={classes.alert}>
-                    No pending offers at the moment
-                  </Alert> */}
                   <Container className={classes.notFound}>
                     <img
                       src={NoPendingOffers}
@@ -254,10 +237,6 @@ function YourSwap({
               />
               {completedSwap.length === 0 && !viewSwapLoading && (
                 <>
-                  {/* <br />
-                  <Alert severity="warning" className={classes.alert}>
-                    No completed swaps at the moment
-                  </Alert> */}
                   <Container className={classes.notFound}>
                     <img
                       src={NoCompletedSwaps}
@@ -290,10 +269,6 @@ function YourSwap({
               <OfferList arr={rejectedOffer} tab="rejectedOffer" />
               {rejectedOffer.length === 0 && !viewOfferLoading && (
                 <>
-                  {/* <br />
-                  <Alert severity="warning" className={classes.alert}>
-                    No rejected offers at the moment
-                  </Alert> */}
                   <Container className={classes.notFound}>
                     <img
                       src={NoRejectedOffers}

@@ -249,38 +249,4 @@ const useSwap = () => {
   };
 };
 
-// const mapStateToProps = (state) => {
-//   return {
-//     user: state.auth.user,
-//   };
-// };
-
-// export default connect(mapStateToProps)(useSwap);
 export default useSwap;
-
-// finding a potential swap
-// const searchSwap = (moduleCode, slotType, currentSlot) => {
-//   dispatch(searchSwapRequest());
-//   authAxios
-//     .post(`/api/v1/searchSwap`, {
-//       module_code: moduleCode,
-//       slot_type: slotType,
-//       desired_slots: currentSlot,
-//     })
-//     .then((swapResponse) => {
-//       // authaxios post
-//       dispatch(searchSwapSuccess());
-//       console.log(response.data);
-//       setPotentialSwaps(response.data.filter((swap) => !swap.isCompleted));
-//       console.log(potentialSwaps);
-//       setTimeout(() => {
-//         dispatch(resetSwap());
-//       }, 5000);
-//     })
-//     .catch((error) => {
-//       dispatch(searchSwapFail(error.response.data));
-//       setTimeout(() => {
-//         dispatch(resetSwap());
-//       }, 2000);
-//     });
-// };

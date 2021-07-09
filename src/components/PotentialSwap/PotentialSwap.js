@@ -59,12 +59,10 @@ function PotentialSwap(props) {
 
   const handleInitiatorSwapClick = (params) => {
     setInitiatorSwap(params);
-    console.log(initiatorSwap);
     setDisabled(!disabled);
   };
 
   const handleNext = () => {
-    console.log(initiatorSwap);
     setCurrentDialog(2);
   };
 
@@ -73,7 +71,6 @@ function PotentialSwap(props) {
   };
 
   const handleCreateSwap = () => {
-    console.log(props.slotDets);
     createSwap(
       props.creatorSwap.module_code,
       props.creatorSwap.slot_type,
@@ -83,7 +80,6 @@ function PotentialSwap(props) {
       false
     );
     setCurrentDialog(2);
-    console.log(initiatorSwap);
   };
 
   const resetCreateRedux = () => {
@@ -91,7 +87,6 @@ function PotentialSwap(props) {
   };
 
   const handleInitiateSwap = () => {
-    //create offer
     createOffer(
       initiatorSwap.user_id,
       props.creatorSwap.user_id,
@@ -101,8 +96,6 @@ function PotentialSwap(props) {
       true
     );
     handleDialogClose();
-    console.log(initiatorSwap);
-    //update swaps
   };
 
   useEffect(() => setSlotDets(props.slotDets));
@@ -368,25 +361,3 @@ const mapStateToProps = (state) => {
 };
 
 export default connect(mapStateToProps)(PotentialSwap);
-
-/*
-//Marketplace get potetialSwaps, userSwapss
-  //potentialSwaps, new SwapList(PotentialSwaps), map into new Swap component(<PotentialSwap swap={swap} />)
-    //PotentialSwap => ButtonBase, onclick=open dialog, setState for creatorSwap 
-      Dialog
-        Step 1:
-        DialogContent
-        userSwaps.map into layout and individual swap (not a separate component)
-          Each swap => ButtonBase, onClick = setState for initiatorSwap
-        DialogActions
-        Next Button onClick={compare 2 swaps to match modcode etc...if dont match, render error else value == 3}
-        Create Button onclick{value == 2}
-        Step 2(optional): 
-        AutoCompletes for creation of swap
-        Submit onClick={useEffect [success], if true, set value === 3,create swap, setState of initiatorSwap}
-        Step 3:
-        initiatorSwap >>> creatorSwap
-        confirm button onclick={create offer using the 2 swap details}
-
-
-*/

@@ -1,5 +1,5 @@
 import React from "react";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import {
   Grid,
   Card,
@@ -9,19 +9,17 @@ import {
   CardActions,
 } from "@material-ui/core";
 import { useStyles } from "./theme";
-import useAuth from "../../hooks/useAuth";
-import useSwap from "../../hooks/useSwap";
 import CurrentSwapButtons from "../ButtonSets/CurrentSwapButtons";
 import CompletedSwapButtons from "../ButtonSets/CompletedSwapButtons";
 import InitiateButtons from "../ButtonSets/InitiateButtons";
 import { connect } from "react-redux";
 import LocalOfferIcon from "@material-ui/icons/LocalOffer";
 
-function Swap({ key, card, buttonset, offer, userSuccess, swapSuccess }) {
+function Swap({ key, card, buttonset, offer }) {
   const classes = useStyles();
   let buttons = null;
-  const { completedSwap, showSwap } = useSwap();
-  const { user, getUser } = useAuth();
+  const [newSlot, setNewSlot] = useState("");
+  const [email, setEmail] = useState("");
 
   switch (buttonset) {
     case "currentSwap":
@@ -38,19 +36,22 @@ function Swap({ key, card, buttonset, offer, userSuccess, swapSuccess }) {
   useEffect(() => {
     if (offer.length > 0) {
       if (offer[0].initiatorSwapId !== card.id) {
-        showSwap(offer[0].initiatorSwapId);
+        setNewSlot(offer[0].initiatorSwap.current_slot);
       } else {
-        showSwap(offer[0].creatorSwapId);
+        setNewSlot(offer[0].creatorSwap.current_slot);
       }
     }
   }, []);
 
   useEffect(() => {
-    if (Object.keys(completedSwap).length !== 0) {
-      console.log(completedSwap);
-      getUser(completedSwap.user_id);
+    if (offer.length > 0) {
+      if (offer[0].initiatorSwapId !== card.id) {
+        setEmail(offer[0].initiatorEmail);
+      } else {
+        setEmail(offer[0].creatorEmail);
+      }
     }
-  }, [completedSwap]);
+  }, []);
 
   return (
     <>
@@ -97,34 +98,32 @@ function Swap({ key, card, buttonset, offer, userSuccess, swapSuccess }) {
         </Grid>
       )}
 
-      {buttonset === "completedSwap" &&
-        Object.keys(user).length !== 0 &&
-        Object.keys(completedSwap).length !== 0 && (
-          <Grid key={key} container item xs={12} sm={6} md={4} justify="center">
-            <Card className={classes.card}>
-              <CardContent className={classes.cardContent}>
-                <Typography variant="h6">
-                  {card.module_code}
-                  <br />
-                  {card.slot_type}
-                  <br />
-                  {card.day}
-                  <br />
-                  {card.venue}
-                  <br />
-                  {`${card.startTime} - ${card.endTime}`}
-                  <br />
-                  New: [{completedSwap.current_slot}]
-                  <br />
-                  Old: [{card.current_slot}]
-                  <br />
-                  {user.email}
-                </Typography>
-              </CardContent>
-              <CardActions className={classes.button}>{buttons}</CardActions>
-            </Card>
-          </Grid>
-        )}
+      {buttonset === "completedSwap" && (
+        <Grid key={key} container item xs={12} sm={6} md={4} justify="center">
+          <Card className={classes.card}>
+            <CardContent className={classes.cardContent}>
+              <Typography variant="h6">
+                {card.module_code}
+                <br />
+                {card.slot_type}
+                <br />
+                {card.day}
+                <br />
+                {card.venue}
+                <br />
+                {`${card.startTime} - ${card.endTime}`}
+                <br />
+                New: [{newSlot}]
+                <br />
+                Old: [{card.current_slot}]
+                <br />
+                {email}
+              </Typography>
+            </CardContent>
+            <CardActions className={classes.button}>{buttons}</CardActions>
+          </Card>
+        </Grid>
+      )}
     </>
   );
 }

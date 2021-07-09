@@ -45,16 +45,12 @@ const useOffer = () => {
         pending: pending,
       })
       .then((response) => {
-        console.log(response.data);
         dispatch(createOfferSuccess());
         setTimeout(() => {
           dispatch(resetOffer());
         }, 3000);
       })
       .catch((error) => {
-        console.log(error);
-        console.log(error.response);
-        console.log(error.response.data);
         dispatch(createOfferFail(error.response.data));
         setTimeout(() => {
           dispatch(resetOffer());
@@ -89,7 +85,6 @@ const useOffer = () => {
       .delete(`/api/v1/offers/${offerId}`)
       .then((response) => {
         dispatch(deleteOfferSuccess());
-        console.log(response.data);
         setTimeout(() => {
           dispatch(resetOffer());
         }, 3000);
@@ -149,12 +144,8 @@ const useOffer = () => {
       .post("/api/v1/rejectOffers", {
         swap_id: swapId,
       })
-      .then((response) => {
-        console.log(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+      .then((response) => {})
+      .catch((error) => {});
   };
 
   return {
