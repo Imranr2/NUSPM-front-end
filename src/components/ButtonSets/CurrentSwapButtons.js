@@ -16,6 +16,7 @@ import { DeleteButton } from "./theme";
 import useSwap from "../../hooks/useSwap";
 import useOffer from "../../hooks/useOffer";
 import { withdrawOfferFail } from "../../redux/actions/offerActions";
+import useNotification from "../../hooks/useNotification";
 
 export default function CurrentSwapButtons({ swapDetails }) {
   const [editOpen, setEditOpen] = useState(false);
@@ -37,6 +38,8 @@ export default function CurrentSwapButtons({ swapDetails }) {
   } = useSwap();
 
   const { rejectOffers, withdrawOffers } = useOffer();
+
+  const { createNotification } = useNotification();
 
   const handleEditClickOpen = () => {
     setModuleCode(swapDetails.module_code);
@@ -65,6 +68,13 @@ export default function CurrentSwapButtons({ swapDetails }) {
   // Edit dialog needs a useeffect to fetch venue starttime endtime and day just like createswap
   const handleEdit = (e) => {
     e.preventDefault();
+    createNotification(
+      `You have edited the swap for ${swapDetails.module_code} ${swapDetails.slot_type} [${swapDetails.current_slot}]`,
+      swapDetails.id,
+      "Swap"
+    );
+    rejectOffers(swapDetails.id);
+    withdrawOffers(swapDetails.id);
     updateSwap(
       swapDetails.id,
       moduleCode,
@@ -74,8 +84,7 @@ export default function CurrentSwapButtons({ swapDetails }) {
       swapDetails.isCompleted,
       swapDetails.isReserved
     );
-    rejectOffers(swapDetails.id);
-    withdrawOffers(swapDetails.id);
+
     setEditOpen(false);
   };
 

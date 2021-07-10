@@ -41,6 +41,10 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   menu: {
+    // maxWidth: 200,
+  },
+  menuItem: {
+    // maxWidth: 200,
     "&:hover": {
       backgroundColor: "#e1e2fc",
       color: "#0D169F",
@@ -57,6 +61,9 @@ const useStyles = makeStyles((theme) => ({
     flexWrap: "wrap",
     alignItems: "center",
     boxShadow: "0px 5px 10px 1px #d9d9d9",
+  },
+  alert: {
+    width: "100%",
   },
 }));
 

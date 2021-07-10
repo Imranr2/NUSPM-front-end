@@ -26,7 +26,7 @@ function Swap({ key, card, buttonset, offer }) {
       buttons = <CurrentSwapButtons swapDetails={card} />;
       break;
     case "completedSwap":
-      buttons = <CompletedSwapButtons swapDetails={card} />;
+      buttons = <CompletedSwapButtons swapDetails={card} offer={offer} />;
       break;
     default:
       buttons = <InitiateButtons swapDetails={card} />;

@@ -9,11 +9,13 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import { ThemeProvider } from "@material-ui/core";
 import { theme } from "../../Theme";
 import useSwap from "../../hooks/useSwap";
+import useOffer from "../../hooks/useOffer";
 
-export default function CompletedSwapButtons({ swapDetails }) {
+export default function CompletedSwapButtons({ swapDetails, offer }) {
   const [freeOpen, setFreeOpen] = useState(false);
 
   const { updateSwap } = useSwap();
+  const { deleteOffer } = useOffer();
 
   const handleUnreserveClickOpen = () => {
     setFreeOpen(true);
@@ -33,6 +35,7 @@ export default function CompletedSwapButtons({ swapDetails }) {
       swapDetails.desired_slots,
       false
     );
+    deleteOffer(offer.id);
   };
 
   return (

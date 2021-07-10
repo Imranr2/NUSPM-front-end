@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Button from "@material-ui/core/Button";
@@ -9,6 +9,8 @@ import {
   ListItemIcon,
   ListItemText,
   Container,
+  Typography,
+  Badge,
 } from "@material-ui/core";
 import { theme, useStyles } from "./theme";
 // import Logo from "../../assets/nuspmlogo.svg";
@@ -26,15 +28,34 @@ import { useMediaQuery } from "react-responsive";
 import HomeIcon from "@material-ui/icons/Home";
 import SwapHorizIcon from "@material-ui/icons/SwapHoriz";
 import PersonIcon from "@material-ui/icons/Person";
+import useNotification from "../../hooks/useNotification";
+import Alert from "@material-ui/lab/Alert";
+import NotificationsIcon from "@material-ui/icons/Notifications";
+import { connect } from "react-redux";
 
-export default function NavBar(props) {
+function NavBar({
+  arr,
+  loggedIn,
+  createSwap,
+  deleteSwap,
+  updateSwap,
+  createOffer,
+  deleteOffer,
+  withdrawOffer,
+  updateOffer,
+}) {
   const classes = useStyles();
   const [anchorEl1, setAnchorEl1] = useState(null);
-  const [homeClicked, setHomeClicked] = useState(props.arr[0]);
-  const [swapClicked, setSwapClicked] = useState(props.arr[1]);
-  const [profileClicked, setProfileClicked] = useState(props.arr[2]);
   const [anchorEl2, setAnchorEl2] = useState(null);
+  const [anchorEl3, setAnchorEl3] = useState(null);
+  const [homeClicked, setHomeClicked] = useState(arr[0]);
+  const [swapClicked, setSwapClicked] = useState(arr[1]);
+  const [profileClicked, setProfileClicked] = useState(arr[2]);
+  const [notifClicked, setNotifClicked] = useState(false);
+
   const { signOut } = useAuth();
+  const { getAllNotifications, markNotificationAsRead, notifications } =
+    useNotification();
 
   const isSmallScreen = useMediaQuery({ query: "(max-width:700px)" });
   const isDesktopOrLaptop = useMediaQuery({
@@ -60,24 +81,64 @@ export default function NavBar(props) {
   };
 
   const handleSwapClosed = () => {
-    // setSwapClicked(!swapClicked);
     setAnchorEl1(null);
-    setHomeClicked(props.arr[0]);
-    setSwapClicked(props.arr[1]);
-    setProfileClicked(props.arr[2]);
+    setHomeClicked(arr[0]);
+    setSwapClicked(arr[1]);
+    setProfileClicked(arr[2]);
   };
 
   const handleProfileClosed = () => {
-    // setProfileClicked(!profileClicked);
     setAnchorEl2(null);
-    setHomeClicked(props.arr[0]);
-    setSwapClicked(props.arr[1]);
-    setProfileClicked(props.arr[2]);
+    setHomeClicked(arr[0]);
+    setSwapClicked(arr[1]);
+    setProfileClicked(arr[2]);
+  };
+
+  const handleNotifClicked = (event) => {
+    markNotificationAsRead();
+    setNotifClicked(!notifClicked);
+    setAnchorEl3(event.currentTarget);
+  };
+
+  const handleNotifClosed = (event) => {
+    setAnchorEl3(null);
+    setNotifClicked(false);
   };
 
   const logOut = () => {
     signOut();
   };
+
+  useEffect(() => {
+    if (
+      loggedIn ||
+      createSwap ||
+      deleteSwap ||
+      updateSwap ||
+      createOffer ||
+      deleteOffer ||
+      withdrawOffer ||
+      updateOffer
+    )
+      getAllNotifications();
+  }, [
+    loggedIn,
+    createSwap,
+    deleteSwap,
+    updateSwap,
+    createOffer,
+    deleteOffer,
+    withdrawOffer,
+    updateOffer,
+  ]);
+
+  // useEffect(() => {
+  //   getAllNotifications();
+  // }, []);
+
+  const success = ["accept"];
+  const info = ["create", "sent", "receive", "edit"];
+  const error = ["reject", "delete", "withdraw"];
 
   return (
     <ThemeProvider theme={theme}>
@@ -96,16 +157,69 @@ export default function NavBar(props) {
               <>
                 <Button
                   className={classes.button}
+                  aria-controls="simple-menu"
+                  aria-haspopup="true"
+                  variant="text"
+                  onClick={handleNotifClicked}
+                >
+                  <Badge
+                    badgeContent={
+                      notifications.filter(
+                        (notification) => notification.read_at === null
+                      ).length
+                    }
+                    color="primary"
+                  >
+                    <NotificationsIcon />
+                  </Badge>
+                  Notification
+                </Button>
+                <Menu
+                  id="simple-menu"
+                  getContentAnchorEl={null}
+                  anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+                  transformOrigin={{ vertical: "top", horizontal: "center" }}
+                  anchorEl={anchorEl3}
+                  keepMounted
+                  open={Boolean(anchorEl3)}
+                  onClose={handleNotifClosed}
+                  className={classes.menu}
+                >
+                  {notifications.map((notification) => (
+                    <MenuItem disableRipple onClose={handleNotifClosed}>
+                      {error.some((element) =>
+                        notification.content.includes(element)
+                      ) && (
+                        <Alert className={classes.alert} severity="error">
+                          {notification.content}
+                        </Alert>
+                      )}
+                      {success.some((element) =>
+                        notification.content.includes(element)
+                      ) && (
+                        <Alert className={classes.alert} severity="success">
+                          {notification.content}
+                        </Alert>
+                      )}
+                      {info.some((element) =>
+                        notification.content.includes(element)
+                      ) && (
+                        <Alert className={classes.alert} severity="info">
+                          {notification.content}
+                        </Alert>
+                      )}
+                    </MenuItem>
+                  ))}
+                </Menu>
+                <Button
+                  className={classes.button}
                   component={RouterLink}
                   to="/home"
                   variant="text"
                   color={homeClicked ? "primary" : "secondary"}
                 >
+                  <HomeIcon />
                   Home
-                  {/* Home */}
-                  {/* {isSmallScreen ? <HomeIcon /> : "Home"} */}
-                  {/* {isSmallScreen && <HomeIcon />} */}
-                  {/* {isDesktopOrLaptop && "Home"} */}
                 </Button>
                 <Button
                   className={classes.button}
@@ -116,10 +230,8 @@ export default function NavBar(props) {
                   color={swapClicked ? "primary" : "secondary"}
                   endIcon={<ArrowDropDown />}
                 >
+                  <SwapHorizIcon />
                   Swap
-                  {/* {isSmallScreen ? <SwapHorizIcon /> : "Swap"} */}
-                  {/* {isSmallScreen && <SwapHorizIcon />} */}
-                  {/* {isDesktopOrLaptop && "Swap"} */}
                 </Button>
                 <Menu
                   id="simple-menu"
@@ -134,7 +246,7 @@ export default function NavBar(props) {
                   <MenuItem
                     component={RouterLink}
                     to="/marketplace"
-                    className={classes.menu}
+                    className={classes.menuItem}
                     onClose={handleSwapClosed}
                   >
                     <ListItemIcon>
@@ -145,7 +257,7 @@ export default function NavBar(props) {
                   <MenuItem
                     component={RouterLink}
                     to="/create"
-                    className={classes.menu}
+                    className={classes.menuItem}
                   >
                     <ListItemIcon>
                       <AddBox />
@@ -155,7 +267,7 @@ export default function NavBar(props) {
                   <MenuItem
                     component={RouterLink}
                     to="/yourSwap"
-                    className={classes.menu}
+                    className={classes.menuItem}
                   >
                     <ListItemIcon>
                       <LocalOffer />
@@ -172,10 +284,8 @@ export default function NavBar(props) {
                   color={profileClicked ? "primary" : "secondary"}
                   endIcon={<ArrowDropDown />}
                 >
+                  <PersonIcon />
                   Profile
-                  {/* {isSmallScreen ? <PersonIcon /> : "Profile"} */}
-                  {/* {isSmallScreen && <PersonIcon />} */}
-                  {/* {isDesktopOrLaptop && "Profile"} */}
                 </Button>
                 <Menu
                   id="simple-menu"
@@ -190,7 +300,7 @@ export default function NavBar(props) {
                   <MenuItem
                     component={RouterLink}
                     to="/myAccount"
-                    className={classes.menu}
+                    className={classes.menuItem}
                     onClick={logOut}
                   >
                     <ListItemIcon>
@@ -209,9 +319,57 @@ export default function NavBar(props) {
               className={classes.appbarSmall}
               position="relative"
               color="default"
-              // elevation={3}
             >
               <Toolbar>
+                <Button
+                  className={classes.button}
+                  aria-controls="simple-menu"
+                  aria-haspopup="true"
+                  variant="text"
+                  onClick={handleNotifClicked}
+                >
+                  <NotificationsIcon />
+                </Button>
+                <Menu
+                  id="simple-menu"
+                  getContentAnchorEl={null}
+                  anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+                  transformOrigin={{ vertical: "top", horizontal: "center" }}
+                  anchorEl={anchorEl3}
+                  keepMounted
+                  open={Boolean(anchorEl3)}
+                  onClose={handleNotifClosed}
+                  className={classes.menu}
+                >
+                  {notifications.map((notification) => (
+                    <MenuItem
+                      className={classes.menuItem}
+                      onClose={handleNotifClosed}
+                    >
+                      {error.some((element) =>
+                        notification.content.includes(element)
+                      ) && (
+                        <Alert className={classes.alert} severity="error">
+                          {notification.content}
+                        </Alert>
+                      )}
+                      {success.some((element) =>
+                        notification.content.includes(element)
+                      ) && (
+                        <Alert className={classes.alert} severity="success">
+                          {notification.content}
+                        </Alert>
+                      )}
+                      {info.some((element) =>
+                        notification.content.includes(element)
+                      ) && (
+                        <Alert className={classes.alert} severity="info">
+                          {notification.content}
+                        </Alert>
+                      )}
+                    </MenuItem>
+                  ))}
+                </Menu>
                 <Button
                   className={classes.buttonStandard}
                   component={RouterLink}
@@ -220,10 +378,6 @@ export default function NavBar(props) {
                   color={homeClicked ? "primary" : "secondary"}
                 >
                   <HomeIcon />
-                  {/* Home */}
-                  {/* {isSmallScreen ? <HomeIcon /> : "Home"} */}
-                  {/* {isSmallScreen && <HomeIcon />} */}
-                  {/* {isDesktopOrLaptop && "Home"} */}
                 </Button>
                 <Button
                   className={classes.buttonStandard}
@@ -235,10 +389,6 @@ export default function NavBar(props) {
                   endIcon={<ArrowDropDown />}
                 >
                   <SwapHorizIcon />
-                  {/* {isSmallScreen ? <SwapHorizIcon /> : "Swap"} */}
-
-                  {/* {isSmallScreen && <SwapHorizIcon />}
-                  {isDesktopOrLaptop && "Swap"} */}
                 </Button>
                 <Menu
                   id="simple-menu"
@@ -253,7 +403,7 @@ export default function NavBar(props) {
                   <MenuItem
                     component={RouterLink}
                     to="/marketplace"
-                    className={classes.menu}
+                    className={classes.menuItem}
                     onClose={handleSwapClosed}
                   >
                     <ListItemIcon>
@@ -264,7 +414,7 @@ export default function NavBar(props) {
                   <MenuItem
                     component={RouterLink}
                     to="/create"
-                    className={classes.menu}
+                    className={classes.menuItem}
                   >
                     <ListItemIcon>
                       <AddBox />
@@ -274,7 +424,7 @@ export default function NavBar(props) {
                   <MenuItem
                     component={RouterLink}
                     to="/yourSwap"
-                    className={classes.menu}
+                    className={classes.menuItem}
                   >
                     <ListItemIcon>
                       <LocalOffer />
@@ -292,9 +442,6 @@ export default function NavBar(props) {
                   endIcon={<ArrowDropDown />}
                 >
                   <PersonIcon />
-                  {/* {isSmallScreen ? <PersonIcon /> : "Profile"} */}
-                  {/* {isSmallScreen && <PersonIcon />}
-                  {isDesktopOrLaptop && "Profile"} */}
                 </Button>
                 <Menu
                   id="simple-menu"
@@ -309,7 +456,7 @@ export default function NavBar(props) {
                   <MenuItem
                     component={RouterLink}
                     to="/myAccount"
-                    className={classes.menu}
+                    className={classes.menuItem}
                     onClick={logOut}
                   >
                     <ListItemIcon>
@@ -326,3 +473,17 @@ export default function NavBar(props) {
     </ThemeProvider>
   );
 }
+
+const mapStateToProps = (state) => {
+  return {
+    createSwap: state.swap.createSuccess,
+    deleteSwap: state.swap.deleteSuccess,
+    updateSwap: state.swap.updateSuccess,
+    createOffer: state.offer.createSuccess,
+    deleteOffer: state.offer.deleteSuccess,
+    withdrawOffer: state.offer.withdrawSuccess,
+    updateOffer: state.offer.updateSuccess,
+    loggedIn: state.auth.loginSuccess,
+  };
+};
+export default connect(mapStateToProps)(NavBar);
