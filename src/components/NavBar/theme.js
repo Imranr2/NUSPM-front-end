@@ -12,16 +12,28 @@ const theme = createMuiTheme({
 });
 
 const useStyles = makeStyles((theme) => ({
-  container: {
+  appbar: {
+    width: "100vw",
     display: "flex",
-    flexGrow: 6,
+    flexWrap: "wrap",
   },
+  appbarSmall: {
+    width: "100vw",
+    display: "flex",
+    flexWrap: "wrap",
+    alignItems: "center",
+    boxShadow: "0px 5px 10px 1px #d9d9d9",
+  },
+  alert: {
+    width: "100%",
+  },
+
   button: {
     marginTop: "24px",
     marginBottom: "16px",
     variant: "outlined",
     flexGrow: 1,
-    maxWidth: "150px",
+    // maxWidth: "150px",
     borderRadius: 4,
     fontSize: "20px",
     "&:hover": {
@@ -40,6 +52,13 @@ const useStyles = makeStyles((theme) => ({
       color: "#0D169F",
     },
   },
+  container: {
+    display: "flex",
+    flexGrow: 70,
+  },
+  icon: {
+    marginRight: 10,
+  },
   menu: {
     // maxWidth: 200,
   },
@@ -49,21 +68,6 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: "#e1e2fc",
       color: "#0D169F",
     },
-  },
-  appbar: {
-    width: "100vw",
-    display: "flex",
-    flexWrap: "wrap",
-  },
-  appbarSmall: {
-    width: "100vw",
-    display: "flex",
-    flexWrap: "wrap",
-    alignItems: "center",
-    boxShadow: "0px 5px 10px 1px #d9d9d9",
-  },
-  alert: {
-    width: "100%",
   },
 }));
 

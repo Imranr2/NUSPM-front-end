@@ -66,6 +66,7 @@ function NavBar({
     if (!swapClicked) {
       setHomeClicked(false);
       setProfileClicked(false);
+      setNotifClicked(false);
     }
     setSwapClicked(!swapClicked);
     setAnchorEl1(event.currentTarget);
@@ -75,6 +76,7 @@ function NavBar({
     if (!profileClicked) {
       setHomeClicked(false);
       setSwapClicked(false);
+      setNotifClicked(false);
     }
     setProfileClicked(!profileClicked);
     setAnchorEl2(event.currentTarget);
@@ -85,6 +87,7 @@ function NavBar({
     setHomeClicked(arr[0]);
     setSwapClicked(arr[1]);
     setProfileClicked(arr[2]);
+    setNotifClicked(false);
   };
 
   const handleProfileClosed = () => {
@@ -92,9 +95,15 @@ function NavBar({
     setHomeClicked(arr[0]);
     setSwapClicked(arr[1]);
     setProfileClicked(arr[2]);
+    setNotifClicked(false);
   };
 
   const handleNotifClicked = (event) => {
+    if (!notifClicked) {
+      setHomeClicked(false);
+      setSwapClicked(false);
+      setProfileClicked(false);
+    }
     markNotificationAsRead();
     setNotifClicked(!notifClicked);
     setAnchorEl3(event.currentTarget);
@@ -102,6 +111,9 @@ function NavBar({
 
   const handleNotifClosed = (event) => {
     setAnchorEl3(null);
+    setHomeClicked(arr[0]);
+    setSwapClicked(arr[1]);
+    setProfileClicked(arr[2]);
     setNotifClicked(false);
   };
 
@@ -161,8 +173,10 @@ function NavBar({
                   aria-haspopup="true"
                   variant="text"
                   onClick={handleNotifClicked}
+                  color={notifClicked ? "primary" : "secondary"}
                 >
                   <Badge
+                    className={classes.icon}
                     badgeContent={
                       notifications.filter(
                         (notification) => notification.read_at === null
@@ -218,7 +232,7 @@ function NavBar({
                   variant="text"
                   color={homeClicked ? "primary" : "secondary"}
                 >
-                  <HomeIcon />
+                  <HomeIcon className={classes.icon} />
                   Home
                 </Button>
                 <Button
@@ -230,7 +244,7 @@ function NavBar({
                   color={swapClicked ? "primary" : "secondary"}
                   endIcon={<ArrowDropDown />}
                 >
-                  <SwapHorizIcon />
+                  <SwapHorizIcon className={classes.icon} />
                   Swap
                 </Button>
                 <Menu
@@ -284,7 +298,7 @@ function NavBar({
                   color={profileClicked ? "primary" : "secondary"}
                   endIcon={<ArrowDropDown />}
                 >
-                  <PersonIcon />
+                  <PersonIcon className={classes.icon} />
                   Profile
                 </Button>
                 <Menu
