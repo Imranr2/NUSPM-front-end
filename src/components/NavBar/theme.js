@@ -40,6 +40,7 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: "#e1e2fc",
       color: "#0D169F",
     },
+    textTransform: "none",
   },
   buttonStandard: {
     variant: "outlined",

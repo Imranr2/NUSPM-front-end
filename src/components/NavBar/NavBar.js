@@ -342,7 +342,9 @@ function NavBar({
                   variant="text"
                   onClick={handleNotifClicked}
                 >
-                  <NotificationsIcon />
+                  <NotificationsIcon
+                    color={notifClicked ? "primary" : "secondary"}
+                  />
                 </Button>
                 <Menu
                   id="simple-menu"
