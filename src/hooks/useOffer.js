@@ -122,8 +122,29 @@ const useOffer = () => {
   const withdrawOffers = (swapId) => {
     dispatch(withdrawOfferRequest());
     authAxios
-      .post(`/api/v1/withdrawOffer`, {
+      .post(`/api/v1/offers/withdrawCurrentUserOffers`, {
         swap_id: swapId,
+      })
+      .then((response) => {
+        dispatch(withdrawOfferSuccess());
+        setTimeout(() => {
+          dispatch(resetOffer());
+        }, 3000);
+      })
+      .catch((error) => {
+        dispatch(withdrawOfferFail(error.response.data));
+        setTimeout(() => {
+          dispatch(resetOffer());
+        }, 3000);
+      });
+  };
+
+  const withdrawOtherUserOffers = (initiatorSwapId, creatorSwapId) => {
+    dispatch(withdrawOfferRequest());
+    authAxios
+      .post(`/api/v1/offers/withdrawOtherUserOffers`, {
+        initiator_swap_id: initiatorSwapId,
+        creator_swap_id: creatorSwapId,
       })
       .then((response) => {
         dispatch(withdrawOfferSuccess());
@@ -141,7 +162,7 @@ const useOffer = () => {
 
   const rejectOffers = (swapId) => {
     authAxios
-      .post("/api/v1/rejectOffers", {
+      .post("/api/v1/offers/rejectOffers", {
         swap_id: swapId,
       })
       .then((response) => {})
@@ -156,6 +177,7 @@ const useOffer = () => {
     deleteOffer,
     updateOffer,
     withdrawOffers,
+    withdrawOtherUserOffers,
     rejectOffers,
   };
 };

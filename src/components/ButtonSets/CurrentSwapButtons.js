@@ -71,7 +71,8 @@ export default function CurrentSwapButtons({ swapDetails }) {
     createNotification(
       `You have edited the swap for ${swapDetails.module_code} ${swapDetails.slot_type} [${swapDetails.current_slot}]`,
       swapDetails.id,
-      "Swap"
+      "Swap",
+      swapDetails.user_id
     );
     rejectOffers(swapDetails.id);
     withdrawOffers(swapDetails.id);

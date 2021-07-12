@@ -15,7 +15,8 @@ export default function PendingOfferButtons({ offerDetails }) {
     createNotification(
       `You have withdrawn your offer to swap ${offerDetails.initiatorSwap.module_code} ${offerDetails.initiatorSwap.slot_type} [${offerDetails.initiatorSwap.current_slot} for ${offerDetails.creatorSwap.module_code} ${offerDetails.initiatorSwap.slot_type} [${offerDetails.creatorSwap.current_slot}]`,
       offerDetails.id,
-      "Offer"
+      "Offer",
+      offerDetails.initiatorUserId
     );
   }
 

@@ -176,7 +176,7 @@ const useSwap = () => {
   const searchSwap = (moduleCode, slotType, currentSlot) => {
     dispatch(searchSwapRequest());
     authAxios
-      .post(`/api/v1/searchSwap`, {
+      .post(`/api/v1/swaps/searchSwap`, {
         module_code: moduleCode,
         slot_type: slotType,
         desired_slots: currentSlot,
