@@ -256,7 +256,7 @@ function Marketplace({
             0 && (
             <>
               <Container className={classes.notFound}>
-                <img src={NoSwaps} width="500" alt="Not-Found" />
+                <img src={NoSwaps} alt="Not-Found" />
               </Container>
             </>
           )}

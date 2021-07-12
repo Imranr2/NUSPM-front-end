@@ -1,4 +1,3 @@
-// import React, { useState, useEffect } from "react";
 import {
   ThemeProvider,
   Container,
@@ -7,14 +6,10 @@ import {
   Link,
   TextField,
   Button,
-  // Typography,
 } from "@material-ui/core";
 import { theme } from "../../Theme";
 import Logo from "../../components/Logo";
-import {
-  Link as RouterLink,
-  // useHistory,
-} from "react-router-dom";
+import { Link as RouterLink } from "react-router-dom";
 import EmailIcon from "@material-ui/icons/Email";
 import LockIcon from "@material-ui/icons/Lock";
 import InputAdornment from "@material-ui/core/InputAdornment";
@@ -66,6 +61,7 @@ function Signup({ loading, registerError, errorMsg, success }) {
                   type="email"
                   id="email"
                   autoComplete="email"
+                  helperText="Please use your NUS email eXXXXXXX@u.nus.edu"
                   onChange={(event) => setEmail(event.target.value)}
                 />
               </Grid>

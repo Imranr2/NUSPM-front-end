@@ -134,11 +134,7 @@ function YourSwap({
               {currentOffer.length === 0 && !viewOfferLoading && (
                 <>
                   <Container className={classes.notFound}>
-                    <img
-                      src={NoCurrentOffers}
-                      alt="No Current Offers"
-                      width="500"
-                    />
+                    <img src={NoCurrentOffers} alt="No Current Offers" />
                   </Container>
                 </>
               )}
@@ -170,11 +166,7 @@ function YourSwap({
               {currentSwap.length === 0 && !viewSwapLoading && (
                 <>
                   <Container className={classes.notFound}>
-                    <img
-                      src={NoCurrentSwaps}
-                      alt="No Current Swaps"
-                      width="500"
-                    />
+                    <img src={NoCurrentSwaps} alt="No Current Swaps" />
                   </Container>
                 </>
               )}
@@ -202,11 +194,7 @@ function YourSwap({
               {pendingOffer.length === 0 && !viewOfferLoading && (
                 <>
                   <Container className={classes.notFound}>
-                    <img
-                      src={NoPendingOffers}
-                      width="500"
-                      alt="No Pending Offers"
-                    />
+                    <img src={NoPendingOffers} alt="No Pending Offers" />
                   </Container>
                 </>
               )}
@@ -238,11 +226,7 @@ function YourSwap({
               {completedSwap.length === 0 && !viewSwapLoading && (
                 <>
                   <Container className={classes.notFound}>
-                    <img
-                      src={NoCompletedSwaps}
-                      alt="No Completed Swaps"
-                      width="500"
-                    />
+                    <img src={NoCompletedSwaps} alt="No Completed Swaps" />
                   </Container>
                 </>
               )}
@@ -270,11 +254,7 @@ function YourSwap({
               {rejectedOffer.length === 0 && !viewOfferLoading && (
                 <>
                   <Container className={classes.notFound}>
-                    <img
-                      src={NoRejectedOffers}
-                      alt="No Rejected Offers"
-                      width="500"
-                    />
+                    <img src={NoRejectedOffers} alt="No Rejected Offers" />
                   </Container>
                 </>
               )}

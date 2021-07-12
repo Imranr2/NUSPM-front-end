@@ -33,11 +33,9 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: "16px",
     variant: "outlined",
     flexGrow: 1,
-    // maxWidth: "150px",
     borderRadius: 4,
     fontSize: "20px",
     "&:hover": {
-      backgroundColor: "#e1e2fc",
       color: "#0D169F",
     },
     textTransform: "none",
@@ -49,7 +47,6 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: 4,
     fontSize: "20px",
     "&:hover": {
-      backgroundColor: "#",
       color: "#0D169F",
     },
   },

@@ -7,7 +7,7 @@ import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
 function Landing({ awake }) {
   const { pingHeroku } = useAuth();
   useEffect(() => pingHeroku(), []);
-  return <>{awake ? <Login /> : <LoadingSpinner />}</>;
+  return <>{awake ? <LoadingSpinner /> : <Login />}</>;
 }
 
 const mapStateToProps = (state) => {

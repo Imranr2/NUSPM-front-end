@@ -51,6 +51,8 @@ const useStyles = makeStyles((theme) => ({
   },
   notFound: {
     marginTop: "10vh",
+    width: "auto",
+    height: "auto",
   },
 }));
 

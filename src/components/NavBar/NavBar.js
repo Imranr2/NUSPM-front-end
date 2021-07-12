@@ -8,12 +8,10 @@ import {
   ThemeProvider,
   ListItemIcon,
   ListItemText,
-  Container,
-  Typography,
   Badge,
+  ButtonBase,
 } from "@material-ui/core";
 import { theme, useStyles } from "./theme";
-// import Logo from "../../assets/nuspmlogo.svg";
 import Logo from "../Logo";
 import {
   Storefront,
@@ -144,10 +142,6 @@ function NavBar({
     updateOffer,
   ]);
 
-  // useEffect(() => {
-  //   getAllNotifications();
-  // }, []);
-
   const success = ["accept"];
   const info = ["create", "sent", "receive", "edit"];
   const error = ["reject", "delete", "withdraw"];
@@ -163,10 +157,22 @@ function NavBar({
         >
           <Toolbar>
             <div className={classes.container}>
-              <Logo width="150" />
+              <ButtonBase disableRipple component={RouterLink} to="/home">
+                <Logo width="150" />
+              </ButtonBase>
             </div>
             {!isSmallScreen && (
               <>
+                <Button
+                  className={classes.button}
+                  component={RouterLink}
+                  to="/home"
+                  variant="text"
+                  color={homeClicked ? "primary" : "secondary"}
+                >
+                  <HomeIcon className={classes.icon} />
+                  Home
+                </Button>
                 <Button
                   className={classes.button}
                   aria-controls="simple-menu"
@@ -186,7 +192,7 @@ function NavBar({
                   >
                     <NotificationsIcon />
                   </Badge>
-                  Notification
+                  Notifications
                 </Button>
                 <Menu
                   id="simple-menu"
@@ -199,6 +205,11 @@ function NavBar({
                   onClose={handleNotifClosed}
                   className={classes.menu}
                 >
+                  {notifications.length === 0 && (
+                    <Alert className={classes.alert} severity="info">
+                      You have no notifications
+                    </Alert>
+                  )}
                   {notifications.map((notification) => (
                     <MenuItem
                       disableRipple
@@ -229,16 +240,6 @@ function NavBar({
                     </MenuItem>
                   ))}
                 </Menu>
-                <Button
-                  className={classes.button}
-                  component={RouterLink}
-                  to="/home"
-                  variant="text"
-                  color={homeClicked ? "primary" : "secondary"}
-                >
-                  <HomeIcon className={classes.icon} />
-                  Home
-                </Button>
                 <Button
                   className={classes.button}
                   aria-controls="simple-menu"
@@ -340,15 +341,23 @@ function NavBar({
             >
               <Toolbar>
                 <Button
-                  className={classes.button}
+                  className={classes.buttonStandard}
+                  component={RouterLink}
+                  to="/home"
+                  variant="text"
+                  color={homeClicked ? "primary" : "secondary"}
+                >
+                  <HomeIcon />
+                </Button>
+                <Button
+                  className={classes.buttonStandard}
                   aria-controls="simple-menu"
                   aria-haspopup="true"
                   variant="text"
                   onClick={handleNotifClicked}
+                  color={notifClicked ? "primary" : "secondary"}
                 >
-                  <NotificationsIcon
-                    color={notifClicked ? "primary" : "secondary"}
-                  />
+                  <NotificationsIcon />
                 </Button>
                 <Menu
                   id="simple-menu"
@@ -390,15 +399,6 @@ function NavBar({
                     </MenuItem>
                   ))}
                 </Menu>
-                <Button
-                  className={classes.buttonStandard}
-                  component={RouterLink}
-                  to="/home"
-                  variant="text"
-                  color={homeClicked ? "primary" : "secondary"}
-                >
-                  <HomeIcon />
-                </Button>
                 <Button
                   className={classes.buttonStandard}
                   aria-controls="simple-menu"

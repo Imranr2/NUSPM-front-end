@@ -18,6 +18,7 @@ export default function CurrentOfferButtons({
   function handleAccept() {
     updateOffer(offerDetails.id, true, false);
     withdrawOffers(offerDetails.creatorSwapId);
+    withdrawOffers(offerDetails.initiatorSwapId);
     updateSwap(
       initiatorSwap.id,
       initiatorSwap.module_code,
