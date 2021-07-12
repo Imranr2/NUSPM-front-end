@@ -65,10 +65,11 @@ const useStyles = makeStyles((theme) => ({
   },
   menuItem: {
     // maxWidth: 200,
-    "&:hover": {
-      backgroundColor: "#e1e2fc",
-      color: "#0D169F",
-    },
+    // "&:hover": {
+    //   backgroundColor: "#e1e2fc",
+    //   color: "#0D169F",
+    // },
+    whiteSpace: "normal",
   },
 }));
 

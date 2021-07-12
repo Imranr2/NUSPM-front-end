@@ -200,7 +200,11 @@ function NavBar({
                   className={classes.menu}
                 >
                   {notifications.map((notification) => (
-                    <MenuItem disableRipple onClose={handleNotifClosed}>
+                    <MenuItem
+                      disableRipple
+                      onClose={handleNotifClosed}
+                      className={classes.menuItem}
+                    >
                       {error.some((element) =>
                         notification.content.includes(element)
                       ) && (
