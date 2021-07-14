@@ -1,42 +1,20 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1920" height="635" viewBox="0 0 1920 635">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1960" height="635" viewBox="0 0 1960 635">
   <defs>
-    <filter id="NUS" x="-19" y="-11" width="1113" height="668" filterUnits="userSpaceOnUse">
+    <filter id="NUSPM" x="-2" y="14" width="1972" height="627" filterUnits="userSpaceOnUse">
       <feOffset dx="3" dy="10" input="SourceAlpha"/>
       <feGaussianBlur stdDeviation="5" result="blur"/>
       <feFlood flood-opacity="0.349"/>
       <feComposite operator="in" in2="blur"/>
       <feComposite in="SourceGraphic"/>
     </filter>
-    <filter id="P" x="1106" y="-11" width="331" height="666" filterUnits="userSpaceOnUse">
-      <feOffset dx="3" dy="10" input="SourceAlpha"/>
-      <feGaussianBlur stdDeviation="5" result="blur-2"/>
-      <feFlood flood-opacity="0.349"/>
-      <feComposite operator="in" in2="blur-2"/>
-      <feComposite in="SourceGraphic"/>
-    </filter>
-    <filter id="M" x="1446" y="-11" width="498" height="675" filterUnits="userSpaceOnUse">
-      <feOffset dx="3" dy="10" input="SourceAlpha"/>
-      <feGaussianBlur stdDeviation="5" result="blur-3"/>
-      <feFlood flood-opacity="0.349"/>
-      <feComposite operator="in" in2="blur-3"/>
-      <feComposite in="SourceGraphic"/>
-    </filter>
     <clipPath id="clip-Custom_Size_1">
-      <rect width="1920" height="635"/>
+      <rect width="1960" height="635"/>
     </clipPath>
   </defs>
   <g id="Custom_Size_1" data-name="Custom Size – 1" clip-path="url(#clip-Custom_Size_1)">
-    <rect width="1920" height="635" fill="rgba(255,255,255,0)"/>
-    <g id="Group_1" data-name="Group 1" transform="translate(-669.35 -251.063)">
-      <g transform="matrix(1, 0, 0, 1, 669.35, 251.06)" filter="url(#NUS)">
-        <text id="NUS-2" data-name="NUS" transform="translate(-1 508)" stroke="#000" stroke-width="6" font-size="471" font-family="SegoeUI-Bold, Segoe UI" font-weight="700" letter-spacing="0.1em"><tspan x="0" y="0">NUS</tspan></text>
-      </g>
-      <g transform="matrix(1, 0, 0, 1, 669.35, 251.06)" filter="url(#P)">
-        <text id="P-2" data-name="P" transform="translate(1124 506)" fill="#0d169f" stroke="#0d169f" stroke-width="6" font-size="469" font-family="SegoeUI-Bold, Segoe UI" font-weight="700" letter-spacing="0.1em"><tspan x="0" y="0">P</tspan></text>
-      </g>
-      <g transform="matrix(1, 0, 0, 1, 669.35, 251.06)" filter="url(#M)">
-        <text id="M-2" data-name="M" transform="translate(1464 514)" fill="#622baa" stroke="#622baa" stroke-width="6" font-size="476" font-family="SegoeUI-Bold, Segoe UI" font-weight="700" letter-spacing="0.1em"><tspan x="0" y="0">M</tspan></text>
-      </g>
+    <rect width="1960" height="635" fill="rgba(255,255,255,0)"/>
+    <g transform="matrix(1, 0, 0, 1, 0, 0)" filter="url(#NUSPM)">
+      <text id="NUSPM-2" data-name="NUSPM" transform="translate(10 495)" fill="#622baa" font-size="500" font-family="SFProDisplay-Semibold, SF Pro Display" font-weight="600" letter-spacing="0.1em"><tspan x="0" y="0" fill="#000">NUS</tspan><tspan y="0" fill="#0d169f">P</tspan><tspan y="0" fill="#622baa">M</tspan></text>
     </g>
   </g>
 </svg>
