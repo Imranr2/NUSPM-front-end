@@ -22,8 +22,9 @@ import authAxios from "../../helpers/authAxios";
 import useOffer from "../../hooks/useOffer";
 import CurrentOfferButtons from "../ButtonSets/CurrentOfferButtons";
 import PendingOfferButtons from "../ButtonSets/PendingOfferButtons";
+import { connect } from "react-redux";
 
-export default function Offer({ key, card, tab }) {
+function Offer({ key, card, tab, userId }) {
   const classes = useStyles();
   const [offerOpen, setOfferOpen] = useState(false);
 
@@ -66,20 +67,32 @@ export default function Offer({ key, card, tab }) {
                 <br />
                 {card.creatorSwap.day}
                 <br />
-                {card.creatorSwap.venue}
-                <br />
                 {`${card.creatorSwap.startTime} - ${card.creatorSwap.endTime}`}
                 <br />
-                Current Slot: [{card.creatorSwap.current_slot}]
+                {card.creatorSwap.venue}
+                <br />
+                Current Slot: [
+                {card.initiatorUserId === userId
+                  ? card.initiatorSwap.current_slot
+                  : card.creatorSwap.current_slot}
+                ]{/* Current Slot: [{card.creatorSwap.current_slot}] */}
                 <br />
                 {tab === "rejectedOffer" && (
                   <Typography variant="h6">
-                    Rejected Slot [{card.initiatorSwap.current_slot}]
+                    Rejected Slot: [
+                    {card.initiatorUserId === userId
+                      ? card.creatorSwap.current_slot
+                      : card.initiatorSwap.current_slot}
+                    ]
                   </Typography>
                 )}
                 {tab === "currentOffer" && (
                   <Typography variant="h6">
-                    Pending Slot [{card.initiatorSwap.current_slot}]
+                    Pending Slot: [
+                    {card.initiatorUserId === userId
+                      ? card.creatorSwap.current_slot
+                      : card.initiatorSwap.current_slot}
+                    ]
                   </Typography>
                 )}
               </Typography>
@@ -94,13 +107,13 @@ export default function Offer({ key, card, tab }) {
                 <br />
                 {card.initiatorSwap.day}
                 <br />
-                {card.initiatorSwap.venue}
-                <br />
                 {`${card.initiatorSwap.startTime} - ${card.initiatorSwap.endTime}`}
                 <br />
-                Current Slot: [{card.creatorSwap.current_slot}]
+                {card.initiatorSwap.venue}
                 <br />
-                Pending Slot: [{card.initiatorSwap.current_slot}]
+                Current Slot: [{card.initiatorSwap.current_slot}]
+                <br />
+                Pending Slot: [{card.creatorSwap.current_slot}]
               </Typography>
             </CardContent>
           )}
@@ -111,28 +124,66 @@ export default function Offer({ key, card, tab }) {
           onBackdropClick={handleOfferClose}
           aria-labelledby="offer-dialog-title"
         >
-          <DialogTitle id="offer-dialog-title">Confirm Offer</DialogTitle>
+          {tab === "pendingOffer" && (
+            <DialogTitle id="offer-dialog-title">Pending Offer</DialogTitle>
+          )}
+          {tab === "rejectedOffer" && (
+            <DialogTitle id="offer-dialog-title">Rejected Offer</DialogTitle>
+          )}
+          {tab === "currentOffer" && (
+            <DialogTitle id="offer-dialog-title">Confirm Offer</DialogTitle>
+          )}
           <DialogContent>
             <Container className={classes.container}>
               <Container className={classes.cardLabel} disableGutters="true">
                 <Card className={classes.card}>
-                  <Typography
-                    className={classes.typography}
-                    variant="h6"
-                    align="center"
-                  >
-                    {card.initiatorSwap.module_code}
-                    <br />
-                    {card.initiatorSwap.slot_type}
-                    <br />
-                    {card.initiatorSwap.current_slot}
-                    <br />
-                    {card.initiatorSwap.day}
-                    <br />
-                    {card.initiatorSwap.venue}
-                    <br />
-                    {`${card.initiatorSwap.startTime} - ${card.initiatorSwap.endTime}`}
-                  </Typography>
+                  {(tab === "pendingOffer" ||
+                    (tab === "rejectedOffer" &&
+                      card.initiatorUserId === userId)) && (
+                    <Typography
+                      className={classes.typography}
+                      variant="h6"
+                      align="center"
+                    >
+                      {card.initiatorSwap.module_code}
+                      <br />
+                      {card.initiatorSwap.slot_type}
+                      <br />
+                      {card.initiatorSwap.day}
+                      <br />
+                      {`${card.initiatorSwap.startTime} - ${card.initiatorSwap.endTime}`}
+                      <br />
+                      {card.initiatorSwap.venue}
+                      <br />
+                      Have: [{card.initiatorSwap.current_slot}]
+                      <br />
+                      Want: [{card.initiatorSwap.desired_slots.toString()}]
+                    </Typography>
+                  )}
+
+                  {(tab === "currentOffer" ||
+                    (tab === "rejectedOffer" &&
+                      card.creatorUserId === userId)) && (
+                    <Typography
+                      className={classes.typography}
+                      variant="h6"
+                      align="center"
+                    >
+                      {card.creatorSwap.module_code}
+                      <br />
+                      {card.creatorSwap.slot_type}
+                      <br />
+                      {card.creatorSwap.day}
+                      <br />
+                      {`${card.creatorSwap.startTime} - ${card.creatorSwap.endTime}`}
+                      <br />
+                      {card.creatorSwap.venue}
+                      <br />
+                      Have: [{card.creatorSwap.current_slot}]
+                      <br />
+                      Want: [{card.creatorSwap.desired_slots.toString()}]
+                    </Typography>
+                  )}
                 </Card>
                 <Typography
                   className={classes.typography}
@@ -148,23 +199,53 @@ export default function Offer({ key, card, tab }) {
               <ArrowRightIcon></ArrowRightIcon>
               <Container className={classes.cardLabel} disableGutters="true">
                 <Card className={classes.card}>
-                  <Typography
-                    className={classes.typography}
-                    variant="h6"
-                    align="center"
-                  >
-                    {card.creatorSwap.module_code}
-                    <br />
-                    {card.creatorSwap.slot_type}
-                    <br />
-                    {card.creatorSwap.current_slot}
-                    <br />
-                    {card.creatorSwap.day}
-                    <br />
-                    {card.creatorSwap.venue}
-                    <br />
-                    {`${card.creatorSwap.startTime} - ${card.creatorSwap.endTime}`}
-                  </Typography>
+                  {(tab === "pendingOffer" ||
+                    (tab === "rejectedOffer" &&
+                      card.initiatorUserId === userId)) && (
+                    <Typography
+                      className={classes.typography}
+                      variant="h6"
+                      align="center"
+                    >
+                      {card.creatorSwap.module_code}
+                      <br />
+                      {card.creatorSwap.slot_type}
+                      <br />
+                      {card.creatorSwap.day}
+                      <br />
+                      {`${card.creatorSwap.startTime} - ${card.creatorSwap.endTime}`}
+                      <br />
+                      {card.creatorSwap.venue}
+                      <br />
+                      Have: [{card.creatorSwap.current_slot}]
+                      <br />
+                      Want: [{card.creatorSwap.desired_slots.toString()}]
+                    </Typography>
+                  )}
+
+                  {(tab === "currentOffer" ||
+                    (tab === "rejectedOffer" &&
+                      card.creatorUserId === userId)) && (
+                    <Typography
+                      className={classes.typography}
+                      variant="h6"
+                      align="center"
+                    >
+                      {card.initiatorSwap.module_code}
+                      <br />
+                      {card.initiatorSwap.slot_type}
+                      <br />
+                      {card.initiatorSwap.day}
+                      <br />
+                      {`${card.initiatorSwap.startTime} - ${card.initiatorSwap.endTime}`}
+                      <br />
+                      {card.initiatorSwap.venue}
+                      <br />
+                      Have: [{card.initiatorSwap.current_slot}]
+                      <br />
+                      Want: [{card.initiatorSwap.desired_slots.toString()}]
+                    </Typography>
+                  )}
                 </Card>
                 {tab === "pendingOffer" && (
                   <Typography
@@ -205,3 +286,11 @@ export default function Offer({ key, card, tab }) {
     </Grid>
   );
 }
+
+const mapStateToProps = (state) => {
+  return {
+    userId: state.auth.user.id,
+  };
+};
+
+export default connect(mapStateToProps)(Offer);

@@ -248,9 +248,6 @@ function Marketplace({
               slotDets={slotDets}
             />
           )}
-        {/* {searchSuccess &&
-            potentialSwaps.filter((swap) => swap.user_id !== user.id).length ===
-              0 && <Alert severity="warning">No swap found.</Alert>} */}
         {searchSuccess &&
           potentialSwaps.filter((swap) => swap.user_id !== user.id).length ===
             0 && (

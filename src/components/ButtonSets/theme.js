@@ -13,4 +13,11 @@ const DeleteButton = withStyles({
   },
 })(Button);
 
-export { DeleteButton };
+const useStyles = makeStyles((theme) => ({
+  loader: {
+    display: "flex",
+    justifyContent: "center",
+  },
+}));
+
+export { useStyles, DeleteButton };

@@ -2,6 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import {
   Button,
+  Container,
   TextField,
   Dialog,
   DialogActions,
@@ -12,13 +13,22 @@ import {
 } from "@material-ui/core";
 import { Autocomplete } from "@material-ui/lab";
 import { theme } from "../../Theme";
-import { DeleteButton } from "./theme";
+import { useStyles, DeleteButton } from "./theme";
 import useSwap from "../../hooks/useSwap";
 import useOffer from "../../hooks/useOffer";
 import { withdrawOfferFail } from "../../redux/actions/offerActions";
 import useNotification from "../../hooks/useNotification";
+import { connect } from "react-redux";
+import { PulseLoader } from "react-spinners";
+import Alert from "@material-ui/lab/Alert";
 
-export default function CurrentSwapButtons({ swapDetails }) {
+function CurrentSwapButtons({
+  swapDetails,
+  editLoading,
+  editSuccess,
+  editFail,
+}) {
+  const classes = useStyles();
   const [editOpen, setEditOpen] = useState(false);
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [moduleCode, setModuleCode] = useState(swapDetails.module_code);
@@ -68,12 +78,6 @@ export default function CurrentSwapButtons({ swapDetails }) {
   // Edit dialog needs a useeffect to fetch venue starttime endtime and day just like createswap
   const handleEdit = (e) => {
     e.preventDefault();
-    createNotification(
-      `You have edited the swap for ${swapDetails.module_code} ${swapDetails.slot_type} [${swapDetails.current_slot}]`,
-      swapDetails.id,
-      "Swap",
-      swapDetails.user_id
-    );
     rejectOffers(swapDetails.id);
     withdrawOffers(swapDetails.id);
     updateSwap(
@@ -85,8 +89,7 @@ export default function CurrentSwapButtons({ swapDetails }) {
       swapDetails.isCompleted,
       swapDetails.isReserved
     );
-
-    setEditOpen(false);
+    // setEditOpen(false);
   };
 
   const handleDelete = (e) => {
@@ -95,12 +98,19 @@ export default function CurrentSwapButtons({ swapDetails }) {
     setDeleteOpen(false);
   };
 
+  const closeDialog = () => setEditOpen(false);
+
   useEffect(() => getAllModules(), []);
   useEffect(() => getModuleDetails(moduleCode), [moduleCode]);
   useEffect(
     () => getSlotDetails(currentSlot, slotType),
     [currentSlot, desiredSlots, slotType]
   );
+  useEffect(() => {
+    if (editSuccess) {
+      setEditOpen(false);
+    }
+  }, [editSuccess]);
 
   const slotTypeOptions = Array.from(
     new Set(
@@ -154,6 +164,7 @@ export default function CurrentSwapButtons({ swapDetails }) {
               setCurrentSlot([]);
               setDesiredSlots([]);
             }}
+            disabled={editLoading}
             renderInput={(params) => (
               <TextField
                 {...params}
@@ -173,6 +184,7 @@ export default function CurrentSwapButtons({ swapDetails }) {
               setCurrentSlot([]);
               setDesiredSlots([]);
             }}
+            disabled={editLoading}
             renderInput={(params) => (
               <TextField
                 {...params}
@@ -190,6 +202,7 @@ export default function CurrentSwapButtons({ swapDetails }) {
             onChange={(event, value) => {
               setCurrentSlot(value);
             }}
+            disabled={editLoading}
             renderInput={(params) => (
               <TextField
                 {...params}
@@ -210,6 +223,7 @@ export default function CurrentSwapButtons({ swapDetails }) {
             onChange={(event, value) => {
               setDesiredSlots(value);
             }}
+            disabled={editLoading}
             renderInput={(params) => (
               <TextField
                 {...params}
@@ -226,6 +240,17 @@ export default function CurrentSwapButtons({ swapDetails }) {
             )}
             multiple
           />
+          {editLoading && (
+            <Container className={classes.loader}>
+              <PulseLoader color="#0D169F" />
+            </Container>
+          )}
+          {editFail && (
+            <Alert severity="error">
+              Check if you already have a swap with the same module code and
+              type
+            </Alert>
+          )}
         </DialogContent>
         <DialogActions>
           <Button onClick={handleEditClose} color="primary">
@@ -260,3 +285,13 @@ export default function CurrentSwapButtons({ swapDetails }) {
     </ThemeProvider>
   );
 }
+
+const mapStateToProps = (state) => {
+  return {
+    editLoading: state.swap.updateLoading,
+    editSuccess: state.swap.updateSuccess,
+    editFail: state.swap.updateError,
+  };
+};
+
+export default connect(mapStateToProps)(CurrentSwapButtons);

@@ -66,9 +66,9 @@ function Swap({ key, card, buttonset, offer }) {
                 <br />
                 {card.day}
                 <br />
-                {card.venue}
-                <br />
                 {`${card.startTime} - ${card.endTime}`}
+                <br />
+                {card.venue}
                 <br />
                 Have: [{card.current_slot}]
                 <br />
@@ -109,9 +109,9 @@ function Swap({ key, card, buttonset, offer }) {
                 <br />
                 {card.day}
                 <br />
-                {card.venue}
-                <br />
                 {`${card.startTime} - ${card.endTime}`}
+                <br />
+                {card.venue}
                 <br />
                 New: [{newSlot}]
                 <br />

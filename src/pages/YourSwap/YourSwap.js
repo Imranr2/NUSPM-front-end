@@ -154,7 +154,7 @@ function YourSwap({
                   Current Swaps
                 </Typography>
               )}
-              <Alert severity="info" className={classes.alert}>
+              <Alert severity="warning" className={classes.alert}>
                 Caution: Editing or deleting your swap request will withdraw and
                 reject all offers pertaining to the request
               </Alert>
@@ -217,6 +217,10 @@ function YourSwap({
               )}
               <Alert severity="info" className={classes.alert}>
                 Contact the other party with the email displayed in the card
+              </Alert>
+              <Alert severity="warning" className={classes.alert}>
+                Caution: Freeing your swap will remove the offer tagged to the
+                swap
               </Alert>
               <SwapList
                 arr={completedSwap}
