@@ -111,9 +111,9 @@ function PotentialSwap(props) {
               <br />
               {props.creatorSwap.day}
               <br />
-              {props.creatorSwap.venue}
-              <br />
               {`${props.creatorSwap.startTime} - ${props.creatorSwap.endTime}`}
+              <br />
+              {props.creatorSwap.venue}
               <br />
               Have: [{props.creatorSwap.current_slot}]
               <br />
@@ -164,9 +164,9 @@ function PotentialSwap(props) {
                             <br />
                             {filteredUserSwaps[0].day}
                             <br />
-                            {filteredUserSwaps[0].venue}
-                            <br />
                             {`${filteredUserSwaps[0].startTime} - ${filteredUserSwaps[0].endTime}`}
+                            <br />
+                            {filteredUserSwaps[0].venue}
                             <br />
                             Have: [{filteredUserSwaps[0].current_slot}]
                             <br />
@@ -248,11 +248,13 @@ function PotentialSwap(props) {
                         <br />
                         {initiatorSwap.day}
                         <br />
-                        {initiatorSwap.venue}
-                        <br />
                         {`${initiatorSwap.startTime} - ${initiatorSwap.endTime}`}
                         <br />
+                        {initiatorSwap.venue}
+                        <br />
                         Have: [{initiatorSwap.current_slot}]
+                        <br />
+                        Want: [{initiatorSwap.desired_slots.toString()}]
                       </Typography>
                     </Card>
                     <Typography
@@ -276,11 +278,13 @@ function PotentialSwap(props) {
                         <br />
                         {props.creatorSwap.day}
                         <br />
-                        {props.creatorSwap.venue}
-                        <br />
                         {`${props.creatorSwap.startTime} - ${props.creatorSwap.endTime}`}
                         <br />
+                        {props.creatorSwap.venue}
+                        <br />
                         Have: [{props.creatorSwap.current_slot}]
+                        <br />
+                        Want: [{props.creatorSwap.desired_slots.toString()}]
                       </Typography>
                     </Card>
                     <Typography
