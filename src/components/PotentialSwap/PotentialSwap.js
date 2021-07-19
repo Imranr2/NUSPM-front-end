@@ -21,6 +21,7 @@ import useOffer from "../../hooks/useOffer";
 import ArrowRightIcon from "@material-ui/icons/ArrowRight";
 import { connect } from "react-redux";
 import { useStyles } from "./theme";
+import { PulseLoader } from "react-spinners";
 
 function PotentialSwap(props) {
   const classes = useStyles();
@@ -79,7 +80,7 @@ function PotentialSwap(props) {
       false,
       false
     );
-    setCurrentDialog(2);
+    // setCurrentDialog(2);
   };
 
   const resetCreateRedux = () => {
@@ -99,6 +100,11 @@ function PotentialSwap(props) {
   };
 
   useEffect(() => setSlotDets(props.slotDets));
+  useEffect(() => {
+    if (props.createSuccess) {
+      setCurrentDialog(2);
+    }
+  }, [props.createSuccess]);
   return (
     <Grid key={props} item xs={12} sm={6} md={4}>
       <Card>
@@ -225,6 +231,11 @@ function PotentialSwap(props) {
                     disabled={true}
                   ></TextField>
                 </Container>
+                {props.createLoading && (
+                  <Container className={classes.loader}>
+                    <PulseLoader color="#0D169F" />
+                  </Container>
+                )}
                 <br />
                 <Alert severity="info">
                   Clicking confirm will create a swap for
@@ -254,7 +265,7 @@ function PotentialSwap(props) {
                         <br />
                         Have: [{initiatorSwap.current_slot}]
                         <br />
-                        Want: [{initiatorSwap.desired_slots.toString()}]
+                        Want: [{initiatorSwap.desired_slots}]
                       </Typography>
                     </Card>
                     <Typography
@@ -361,6 +372,8 @@ function PotentialSwap(props) {
 const mapStateToProps = (state) => {
   return {
     loading: state.swap.viewLoading,
+    createSuccess: state.swap.createSuccess,
+    createLoading: state.swap.createLoading,
   };
 };
 

@@ -1,4 +1,4 @@
-import NUSPMLogo from "../../assets/nuspmlogo.svg";
+import NUSPMLogo from "../../assets/nuspm.svg";
 import { useMediaQuery } from "react-responsive";
 
 function Logo(props) {
