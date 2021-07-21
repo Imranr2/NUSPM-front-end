@@ -3,10 +3,6 @@ import { Grid, Container } from "@material-ui/core";
 import { useStyles } from "./theme";
 
 function OfferList(props) {
-  /* 
-  have array of offer details
-  map give each offer deatils into Offer component
- */
   const classes = useStyles();
   return (
     <Container>

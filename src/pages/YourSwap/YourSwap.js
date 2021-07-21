@@ -1,3 +1,4 @@
+/* eslint-disable */
 import NavBar from "../../components/NavBar";
 import {
   ThemeProvider,
@@ -40,7 +41,6 @@ function YourSwap({
   userId,
 }) {
   const [value, setValue] = useState(0);
-  const [refresh, setRefresh] = useState(true);
 
   const classes = useStyles();
 
@@ -83,7 +83,7 @@ function YourSwap({
       <Container
         disableGutters={true}
         className={classes.main}
-        maxWidth="false"
+        maxWidth={false}
       >
         <NavBar arr={[false, true, false]} />
         <Container className={classes.content}>
@@ -94,7 +94,6 @@ function YourSwap({
             className={classes.tabs}
             onChange={handleChange}
             centered={true}
-            variant="fullwidth"
           >
             <Tab
               label={isSmallScreen ? null : "Current Offers"}
@@ -183,7 +182,7 @@ function YourSwap({
           {value === 2 && (
             <>
               {isSmallScreen && (
-                <Typography color="primary" variant="h5" color="primary">
+                <Typography color="primary" variant="h5">
                   Pending Offers
                 </Typography>
               )}

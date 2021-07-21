@@ -1,4 +1,4 @@
-import { makeStyles, withStyles } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   actionArea: {
@@ -15,11 +15,9 @@ const useStyles = makeStyles((theme) => ({
     height: "100%",
     display: "flex",
     flexDirection: "column",
-    // width: "15vw",
     minWidth: 200,
   },
   typography: {
-    // width: "15vw",
     minWidth: 200,
   },
   field: {

@@ -1,18 +1,7 @@
+/* eslint-disable */
 import NavBar from "../../components/NavBar";
 import ChangePasswordForm from "../../components/ChangePasswordForm/ChangePasswordForm";
-import {
-  ThemeProvider,
-  Container,
-  Grid,
-  Button,
-  TextField,
-  Link,
-  Tabs,
-  Tab,
-  Typography,
-  Box,
-  Paper,
-} from "@material-ui/core";
+import { ThemeProvider, Tabs, Tab, Paper } from "@material-ui/core";
 import { theme } from "../../Theme";
 import { useState } from "react";
 import { useStyles } from "./theme";

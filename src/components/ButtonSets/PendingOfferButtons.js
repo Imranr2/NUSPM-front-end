@@ -1,8 +1,6 @@
 import React from "react";
-import { useState, useEffect } from "react";
 import { Button, ThemeProvider } from "@material-ui/core";
 import { theme } from "../../Theme";
-import axios from "axios";
 import useOffer from "../../hooks/useOffer";
 import useNotification from "../../hooks/useNotification";
 

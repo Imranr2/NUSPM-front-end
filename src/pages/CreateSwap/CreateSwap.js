@@ -27,14 +27,14 @@ function CreateSwap({ success, error, errorMsg, loading }) {
     getModuleDetails,
     getSlotDetails,
     createSwap,
-    slotDets,
   } = useSwap();
 
-  const [moduleCode, setModuleCode] = useState([]);
-  const [slotType, setSlotType] = useState([]);
-  const [currentSlot, setCurrentSlot] = useState([]);
+  const [moduleCode, setModuleCode] = useState(null);
+  const [slotType, setSlotType] = useState(null);
+  const [currentSlot, setCurrentSlot] = useState(null);
   const [desiredSlots, setDesiredSlots] = useState([]);
 
+  /* eslint-disable */
   useEffect(() => getAllModules(), []);
 
   useEffect(
@@ -42,14 +42,18 @@ function CreateSwap({ success, error, errorMsg, loading }) {
     [currentSlot, slotType, desiredSlots]
   );
 
-  useEffect(() => getModuleDetails(moduleCode), [moduleCode]);
+  useEffect(() => {
+    if (moduleCode !== null) {
+      getModuleDetails(moduleCode);
+    }
+  }, [moduleCode]);
 
   function handleSubmit(e) {
     e.preventDefault();
     createSwap(moduleCode, slotType, currentSlot, desiredSlots, false);
-    setModuleCode([]);
-    setSlotType([]);
-    setCurrentSlot([]);
+    setModuleCode(null);
+    setSlotType(null);
+    setCurrentSlot(null);
     setDesiredSlots([]);
   }
 
@@ -89,7 +93,7 @@ function CreateSwap({ success, error, errorMsg, loading }) {
       <Container
         disableGutters={true}
         className={classes.main}
-        maxWidth="false"
+        maxWidth={false}
       >
         <NavBar arr={[false, true, false]} />
         <Container className={classes.form} component="main" maxWidth="xs">
@@ -108,8 +112,8 @@ function CreateSwap({ success, error, errorMsg, loading }) {
                     options={moduleList}
                     onChange={(event, value) => {
                       setModuleCode(value);
-                      setSlotType([]);
-                      setCurrentSlot([]);
+                      setSlotType(null);
+                      setCurrentSlot(null);
                       setDesiredSlots([]);
                     }}
                     renderInput={(params) => (
@@ -132,7 +136,7 @@ function CreateSwap({ success, error, errorMsg, loading }) {
                     options={slotTypeOptions}
                     onChange={(event, value) => {
                       setSlotType(value);
-                      setCurrentSlot([]);
+                      setCurrentSlot(null);
                       setDesiredSlots([]);
                     }}
                     renderInput={(params) => (
@@ -207,7 +211,7 @@ function CreateSwap({ success, error, errorMsg, loading }) {
                 fullWidth
                 variant="contained"
                 color="primary"
-                disabled={loading}
+                disabled={slotType === null || currentSlot === null || loading}
               >
                 Create
               </Button>

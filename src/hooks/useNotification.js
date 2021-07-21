@@ -1,6 +1,5 @@
 import { useState } from "react";
 import authAxios from "../helpers/authAxios";
-import { connect } from "react-redux";
 
 const useNotification = () => {
   const [notifications, setNotifications] = useState([]);
@@ -45,12 +44,4 @@ const useNotification = () => {
     notifications,
   };
 };
-
-// const mapStateToProps = (state) => {
-//   return {
-//     userId: state.auth.user.id,
-//   };
-// };
-
-// export default connect(mapStateToProps)(useNotification);
 export default useNotification;

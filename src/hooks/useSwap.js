@@ -20,7 +20,7 @@ import {
   resetSwap,
 } from "../redux/actions/swapActions";
 import axios from "axios";
-import { useDispatch, connect } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useState } from "react";
 import authAxios from "../helpers/authAxios";
 
@@ -34,11 +34,19 @@ const useSwap = () => {
   const [completedSwap, setCompletedSwap] = useState({});
 
   const [initiatorSwap, setInitiatorSwap] = useState({});
-  const [creatorSwap, setCreatorSwap] = useState("");
+
+  let date = new Date();
+  let currentYear = date.getFullYear();
+  let nextYear = currentYear + 1;
+  let month = date.getMonth();
+  const sem1 = [5, 6, 7, 8, 9, 10];
+  const semester = sem1.includes(month) ? 0 : 1;
 
   const getAllModules = () => {
     axios
-      .get("https://api.nusmods.com/v2/2021-2022/moduleList.json")
+      .get(
+        `https://api.nusmods.com/v2/${currentYear}-${nextYear}/moduleList.json`
+      )
       .then((response) => {
         return response.data;
       })
@@ -47,10 +55,11 @@ const useSwap = () => {
   };
 
   const getModuleDetails = (moduleCode) => {
-    // maybe should have date to automatically change parameters
     axios
-      .get(`https://api.nusmods.com/v2/2021-2022/modules/${moduleCode}.json`)
-      .then((response) => response.data.semesterData[0].timetable)
+      .get(
+        `https://api.nusmods.com/v2/${currentYear}-${nextYear}/modules/${moduleCode}.json`
+      )
+      .then((response) => response.data.semesterData[semester].timetable)
       .then((result) => setModDets(result));
   };
 
@@ -108,9 +117,6 @@ const useSwap = () => {
       .then((response) => {
         setUserSwaps(response.data);
         dispatch(viewSwapSuccess());
-        // setTimeout(() => {
-        //   dispatch(resetSwap());
-        // }, 2000);
       })
       .catch((error) => {
         dispatch(viewSwapFail(error.response.data));
@@ -213,7 +219,6 @@ const useSwap = () => {
       });
   };
 
-  // NEW METHOD FOR OFFER
   const showSwap = (swapId) => {
     dispatch(showSwapRequest());
     authAxios

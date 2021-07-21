@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { useState, useEffect } from "react";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -56,9 +57,6 @@ function NavBar({
     useNotification();
 
   const isSmallScreen = useMediaQuery({ query: "(max-width:700px)" });
-  const isDesktopOrLaptop = useMediaQuery({
-    query: "(min-width: 701px)",
-  });
 
   const handleSwapClicked = (event) => {
     if (!swapClicked) {
@@ -203,15 +201,15 @@ function NavBar({
                   keepMounted
                   open={Boolean(anchorEl3)}
                   onClose={handleNotifClosed}
-                  className={classes.menu}
                 >
                   {notifications.length === 0 && (
                     <Alert className={classes.alert} severity="info">
                       You have no notifications
                     </Alert>
                   )}
-                  {notifications.map((notification) => (
+                  {notifications.map((notification, index) => (
                     <MenuItem
+                      key={index}
                       disableRipple
                       onClose={handleNotifClosed}
                       className={classes.menuItem}
@@ -368,10 +366,10 @@ function NavBar({
                   keepMounted
                   open={Boolean(anchorEl3)}
                   onClose={handleNotifClosed}
-                  className={classes.menu}
                 >
-                  {notifications.map((notification) => (
+                  {notifications.map((notification, index) => (
                     <MenuItem
+                      key={index}
                       className={classes.menuItem}
                       onClose={handleNotifClosed}
                     >

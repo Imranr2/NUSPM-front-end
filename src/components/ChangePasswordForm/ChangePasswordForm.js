@@ -1,16 +1,4 @@
-import {
-  ThemeProvider,
-  Container,
-  Grid,
-  Button,
-  TextField,
-  Link,
-  Tabs,
-  Tab,
-  Typography,
-  Box,
-  Paper,
-} from "@material-ui/core";
+import { Container, Grid, Button, TextField } from "@material-ui/core";
 import useAuth from "../../hooks/useAuth";
 import { connect } from "react-redux";
 import { useStyles } from "./theme";
@@ -47,7 +35,6 @@ function ChangePasswordForm({ loading, user, success, error, errorMsg }) {
                 value={oldPassword}
                 variant="outlined"
                 required
-                // fullWidth
                 name="currentPassword"
                 label="Current Password"
                 type="password"
@@ -61,7 +48,6 @@ function ChangePasswordForm({ loading, user, success, error, errorMsg }) {
                 value={password}
                 variant="outlined"
                 required
-                // fullWidth
                 name="newPassword"
                 label="New Password"
                 type="password"
@@ -75,7 +61,6 @@ function ChangePasswordForm({ loading, user, success, error, errorMsg }) {
                 value={passwordConf}
                 variant="outlined"
                 required
-                // fullWidth
                 name="confirmPassword"
                 label="Confirm Password"
                 type="password"

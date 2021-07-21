@@ -12,7 +12,7 @@ import {
   TextField,
   Typography,
 } from "@material-ui/core";
-import { resetSwap, resetCreate } from "../../redux/actions/swapActions";
+import { resetCreate } from "../../redux/actions/swapActions";
 import { useDispatch } from "react-redux";
 import { Alert } from "@material-ui/lab";
 import { useState, useEffect } from "react";
@@ -34,15 +34,8 @@ function PotentialSwap(props) {
       userSwap.slot_type === props.creatorSwap.slot_type
   );
 
-  const {
-    userSwaps,
-    createSwap,
-    deleteSwap,
-    initiatorSwap,
-    slotDets,
-    setInitiatorSwap,
-    setSlotDets,
-  } = useSwap();
+  const { createSwap, initiatorSwap, setInitiatorSwap, setSlotDets } =
+    useSwap();
   const dispatch = useDispatch();
 
   const { createOffer } = useOffer();
@@ -80,7 +73,6 @@ function PotentialSwap(props) {
       false,
       false
     );
-    // setCurrentDialog(2);
   };
 
   const resetCreateRedux = () => {

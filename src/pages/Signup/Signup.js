@@ -1,7 +1,6 @@
 import {
   ThemeProvider,
   Container,
-  CssBaseline,
   Grid,
   Link,
   TextField,

@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useEffect } from "react";
 import useAuth from "../../hooks/useAuth";
 import { connect } from "react-redux";

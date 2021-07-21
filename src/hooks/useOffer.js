@@ -22,10 +22,8 @@ import { useState } from "react";
 
 const useOffer = () => {
   const [userOffer, setUserOffer] = useState([]);
-  const [refresh, setRefresh] = useState(false);
   const dispatch = useDispatch();
 
-  // CHANGED HERE (DELETE COMMENT ONCE SEEN)
   const createOffer = (
     initiatorUserId,
     creatorUserId,
@@ -58,7 +56,6 @@ const useOffer = () => {
       });
   };
 
-  // WILL SHOW ALL OFFERS WHERE INITIATOR ID OR CREATOR ID == LOCALSTORAGE USER (DELETE ONCE SEEN)
   const viewOffers = () => {
     dispatch(viewOfferRequest());
     authAxios
@@ -66,7 +63,6 @@ const useOffer = () => {
       .then((response) => {
         setUserOffer(response.data);
         dispatch(viewOfferSuccess());
-        setRefresh(false);
         setTimeout(() => {
           dispatch(resetOffer());
         }, 3000);
@@ -97,7 +93,6 @@ const useOffer = () => {
       });
   };
 
-  // CHANGED HERE (DELETE COMMENT ONCE SEEN)
   const updateOffer = (offerId, accepted, pending) => {
     dispatch(updateOfferRequest());
     authAxios

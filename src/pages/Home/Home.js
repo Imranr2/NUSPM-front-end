@@ -1,6 +1,6 @@
 import React from "react";
 import NavBar from "../../components/NavBar";
-import { Container, Grid } from "@material-ui/core";
+import { Container } from "@material-ui/core";
 import { useStyles } from "./theme";
 import { ThemeProvider } from "@material-ui/styles";
 import { theme } from "../../Theme";
@@ -14,14 +14,13 @@ export default function Home() {
       <Container
         disableGutters={true}
         className={classes.main}
-        maxWidth="false"
+        maxWidth={false}
       >
         <NavBar arr={[true, false, false]} />
-        {/* <Container className={classes.content}> */}
         <div className="content">
           <div className="player-wrapper">
             <ReactPlayer
-              url="https://youtu.be/iDnB0zWXZp4"
+              url="https://youtu.be/zNGRK7WS0_g"
               className="react-player"
               playing={false}
               width="100%"
@@ -31,8 +30,6 @@ export default function Home() {
           </div>
         </div>
       </Container>
-      {/* </Container> */}
     </ThemeProvider>
   );
-  //call API to move moduleList to global state
 }

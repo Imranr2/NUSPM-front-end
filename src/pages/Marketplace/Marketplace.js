@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React from "react";
 import { useState, useEffect } from "react";
 import NavBar from "../../components/NavBar";
@@ -7,10 +8,7 @@ import {
   Grid,
   Button,
   TextField,
-  Typography,
   Drawer,
-  ClickAwayListener,
-  Backdrop,
 } from "@material-ui/core";
 import { Alert, Autocomplete } from "@material-ui/lab";
 import { theme } from "./theme";
@@ -25,7 +23,6 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import ExpandLessIcon from "@material-ui/icons/ExpandLess";
 import { resetSwap } from "../../redux/actions/swapActions";
 import { useDispatch } from "react-redux";
-// import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 
 function Marketplace({
   createSuccess,
@@ -52,9 +49,9 @@ function Marketplace({
 
   const isSmallScreen = useMediaQuery({ query: "(max-width:900px)" });
 
-  const [moduleCode, setModuleCode] = useState("");
-  const [slotType, setSlotType] = useState("");
-  const [currentSlot, setCurrentSlot] = useState("");
+  const [moduleCode, setModuleCode] = useState(null);
+  const [slotType, setSlotType] = useState(null);
+  const [currentSlot, setCurrentSlot] = useState(null);
   // const [search, setSearch] = useState(false);
   const [drawer, setDrawer] = useState(true);
 
@@ -62,7 +59,11 @@ function Marketplace({
 
   useEffect(() => getAllModules(), []);
 
-  useEffect(() => getModuleDetails(moduleCode), [moduleCode]);
+  useEffect(() => {
+    if (moduleCode !== null) {
+      getModuleDetails(moduleCode);
+    }
+  }, [moduleCode]);
 
   useEffect(
     () => getSlotDetails(currentSlot, slotType),
@@ -129,8 +130,8 @@ function Marketplace({
                 options={moduleList}
                 onChange={(event, value) => {
                   setModuleCode(value);
-                  setSlotType([]);
-                  setCurrentSlot([]);
+                  setSlotType(null);
+                  setCurrentSlot(null);
                 }}
                 renderInput={(params) => (
                   <TextField
@@ -154,7 +155,7 @@ function Marketplace({
                 options={slotTypeOptions}
                 onChange={(event, value) => {
                   setSlotType(value);
-                  setCurrentSlot([]);
+                  setCurrentSlot(null);
                 }}
                 renderInput={(params) => (
                   <TextField
@@ -216,7 +217,7 @@ function Marketplace({
       <Container
         disableGutters={true}
         className={classes.main}
-        maxWidth="false"
+        maxWidth={false}
       >
         <NavBar arr={[false, true, false]} />
         {isSmallScreen && (

@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React from "react";
 import { useState, useEffect } from "react";
 import {
@@ -16,8 +17,6 @@ import { theme } from "../../Theme";
 import { useStyles, DeleteButton } from "./theme";
 import useSwap from "../../hooks/useSwap";
 import useOffer from "../../hooks/useOffer";
-import { withdrawOfferFail } from "../../redux/actions/offerActions";
-import useNotification from "../../hooks/useNotification";
 import { connect } from "react-redux";
 import { PulseLoader } from "react-spinners";
 import Alert from "@material-ui/lab/Alert";
@@ -35,6 +34,7 @@ function CurrentSwapButtons({
   const [slotType, setSlotType] = useState(swapDetails.slot_type);
   const [currentSlot, setCurrentSlot] = useState(swapDetails.current_slot);
   const [desiredSlots, setDesiredSlots] = useState(swapDetails.desired_slots);
+  const [detailsChange, setDetailsChange] = useState(false);
 
   const {
     updateSwap,
@@ -44,12 +44,9 @@ function CurrentSwapButtons({
     modDets,
     getAllModules,
     getModuleDetails,
-    slotDets,
   } = useSwap();
 
   const { rejectOffers, withdrawOffers } = useOffer();
-
-  const { createNotification } = useNotification();
 
   const handleEditClickOpen = () => {
     setModuleCode(swapDetails.module_code);
@@ -65,6 +62,7 @@ function CurrentSwapButtons({
     setSlotType(swapDetails.slot_type);
     setCurrentSlot(swapDetails.current_slot);
     setDesiredSlots(swapDetails.desired_slots);
+    setDetailsChange(false);
   };
 
   const handleDeleteClickOpen = () => {
@@ -75,7 +73,6 @@ function CurrentSwapButtons({
     setDeleteOpen(false);
   };
 
-  // Edit dialog needs a useeffect to fetch venue starttime endtime and day just like createswap
   const handleEdit = (e) => {
     e.preventDefault();
     rejectOffers(swapDetails.id);
@@ -89,7 +86,7 @@ function CurrentSwapButtons({
       swapDetails.isCompleted,
       swapDetails.isReserved
     );
-    // setEditOpen(false);
+    setDetailsChange(false);
   };
 
   const handleDelete = (e) => {
@@ -98,10 +95,13 @@ function CurrentSwapButtons({
     setDeleteOpen(false);
   };
 
-  const closeDialog = () => setEditOpen(false);
-
   useEffect(() => getAllModules(), []);
-  useEffect(() => getModuleDetails(moduleCode), [moduleCode]);
+  useEffect(() => {
+    if (moduleCode !== null) {
+      getModuleDetails(moduleCode);
+    }
+  }, [moduleCode]);
+
   useEffect(
     () => getSlotDetails(currentSlot, slotType),
     [currentSlot, desiredSlots, slotType]
@@ -160,9 +160,10 @@ function CurrentSwapButtons({
             options={moduleList}
             onChange={(event, value) => {
               setModuleCode(value);
-              setSlotType([]);
-              setCurrentSlot([]);
+              setSlotType(null);
+              setCurrentSlot(null);
               setDesiredSlots([]);
+              setDetailsChange(true);
             }}
             disabled={editLoading}
             renderInput={(params) => (
@@ -181,10 +182,13 @@ function CurrentSwapButtons({
             options={slotTypeOptions}
             onChange={(event, value) => {
               setSlotType(value);
-              setCurrentSlot([]);
+              setCurrentSlot(null);
               setDesiredSlots([]);
+              setDetailsChange(true);
             }}
-            disabled={editLoading}
+            disabled={
+              slotTypeOptions.length === 0 || moduleCode === null || editLoading
+            }
             renderInput={(params) => (
               <TextField
                 {...params}
@@ -201,8 +205,14 @@ function CurrentSwapButtons({
             options={slotOptions}
             onChange={(event, value) => {
               setCurrentSlot(value);
+              setDetailsChange(true);
             }}
-            disabled={editLoading}
+            disabled={
+              slotType === null ||
+              moduleCode === null ||
+              slotType.length === 0 ||
+              editLoading
+            }
             renderInput={(params) => (
               <TextField
                 {...params}
@@ -222,8 +232,14 @@ function CurrentSwapButtons({
             options={desiredSlotOptions}
             onChange={(event, value) => {
               setDesiredSlots(value);
+              setDetailsChange(true);
             }}
-            disabled={editLoading}
+            disabled={
+              slotType === null ||
+              moduleCode === null ||
+              slotType.length === 0 ||
+              editLoading
+            }
             renderInput={(params) => (
               <TextField
                 {...params}
@@ -256,7 +272,16 @@ function CurrentSwapButtons({
           <Button onClick={handleEditClose} color="primary">
             Cancel
           </Button>
-          <Button onClick={handleEdit} color="primary">
+          <Button
+            disabled={
+              editLoading ||
+              slotType === null ||
+              currentSlot === null ||
+              !detailsChange
+            }
+            onClick={handleEdit}
+            color="primary"
+          >
             Confirm
           </Button>
         </DialogActions>

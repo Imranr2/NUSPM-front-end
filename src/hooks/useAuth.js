@@ -132,7 +132,6 @@ const useAuth = () => {
       });
   };
 
-  //add redux later
   const getUser = (id) => {
     dispatch(fetchUserRequest());
     authAxios

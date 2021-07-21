@@ -1,5 +1,4 @@
 import React from "react";
-import { useState, useEffect } from "react";
 import { Button, ThemeProvider } from "@material-ui/core";
 import { theme } from "../../Theme";
 import useOffer from "../../hooks/useOffer";

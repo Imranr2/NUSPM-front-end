@@ -57,15 +57,7 @@ const useStyles = makeStyles((theme) => ({
   icon: {
     marginRight: 10,
   },
-  menu: {
-    // maxWidth: 200,
-  },
   menuItem: {
-    // maxWidth: 200,
-    // "&:hover": {
-    //   backgroundColor: "#e1e2fc",
-    //   color: "#0D169F",
-    // },
     whiteSpace: "normal",
   },
 }));
