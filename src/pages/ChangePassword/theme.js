@@ -29,6 +29,10 @@ const useStyles = makeStyles((theme) => ({
     minWidth: 150,
     maxWidth: "10vw",
   },
+  smallTabs: {
+    marginTop: "5vh",
+    marginBottom: "5vh",
+  },
   main: {
     height: "100vh",
     display: "flex",
@@ -38,6 +42,7 @@ const useStyles = makeStyles((theme) => ({
   },
   body: {
     display: "flex",
+    flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
   },

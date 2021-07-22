@@ -1,6 +1,6 @@
 import React from "react";
 import NavBar from "../../components/NavBar";
-import { Container, Typography } from "@material-ui/core";
+import { Container } from "@material-ui/core";
 import { useStyles } from "./theme";
 import { ThemeProvider } from "@material-ui/styles";
 import { theme } from "../../Theme";

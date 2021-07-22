@@ -57,7 +57,7 @@ function NavBar({
   const { getAllNotifications, markNotificationAsRead, notifications } =
     useNotification();
 
-  const isSmallScreen = useMediaQuery({ query: "(max-width:700px)" });
+  const isSmallScreen = useMediaQuery({ query: "(max-width:900px)" });
 
   const handleSwapClicked = (event) => {
     if (!swapClicked) {
@@ -327,7 +327,7 @@ function NavBar({
                   </MenuItem>
                   <MenuItem
                     component={RouterLink}
-                    to="/myAccount"
+                    to="/"
                     className={classes.menuItem}
                     onClick={logOut}
                   >
@@ -484,7 +484,17 @@ function NavBar({
                 >
                   <MenuItem
                     component={RouterLink}
-                    to="/myAccount"
+                    to="/changePassword"
+                    className={classes.menuItem}
+                  >
+                    <ListItemIcon>
+                      <AccountCircleIcon />
+                    </ListItemIcon>
+                    <ListItemText primary="Edit Profile" />
+                  </MenuItem>
+                  <MenuItem
+                    component={RouterLink}
+                    to="/"
                     className={classes.menuItem}
                     onClick={logOut}
                   >

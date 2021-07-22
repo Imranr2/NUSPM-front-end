@@ -67,7 +67,7 @@ function YourSwap({
     (offer) => !offer.isAccepted && !offer.isPending
   );
 
-  const isSmallScreen = useMediaQuery({ query: "(max-width:850px)" });
+  const isSmallScreen = useMediaQuery({ query: "(max-width:900px)" });
 
   useEffect(() => {
     viewSwaps();

@@ -1,4 +1,4 @@
-import { makeStyles, createMuiTheme } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   footer: {
@@ -14,7 +14,6 @@ const useStyles = makeStyles((theme) => ({
     borderLeftWidth: 0,
     borderRightWidth: 0,
     borderBottomWidth: 0,
-    // borderStyle: "solid",
     backgroundColor: "#f5f5f5",
   },
   footerText: {

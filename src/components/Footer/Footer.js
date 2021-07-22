@@ -1,7 +1,6 @@
 import { Container, Typography, Link } from "@material-ui/core";
 import { Link as RouterLink } from "react-router-dom";
-import { theme, useStyles } from "./theme";
-import GitHubIcon from "@material-ui/icons/GitHub";
+import { useStyles } from "./theme";
 
 export default function Footer() {
   const classes = useStyles();
