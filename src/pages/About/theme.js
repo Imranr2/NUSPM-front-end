@@ -1,15 +1,4 @@
-import { makeStyles, createMuiTheme } from "@material-ui/core";
-
-const theme = createMuiTheme({
-  palette: {
-    primary: {
-      main: "#0D169F",
-    },
-    secondary: {
-      main: "#9b9b9b",
-    },
-  },
-});
+import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -21,20 +10,30 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: 4,
   },
   form: {
-    marginTop: "15vh",
+    marginTop: "20vh",
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
   },
   main: {
-    // width: "100vw",
     height: "100vh",
     display: "flex",
     flexDirection: "column",
     justifyContent: "flex-start",
     marginLeft: 0,
   },
+  body: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "flex-start",
+  },
+  text: {
+    margin: theme.spacing(0, 3, 3, 3),
+  },
+  title: {
+    margin: theme.spacing(3),
+  },
 }));
 
-export { theme, useStyles };
+export { useStyles };

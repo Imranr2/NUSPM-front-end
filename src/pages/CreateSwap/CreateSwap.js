@@ -17,6 +17,8 @@ import { theme } from "../../Theme";
 import { useStyles } from "./theme";
 import useSwap from "../../hooks/useSwap";
 import Alert from "@material-ui/lab/Alert";
+import Footer from "../../components/Footer/Footer";
+import { PulseLoader } from "react-spinners";
 
 function CreateSwap({ success, error, errorMsg, loading }) {
   const classes = useStyles();
@@ -205,6 +207,7 @@ function CreateSwap({ success, error, errorMsg, loading }) {
                   />
                 </Grid>
               </Grid>
+              {loading && <PulseLoader color="#0D169F" />}
               <Button
                 className={classes.button}
                 type="submit"
@@ -231,6 +234,7 @@ function CreateSwap({ success, error, errorMsg, loading }) {
             </form>
           </div>
         </Container>
+        <Footer />
       </Container>
     </ThemeProvider>
   );

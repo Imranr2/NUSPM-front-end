@@ -13,6 +13,7 @@ import useSwap from "../../hooks/useSwap";
 import useOffer from "../../hooks/useOffer";
 import SwapList from "../../components/SwapList/SwapList";
 import OfferList from "../../components/OfferList/OfferList";
+import Footer from "../../components/Footer/Footer";
 import { connect } from "react-redux";
 import { PulseLoader } from "react-spinners";
 import { Alert } from "@material-ui/lab";
@@ -271,6 +272,7 @@ function YourSwap({
             </>
           )}
         </Container>
+        <Footer />
       </Container>
     </ThemeProvider>
   );

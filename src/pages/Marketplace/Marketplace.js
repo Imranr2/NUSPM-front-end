@@ -9,6 +9,7 @@ import {
   Button,
   TextField,
   Drawer,
+  Typography,
 } from "@material-ui/core";
 import { Alert, Autocomplete } from "@material-ui/lab";
 import { theme } from "./theme";
@@ -23,6 +24,7 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import ExpandLessIcon from "@material-ui/icons/ExpandLess";
 import { resetSwap } from "../../redux/actions/swapActions";
 import { useDispatch } from "react-redux";
+import Footer from "../../components/Footer/Footer";
 
 function Marketplace({
   createSuccess,
@@ -264,6 +266,7 @@ function Marketplace({
             <Alert severity="warning">{errorMsg}</Alert>
           </>
         )}
+        <Footer />
       </Container>
     </ThemeProvider>
   );

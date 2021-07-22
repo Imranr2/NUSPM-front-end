@@ -1,11 +1,12 @@
 import React from "react";
 import NavBar from "../../components/NavBar";
-import { Container } from "@material-ui/core";
+import { Container, Typography } from "@material-ui/core";
 import { useStyles } from "./theme";
 import { ThemeProvider } from "@material-ui/styles";
 import { theme } from "../../Theme";
 import ReactPlayer from "react-player/youtube";
 import "./Home.css";
+import Footer from "../../components/Footer/Footer";
 
 export default function Home() {
   const classes = useStyles();
@@ -29,6 +30,7 @@ export default function Home() {
             />
           </div>
         </div>
+        <Footer />
       </Container>
     </ThemeProvider>
   );

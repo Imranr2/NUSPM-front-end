@@ -31,6 +31,7 @@ import useNotification from "../../hooks/useNotification";
 import Alert from "@material-ui/lab/Alert";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import { connect } from "react-redux";
+import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 
 function NavBar({
   arr,
@@ -314,6 +315,16 @@ function NavBar({
                   open={Boolean(anchorEl2)}
                   onClose={handleProfileClosed}
                 >
+                  <MenuItem
+                    component={RouterLink}
+                    to="/changePassword"
+                    className={classes.menuItem}
+                  >
+                    <ListItemIcon>
+                      <AccountCircleIcon />
+                    </ListItemIcon>
+                    <ListItemText primary="Edit Profile" />
+                  </MenuItem>
                   <MenuItem
                     component={RouterLink}
                     to="/myAccount"

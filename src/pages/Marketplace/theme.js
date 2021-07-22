@@ -17,6 +17,7 @@ const theme = createMuiTheme({
 const useStyles = makeStyles((theme) => ({
   main: {
     height: "100vh",
+    minHeight: "100vh",
     display: "flex",
     flexDirection: "column",
     justifyContent: "flex-start",
@@ -71,6 +72,16 @@ const useStyles = makeStyles((theme) => ({
     marginTop: "15vh",
     width: "auto",
     height: "auto",
+  },
+  footer: {
+    marginTop: "auto",
+    maxHeight: "10vh",
+    borderColor: "black",
+    borderWidth: 1,
+    borderStyle: "solid",
+  },
+  footerText: {
+    wordWrap: "break-word",
   },
 }));
 

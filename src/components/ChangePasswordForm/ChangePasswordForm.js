@@ -26,7 +26,7 @@ function ChangePasswordForm({ loading, user, success, error, errorMsg }) {
     changePassword(user.id, user.email, oldPassword, password, passwordConf);
   };
   return (
-    <Container>
+    <Container className={classes.main} disableGutters={true} maxWidth={false}>
       <div>
         <form onSubmit={handleSubmit} className={classes.form}>
           <Grid container spacing={2}>
@@ -70,21 +70,28 @@ function ChangePasswordForm({ loading, user, success, error, errorMsg }) {
               />
             </Grid>
           </Grid>
-
+          {loading && (
+            <Container>
+              <PulseLoader color="#0D169F" />
+            </Container>
+          )}
           <Button
             type="submit"
             variant="contained"
             color="primary"
             className={classes.button}
+            disabled={loading}
           >
             Change Password
           </Button>
-          <div>
-            {loading && <PulseLoader color="#0D169F" />}
-            {error && (
-              <Alert severity="error">Incorrect Current Password</Alert>
-            )}
-          </div>
+          {error && (
+            <Container className={classes.container} disableGutters={true}>
+              <Alert severity="error">{errorMsg}</Alert>
+            </Container>
+          )}
+          {success && (
+            <Alert severity="success">Password updated successfully</Alert>
+          )}
         </form>
       </div>
     </Container>
@@ -93,9 +100,9 @@ function ChangePasswordForm({ loading, user, success, error, errorMsg }) {
 
 const mapStateToProps = (state) => {
   return {
-    loading: state.auth.isLoading,
+    loading: state.auth.updateLoading,
     user: state.auth.user,
-    success: state.auth.success,
+    success: state.auth.updateSuccess,
     error: state.auth.updateError,
     errorMsg: state.auth.errorMsg,
   };
