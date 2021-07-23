@@ -1,4 +1,15 @@
-import { makeStyles } from "@material-ui/core";
+import { createMuiTheme, makeStyles } from "@material-ui/core";
+
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: "#0D169F",
+    },
+    secondary: {
+      main: "#9b9b9b",
+    },
+  },
+});
 
 const useStyles = makeStyles((theme) => ({
   footer: {
@@ -20,6 +31,13 @@ const useStyles = makeStyles((theme) => ({
     wordWrap: "break-word",
   },
   link: {
+    "&:hover": {
+      color: "#0D169F",
+    },
+    textDecoration: "none",
+    margin: theme.spacing(0, 3),
+  },
+  github: {
     color: "#9b9b9b",
     "&:hover": {
       color: "#0D169F",
@@ -29,4 +47,4 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export { useStyles };
+export { theme, useStyles };

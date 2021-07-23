@@ -30,7 +30,7 @@ export default function Home() {
             />
           </div>
         </div>
-        <Footer />
+        <Footer arr={[false]} />
       </Container>
     </ThemeProvider>
   );

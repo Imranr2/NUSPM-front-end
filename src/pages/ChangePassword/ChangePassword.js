@@ -70,7 +70,7 @@ function ChangePassword() {
           </Container>
         )}
 
-        <Footer />
+        <Footer arr={[false]} />
       </Container>
     </ThemeProvider>
   );

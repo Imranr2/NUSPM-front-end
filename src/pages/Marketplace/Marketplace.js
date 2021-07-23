@@ -266,7 +266,7 @@ function Marketplace({
             <Alert severity="warning">{errorMsg}</Alert>
           </>
         )}
-        <Footer />
+        <Footer arr={[false]} />
       </Container>
     </ThemeProvider>
   );

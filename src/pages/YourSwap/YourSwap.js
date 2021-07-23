@@ -272,7 +272,7 @@ function YourSwap({
             </>
           )}
         </Container>
-        <Footer />
+        <Footer arr={[false]} />
       </Container>
     </ThemeProvider>
   );

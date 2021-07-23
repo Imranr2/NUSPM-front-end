@@ -234,7 +234,7 @@ function CreateSwap({ success, error, errorMsg, loading }) {
             </form>
           </div>
         </Container>
-        <Footer />
+        <Footer arr={[false]} />
       </Container>
     </ThemeProvider>
   );

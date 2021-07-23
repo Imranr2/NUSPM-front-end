@@ -49,7 +49,7 @@ export default function About() {
             Ruby on Rails backend which is hosted on Heroku.
           </Typography>
         </Container>
-        <Footer />
+        <Footer arr={[true]} />
       </Container>
     </ThemeProvider>
   );
