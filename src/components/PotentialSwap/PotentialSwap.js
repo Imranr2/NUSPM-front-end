@@ -55,6 +55,7 @@ function PotentialSwap(props) {
     setDialogOpen(false);
     setCurrentDialog(0);
     setDisabled(true);
+    setDesiredSlots([props.creatorSwap.current_slot]);
   };
 
   const handleInitiatorSwapClick = (params) => {
@@ -229,7 +230,7 @@ function PotentialSwap(props) {
                     )}
                     onChange={(event, value) => {
                       if (!value.includes(props.creatorSwap.current_slot)) {
-                        value.push(props.creatorSwap.current_slot);
+                        value.unshift(props.creatorSwap.current_slot);
                       }
                       setDesiredSlots(value);
                     }}
