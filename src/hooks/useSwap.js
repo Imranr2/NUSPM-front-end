@@ -148,15 +148,12 @@ const useSwap = () => {
         day: slotDets.day,
       })
       .then((response) => {
-        console.log(response.data);
         dispatch(updateSwapSuccess());
         setTimeout(() => {
           dispatch(resetSwap());
         }, 2000);
       })
       .catch((error) => {
-        console.log(error.response);
-
         dispatch(updateSwapFail(error.response.data));
         setTimeout(() => {
           dispatch(resetSwap());

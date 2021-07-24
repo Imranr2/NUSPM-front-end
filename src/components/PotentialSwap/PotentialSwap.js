@@ -134,17 +134,17 @@ function PotentialSwap(props) {
         >
           <DialogTitle>
             {currentDialog === 0 && (
-              <Typography variant="h5" align="center">
+              <Typography component="div" variant="h5" align="center">
                 Choose Your Swap
               </Typography>
             )}
             {currentDialog === 1 && (
-              <Typography variant="h5" align="center">
+              <Typography component="div" variant="h5" align="center">
                 Create Swap
               </Typography>
             )}
             {currentDialog === 2 && (
-              <Typography variant="h5" align="center">
+              <Typography component="div" variant="h5" align="center">
                 Initiate Swap
               </Typography>
             )}
@@ -267,7 +267,7 @@ function PotentialSwap(props) {
                 <Container className={classes.comparison}>
                   <Container
                     className={classes.cardLabel}
-                    disableGutters="true"
+                    disableGutters={true}
                   >
                     <Card className={classes.card}>
                       <Typography variant="h6" align="center">
@@ -298,7 +298,7 @@ function PotentialSwap(props) {
                   <ArrowRightIcon></ArrowRightIcon>
                   <ArrowRightIcon></ArrowRightIcon>
                   <ArrowRightIcon></ArrowRightIcon>
-                  <Container disableGutters="true">
+                  <Container disableGutters={true}>
                     <Card className={classes.card}>
                       <Typography variant="h6" align="center">
                         {props.creatorSwap.module_code}
