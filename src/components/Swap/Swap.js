@@ -60,7 +60,7 @@ function Swap({ key, card, buttonset, offer }) {
         <Grid key={key} container item xs={12} sm={6} md={4} justify="center">
           <Card className={classes.card}>
             <CardContent className={classes.cardContent}>
-              <Typography variant="h6" component={"div"}>
+              <Typography variant="h6" component="div">
                 {card.module_code}
                 <br />
                 {card.slot_type}
@@ -103,7 +103,7 @@ function Swap({ key, card, buttonset, offer }) {
         <Grid key={key} container item xs={12} sm={6} md={4} justify="center">
           <Card className={classes.card}>
             <CardContent className={classes.cardContent}>
-              <Typography variant="h6" component={"div"}>
+              <Typography variant="h6" component="div">
                 {card.module_code}
                 <br />
                 {card.slot_type}

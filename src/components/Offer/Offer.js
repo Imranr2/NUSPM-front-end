@@ -56,7 +56,7 @@ function Offer({ key, card, tab, userId }) {
         <ButtonBase onClick={handleOfferOpen}>
           {(tab === "currentOffer" || tab === "rejectedOffer") && (
             <CardContent>
-              <Typography variant="h6" component={"div"}>
+              <Typography variant="h6" component="div">
                 {card.creatorSwap.module_code}
                 <br />
                 {card.creatorSwap.slot_type}
@@ -71,10 +71,10 @@ function Offer({ key, card, tab, userId }) {
                 {card.initiatorUserId === userId
                   ? card.initiatorSwap.current_slot
                   : card.creatorSwap.current_slot}
-                ]{/* Current Slot: [{card.creatorSwap.current_slot}] */}
+                ]
                 <br />
                 {tab === "rejectedOffer" && (
-                  <Typography variant="h6" component={"div"}>
+                  <Typography variant="h6" component="div">
                     Rejected Slot: [
                     {card.initiatorUserId === userId
                       ? card.creatorSwap.current_slot
@@ -83,7 +83,7 @@ function Offer({ key, card, tab, userId }) {
                   </Typography>
                 )}
                 {tab === "currentOffer" && (
-                  <Typography variant="h6" component={"div"}>
+                  <Typography variant="h6" component="div">
                     Pending Slot: [
                     {card.initiatorUserId === userId
                       ? card.creatorSwap.current_slot
@@ -96,7 +96,7 @@ function Offer({ key, card, tab, userId }) {
           )}
           {tab === "pendingOffer" && (
             <CardContent>
-              <Typography variant="h6" component={"div"}>
+              <Typography variant="h6" component="div">
                 {card.initiatorSwap.module_code}
                 <br />
                 {card.initiatorSwap.slot_type}
@@ -139,7 +139,7 @@ function Offer({ key, card, tab, userId }) {
                     <Typography
                       className={classes.typography}
                       variant="h6"
-                      component={"div"}
+                      component="div"
                       align="center"
                     >
                       {card.initiatorSwap.module_code}
@@ -164,7 +164,7 @@ function Offer({ key, card, tab, userId }) {
                     <Typography
                       className={classes.typography}
                       variant="h6"
-                      component={"div"}
+                      component="div"
                       align="center"
                     >
                       {card.creatorSwap.module_code}
@@ -203,7 +203,7 @@ function Offer({ key, card, tab, userId }) {
                     <Typography
                       className={classes.typography}
                       variant="h6"
-                      component={"div"}
+                      component="div"
                       align="center"
                     >
                       {card.creatorSwap.module_code}
@@ -228,7 +228,7 @@ function Offer({ key, card, tab, userId }) {
                     <Typography
                       className={classes.typography}
                       variant="h6"
-                      component={"div"}
+                      component="div"
                       align="center"
                     >
                       {card.initiatorSwap.module_code}
