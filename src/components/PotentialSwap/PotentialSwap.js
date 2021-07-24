@@ -22,12 +22,17 @@ import ArrowRightIcon from "@material-ui/icons/ArrowRight";
 import { connect } from "react-redux";
 import { useStyles } from "./theme";
 import { PulseLoader } from "react-spinners";
+import { Autocomplete } from "@material-ui/lab";
 
 function PotentialSwap(props) {
   const classes = useStyles();
   const [dialogOpen, setDialogOpen] = useState(false);
   const [currentDialog, setCurrentDialog] = useState(0);
   const [disabled, setDisabled] = useState(true);
+  const [desiredSlots, setDesiredSlots] = useState([
+    props.creatorSwap.current_slot,
+  ]);
+
   const filteredUserSwaps = props.initiatorSwaps.filter(
     (userSwap) =>
       userSwap.module_code === props.creatorSwap.module_code &&
@@ -36,6 +41,7 @@ function PotentialSwap(props) {
 
   const { createSwap, initiatorSwap, setInitiatorSwap, setSlotDets } =
     useSwap();
+
   const dispatch = useDispatch();
 
   const { createOffer } = useOffer();
@@ -69,7 +75,7 @@ function PotentialSwap(props) {
       props.creatorSwap.module_code,
       props.creatorSwap.slot_type,
       props.initiatorSlot,
-      [props.creatorSwap.current_slot],
+      desiredSlots.sort(),
       false,
       false
     );
@@ -215,13 +221,32 @@ function PotentialSwap(props) {
                     disabled={true}
                   ></TextField>
                   <br />
-                  <TextField
-                    className={classes.field}
-                    value={props.creatorSwap.current_slot}
-                    label="Desired Slot"
-                    variant="outlined"
-                    disabled={true}
-                  ></TextField>
+                  <Autocomplete
+                    classes={{ paper: classes.paper }}
+                    value={desiredSlots}
+                    options={props.slotOptions.filter(
+                      (slot) => slot !== props.initiatorSlot
+                    )}
+                    onChange={(event, value) => {
+                      if (!value.includes(props.creatorSwap.current_slot)) {
+                        value.push(props.creatorSwap.current_slot);
+                      }
+                      setDesiredSlots(value);
+                    }}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        required
+                        inputProps={{
+                          ...params.inputProps,
+                          required: desiredSlots.length === 0,
+                        }}
+                        label="Desired Slots"
+                        variant="outlined"
+                      />
+                    )}
+                    multiple
+                  />
                 </Container>
                 {props.createLoading && (
                   <Container className={classes.loader}>
@@ -257,7 +282,7 @@ function PotentialSwap(props) {
                         <br />
                         Have: [{initiatorSwap.current_slot}]
                         <br />
-                        Want: [{initiatorSwap.desired_slots}]
+                        Want: [{initiatorSwap.desired_slots.toString()}]
                       </Typography>
                     </Card>
                     <Typography

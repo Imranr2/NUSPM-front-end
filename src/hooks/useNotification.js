@@ -17,8 +17,8 @@ const useNotification = () => {
         notifiable_type: notifiableType,
         user_id: userId,
       })
-      .then((response) => console.log(response.data))
-      .catch((error) => console.log(error.response));
+      .then()
+      .catch();
   };
 
   const markNotificationAsRead = () => {
@@ -31,10 +31,9 @@ const useNotification = () => {
     authAxios
       .get("api/v1/notifications")
       .then((response) => {
-        console.log(response.data);
         setNotifications(response.data);
       })
-      .catch((error) => console.log(error));
+      .catch();
   };
 
   return {

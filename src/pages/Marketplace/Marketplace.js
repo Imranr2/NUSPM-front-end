@@ -54,7 +54,6 @@ function Marketplace({
   const [moduleCode, setModuleCode] = useState(null);
   const [slotType, setSlotType] = useState(null);
   const [currentSlot, setCurrentSlot] = useState(null);
-  // const [search, setSearch] = useState(false);
   const [drawer, setDrawer] = useState(true);
 
   const dispatch = useDispatch();
@@ -92,7 +91,6 @@ function Marketplace({
     e.preventDefault();
     searchSwap(moduleCode, slotType, currentSlot);
     viewSwaps();
-    // setSearch(true);
     toggleDrawer();
   }
 
@@ -250,6 +248,7 @@ function Marketplace({
               initiatorSwaps={userSwaps}
               initiatorSlot={currentSlot}
               slotDets={slotDets}
+              slotOptions={slotOptions}
             />
           )}
         {searchSuccess &&

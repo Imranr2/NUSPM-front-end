@@ -1,11 +1,10 @@
 import { ThemeProvider, Container, Typography, Link } from "@material-ui/core";
 import { Link as RouterLink } from "react-router-dom";
 import { theme, useStyles } from "./theme";
-import { useState } from "react";
 
 export default function Footer({ arr }) {
   const classes = useStyles();
-  const [aboutClicked, setAboutClicked] = useState(arr[0]);
+  const aboutClicked = arr[0];
   return (
     <ThemeProvider theme={theme}>
       <Container

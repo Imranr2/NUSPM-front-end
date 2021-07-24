@@ -12,6 +12,7 @@ function PotentialSwaps(props) {
             initiatorSwaps={props.initiatorSwaps}
             initiatorSlot={props.initiatorSlot}
             slotDets={props.slotDets}
+            slotOptions={props.slotOptions}
           ></PotentialSwap>
         ))}
       </Grid>
