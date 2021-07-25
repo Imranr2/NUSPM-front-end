@@ -49,7 +49,7 @@ const useOffer = () => {
         }, 3000);
       })
       .catch((error) => {
-        dispatch(createOfferFail(error.response.data));
+        dispatch(createOfferFail(error.response));
         setTimeout(() => {
           dispatch(resetOffer());
         }, 3000);
@@ -68,7 +68,7 @@ const useOffer = () => {
         }, 3000);
       })
       .catch((error) => {
-        dispatch(viewOfferFail(error.response.data));
+        dispatch(viewOfferFail(error.response));
         setTimeout(() => {
           dispatch(resetOffer());
         }, 3000);
@@ -86,7 +86,7 @@ const useOffer = () => {
         }, 3000);
       })
       .catch((error) => {
-        dispatch(deleteOfferFail(error.response.data));
+        dispatch(deleteOfferFail(error.response));
         setTimeout(() => {
           dispatch(resetOffer());
         }, 3000);
@@ -107,7 +107,7 @@ const useOffer = () => {
         }, 3000);
       })
       .catch((error) => {
-        dispatch(updateOfferFail(error.response.data));
+        dispatch(updateOfferFail(error.response));
         setTimeout(() => {
           dispatch(resetOffer());
         }, 3000);
@@ -127,7 +127,7 @@ const useOffer = () => {
         }, 3000);
       })
       .catch((error) => {
-        dispatch(withdrawOfferFail(error.response.data));
+        dispatch(withdrawOfferFail(error.response));
         setTimeout(() => {
           dispatch(resetOffer());
         }, 3000);
@@ -148,7 +148,7 @@ const useOffer = () => {
         }, 3000);
       })
       .catch((error) => {
-        dispatch(withdrawOfferFail(error.response.data));
+        dispatch(withdrawOfferFail(error.response));
         setTimeout(() => {
           dispatch(resetOffer());
         }, 3000);

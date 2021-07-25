@@ -94,8 +94,10 @@ const useSwap = () => {
         day: slotDets.day,
       })
       .then((response) => {
-        dispatch(createSwapSuccess());
         setInitiatorSwap(response.data);
+      })
+      .then((data) => {
+        dispatch(createSwapSuccess());
         if (reset) {
           setTimeout(() => {
             dispatch(resetSwap());
@@ -105,8 +107,7 @@ const useSwap = () => {
       .catch((error) => {
         console.log(error);
         console.log(error.response);
-        console.log(error.response.data);
-        dispatch(createSwapFail(error.response.data));
+        dispatch(createSwapFail(error.response));
         setTimeout(() => {
           dispatch(resetSwap());
         }, 3000);
@@ -122,7 +123,7 @@ const useSwap = () => {
         dispatch(viewSwapSuccess());
       })
       .catch((error) => {
-        dispatch(viewSwapFail(error.response.data));
+        dispatch(viewSwapFail(error.response));
         setTimeout(() => {
           dispatch(resetSwap());
         }, 2000);
@@ -157,7 +158,7 @@ const useSwap = () => {
         }, 2000);
       })
       .catch((error) => {
-        dispatch(updateSwapFail(error.response.data));
+        dispatch(updateSwapFail(error.response));
         setTimeout(() => {
           dispatch(resetSwap());
         }, 2000);
@@ -175,7 +176,7 @@ const useSwap = () => {
         }, 2000);
       })
       .catch((error) => {
-        dispatch(deleteSwapFail(error.response.data));
+        dispatch(deleteSwapFail(error.response));
         setTimeout(() => {
           dispatch(resetSwap());
         }, 2000);

@@ -90,7 +90,7 @@ const useAuth = () => {
         }, 500);
       })
       .catch((error) => {
-        dispatch(registerFail(error.response.data));
+        dispatch(registerFail(error.response));
         setTimeout(() => {
           dispatch(resetAuth());
         }, 2000);
@@ -119,7 +119,7 @@ const useAuth = () => {
             dispatch(changePasswordSuccess());
           })
           .catch((error) => {
-            dispatch(changePasswordFail(error.response.data));
+            dispatch(changePasswordFail(error.response));
             setTimeout(() => {
               dispatch(resetAuth());
             }, 2000);
