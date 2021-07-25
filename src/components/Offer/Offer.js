@@ -154,7 +154,8 @@ function Offer({ key, card, tab, userId }) {
                       <br />
                       Have: [{card.initiatorSwap.current_slot}]
                       <br />
-                      Want: [{card.initiatorSwap.desired_slots.toString()}]
+                      Want: [
+                      {card.initiatorSwap.desired_slots.sort().toString()}]
                     </Typography>
                   )}
 
@@ -179,7 +180,7 @@ function Offer({ key, card, tab, userId }) {
                       <br />
                       Have: [{card.creatorSwap.current_slot}]
                       <br />
-                      Want: [{card.creatorSwap.desired_slots.toString()}]
+                      Want: [{card.creatorSwap.desired_slots.sort().toString()}]
                     </Typography>
                   )}
                 </Card>
@@ -218,7 +219,7 @@ function Offer({ key, card, tab, userId }) {
                       <br />
                       Have: [{card.creatorSwap.current_slot}]
                       <br />
-                      Want: [{card.creatorSwap.desired_slots.toString()}]
+                      Want: [{card.creatorSwap.desired_slots.sort().toString()}]
                     </Typography>
                   )}
 
@@ -243,7 +244,8 @@ function Offer({ key, card, tab, userId }) {
                       <br />
                       Have: [{card.initiatorSwap.current_slot}]
                       <br />
-                      Want: [{card.initiatorSwap.desired_slots.toString()}]
+                      Want: [
+                      {card.initiatorSwap.desired_slots.sort().toString()}]
                     </Typography>
                   )}
                 </Card>

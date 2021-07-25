@@ -117,6 +117,9 @@ const useAuth = () => {
           })
           .then((response) => {
             dispatch(changePasswordSuccess());
+            setTimeout(() => {
+              dispatch(resetAuth());
+            }, 2000);
           })
           .catch((error) => {
             dispatch(changePasswordFail(error.response));

@@ -73,7 +73,7 @@ function Swap({ key, card, buttonset, offer }) {
                 <br />
                 Have: [{card.current_slot}]
                 <br />
-                Want: [{card.desired_slots.toString()}]
+                Want: [{card.desired_slots.sort().toString()}]
               </Typography>
               <Container className={classes.tag}>
                 {offer

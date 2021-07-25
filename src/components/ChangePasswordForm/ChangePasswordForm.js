@@ -90,7 +90,9 @@ function ChangePasswordForm({ loading, user, success, error, errorMsg }) {
             </Container>
           )}
           {success && (
-            <Alert severity="success">Password updated successfully</Alert>
+            <Container className={classes.container} disableGutters={true}>
+              <Alert severity="success">Password updated successfully</Alert>
+            </Container>
           )}
         </form>
       </div>

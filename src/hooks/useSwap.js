@@ -105,8 +105,6 @@ const useSwap = () => {
         }
       })
       .catch((error) => {
-        console.log(error);
-        console.log(error.response);
         dispatch(createSwapFail(error.response));
         setTimeout(() => {
           dispatch(resetSwap());
