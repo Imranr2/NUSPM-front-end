@@ -283,7 +283,11 @@ function PotentialSwap(props) {
                         <br />
                         Have: [{initiatorSwap.current_slot}]
                         <br />
-                        Want: [{initiatorSwap.desired_slots}]
+                        Want: [
+                        {initiatorSwap.desired_slots.length > 0
+                          ? initiatorSwap.desired_slots.toString()
+                          : props.creatorSwap.current_slot}
+                        ]
                       </Typography>
                     </Card>
                     <Typography
