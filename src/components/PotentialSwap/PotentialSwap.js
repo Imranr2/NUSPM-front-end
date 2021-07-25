@@ -283,7 +283,7 @@ function PotentialSwap(props) {
                         <br />
                         Have: [{initiatorSwap.current_slot}]
                         <br />
-                        Want: [{initiatorSwap.desired_slots.toString()}]
+                        Want: [{initiatorSwap.desired_slots}]
                       </Typography>
                     </Card>
                     <Typography
