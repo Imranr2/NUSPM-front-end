@@ -131,7 +131,7 @@ function Offer({ key, card, tab, userId }) {
           )}
           <DialogContent>
             <Container className={classes.container}>
-              <Container className={classes.cardLabel} disableGutters="true">
+              <Container className={classes.cardLabel} disableGutters={true}>
                 <Card className={classes.card}>
                   {(tab === "pendingOffer" ||
                     (tab === "rejectedOffer" &&
@@ -196,7 +196,7 @@ function Offer({ key, card, tab, userId }) {
               <ArrowRightIcon></ArrowRightIcon>
               <ArrowRightIcon></ArrowRightIcon>
               <ArrowRightIcon></ArrowRightIcon>
-              <Container className={classes.cardLabel} disableGutters="true">
+              <Container className={classes.cardLabel} disableGutters={true}>
                 <Card className={classes.card}>
                   {(tab === "pendingOffer" ||
                     (tab === "rejectedOffer" &&

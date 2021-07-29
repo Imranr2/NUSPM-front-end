@@ -211,9 +211,9 @@ function NavBar({
                   {notifications.map((notification, index) => (
                     <MenuItem
                       key={index}
-                      disableRipple
                       onClose={handleNotifClosed}
                       className={classes.menuItem}
+                      button={false}
                     >
                       {error.some((element) =>
                         notification.content.includes(element)
@@ -378,6 +378,11 @@ function NavBar({
                   open={Boolean(anchorEl3)}
                   onClose={handleNotifClosed}
                 >
+                  {notifications.length === 0 && (
+                    <Alert className={classes.alert} severity="info">
+                      You have no notifications
+                    </Alert>
+                  )}
                   {notifications.map((notification, index) => (
                     <MenuItem
                       key={index}

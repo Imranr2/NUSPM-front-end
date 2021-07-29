@@ -90,7 +90,7 @@ const useAuth = () => {
         }, 500);
       })
       .catch((error) => {
-        dispatch(registerFail(error.response));
+        dispatch(registerFail(error.response.data));
         setTimeout(() => {
           dispatch(resetAuth());
         }, 2000);

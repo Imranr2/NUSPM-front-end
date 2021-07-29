@@ -3,7 +3,7 @@ import { Container } from "@material-ui/core";
 
 function LoadingSpinner() {
   return (
-    <Container maxWidth="false" disableGutters>
+    <Container maxWidth={false} disableGutters={true}>
       <PacmanLoader />
     </Container>
   );
