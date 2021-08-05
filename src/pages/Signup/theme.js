@@ -7,6 +7,9 @@ const useStyles = makeStyles((theme) => ({
     marginTop: 24,
     marginBottom: 16,
   },
+  alert: {
+    marginBottom: 16,
+  },
 }));
 
 export { useStyles };

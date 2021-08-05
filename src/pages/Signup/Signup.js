@@ -126,7 +126,9 @@ function Signup({ loading, registerError, errorMsg, success }) {
           {registerError && (
             <>
               {errorMsg.map((error) => (
-                <Alert severity="error">{error}</Alert>
+                <Alert className={classes.alert} severity="error">
+                  {error}
+                </Alert>
               ))}
             </>
           )}
